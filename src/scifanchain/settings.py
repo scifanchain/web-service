@@ -94,7 +94,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS': {
-            'read_default_file':  'D:/scifanchain/web/src/sfc/db_dev.cnf',
+            'read_default_file':  'D:/scifanchain/web/src/scifanchain/db_dev.cnf',
         },
     }
 }
