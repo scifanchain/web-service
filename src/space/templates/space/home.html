@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% load static%}
+
+{% block content %}
+  <div class="container py-4">
+    <div class="row">
+      <div class="col-2">
+        <div class="bg-light mb-3 text-center p-2 border">
+          <img src="{{ MEDIA_URL }}avatars/{{ user.date_joined.year }}/{{ user.username }}.svg" alt="" class="avatar">
+        </div>
+        <div>
+          <a href="{% url 'space:change_avatar'%}">换个随机头像</a>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">个人资料</li>
+          <li class="list-group-item">我的作品</li>
+          <li class="list-group-item">参与社区</li>
+          <li class="list-group-item">修改密码</li>
+          <li class="list-group-item">我的钱包</li>
+        </ul>
+      </div>
+      <div class="col-9 offset-1">
+        <h1>个人资料</h1>
+        <p>直接在下面撰写：</p>
+<div id="like_button_container"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock content %}

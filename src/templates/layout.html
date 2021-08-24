@@ -1,0 +1,119 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="赛凡链官网。Scifanchain web.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
+  <link rel="bookmark" href="{% static 'favicon.ico' %}"/>
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'font/' %}bootstrap-icons.css">
+  {% block extracss %}{% endblock %}
+</head>
+<body>
+<header class="bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="{% static 'img/logo.png' %}" alt="" height="24">
+        赛凡链
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'works:index' %}">作品</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">社区</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'blogs:index' %}">博客</a>
+          </li>
+        </ul>
+        {% if user.is_authenticated %}
+          <div class="dropdown mx-4">
+            <a class="dropdown-toggle text-white text-decoration-none" type="button" id="dropdownMenuButton1"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi-plus" style="font-size: 1.5rem;"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="#">开始创作</a></li>
+              <li><a class="dropdown-item" href="#">参与治理</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">帮助</a></li>
+            </ul>
+          </div>
+          <div class="dropdown">
+            <a class="dropdown-toggle text-white text-decoration-none" type="button" id="dropdownMenuButton1"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="{{ MEDIA_URL }}avatars/{{ user.date_joined.year }}/{{ user.username }}.svg" alt=""
+                   class="avatar-tiny">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+              <li><strong class="p-3">Hi,{{ user.username }}</strong></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'space:home' %}">工作空间</a></li>
+              <li><a class="dropdown-item" href="#">钱包</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">帮助</a></li>
+              <li><a class="dropdown-item" href="#">设置</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'logout' %}">退出</a></li>
+            </ul>
+          </div>
+        {% else %}
+          <a href="{% url 'register' %}" class="px-3">注册</a>
+          <a href="{% url 'login' %}">登录</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  {% block content %}
+  {% endblock content %}
+</main>
+
+<nav class="footer navbar navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">Scifan Chain</a>
+    <span style="font-family:arial;">Copyright &copy; 2021 scifanchain.com All Rights Reserved.</span>
+    <a href="https://docs.scifanchain.com" target="_blank">文档</a>
+    <a href="https://blogs.scifanchain.com" target="_blank">博客</a>
+  </div>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous">
+</script>
+
+<!-- 加载 React -->
+<!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js" -->
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+<!-- 加载Scifan的 React 组件 -->
+<script src="{% static 'js/scifan.js' %}"></script>
+
+</body>
+</html>

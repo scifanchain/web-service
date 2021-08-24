@@ -1,0 +1,44 @@
+{% extends "layout_account.html" %}
+{% load static %}
+{% load widget_tweaks%}
+
+{% block title %}登录{% endblock title %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-5">
+    <h4>欢迎登录</h4>
+      <hr>
+          {% if form.errors %}
+            <div class="alert alert-danger" role="alert">用户名或密码错误，请重新尝试。</div>
+          {% endif %}
+
+          <form action="{% url 'login' %}" method="post" class="">
+            {% csrf_token %}
+            <label for="username" class="form-label">用户名或电子邮件地址</label>
+            <div class="mb-2">
+              <input type="text" name="username" autofocus="" autocapitalize="none"
+                     autocomplete="username" maxlength="150" required="" id="id_username"
+                     class="form-control">
+            </div>
+            <label for="password" class="form-label">用户密码</label>
+            <div class="mb-2">
+              <input type="password" name="password" autocomplete="current-password" required=""
+                     id="id_password" class="form-control">
+            </div>
+            {% comment %} <input type="hidden" name="next" id="" value="{{ next }}"> {% endcomment %}
+            <div class="d-grid gap-2">
+              <input type="submit" name="" id="" value="用户登录" class="mt-3 btn btn-info text-white fw-bold">
+            </div>
+          </form>
+          <div class="mt-4 mb-1">忘记密码，可以从这里<a href="{% url 'password_reset' %}" class="">重置密码</a></div>
+          <div class="">如果还没有{{ SITE_NAME }}账号，马上<a href="{% url 'register' %}" class="link-primary">注册一个</a>
+          </div>
+    </div>
+    <div class="col-7">
+      <h4>登录须知</h4>
+      <hr>
+    </div>
+  </div>
+
+{% endblock %}
