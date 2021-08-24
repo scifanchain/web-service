@@ -8,7 +8,7 @@ from taggit.managers import TaggableManager
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'status', 'created_time')
+    list_display = ('name', 'status', 'created')
     fields = ('name', 'status')
 
     def save_model(self, request, obj, form, change):
@@ -19,7 +19,7 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
-    list_display = ('title', 'category', 'owner', 'status', 'created_time', 'operator', 'tag_list')
+    list_display = ('title', 'category', 'owner', 'status', 'created', 'operator', 'tag_list')
     list_display_links = []
     search_fields = ['title', 'category__name']
     actions_on_top = True
@@ -60,4 +60,4 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('target', 'content', 'created_time')
+    list_display = ('target', 'content', 'created')

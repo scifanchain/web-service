@@ -2,17 +2,17 @@
 {% load static%}
 {% block extracss %} <link href="{% static 'css/markdown_code.css' %}" rel="stylesheet" /> {% endblock %}
 {% block content %}
-  <div class="container">
+  <div class="container mb-5">
     <div class="row mt-5">
-      <div class="col-8">
+      <div class="col-9">
         {% block blog %}
         {% endblock %}
       </div>
-      <div class="col-4">
-        <h2 class="h4">分类菜单</h2>
+      <div class="col-3 ps-5 text-center">
+        <h2 class="h4 bg-light py-2">分类</h2>
         <ul class="navbar-nav">
           {% for menu in menus %}
-            <li class="nav-item">
+            <li class="nav-item border-bottom">
               <a class="nav-link active" aria-current="page" href="/blogs/category/{{ menu.id }}">{{ menu.name }}</a>
             </li>
           {% endfor %}
