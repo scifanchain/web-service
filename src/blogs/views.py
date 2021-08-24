@@ -65,8 +65,9 @@ class PostDetailView(CommonViewMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        post_id = self.kwargs.get('post_id')
         context["comment_form"] = CommentForm
-        context['comment_list'] = Comment.objects.all()
+        context['comment_list'] = Comment.get_by_post(post_id)
         return context
 
     def get_object(self):

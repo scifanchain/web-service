@@ -4,18 +4,16 @@
 
 {% for post in posts %}
 
-<div class="row">
-    <a class="h4" href="{% url 'blogs:detail' post.id %}">{{ post.title }}</a>
+<div class="row mb-4">
+    <a class="h4 text-decoration-none" href="{% url 'blogs:detail' post.id %}">{{ post.title }}</a>
     <div class="my-3">
-        <span>作者:{{post.owner.username}}</span>
-        <span>分类:{{post.category.name}}</span>
-        <span>标签：{{ post.tags.all|join:"，" }}</span>
+        <span class="px-2 bg-light">作者:{{post.owner.username}}</span>
+        <span class="px-2 bg-light">分类:{{post.category.name}}</span>
+        <span class="px-2 bg-light">标签：{{ post.tags.all|join:"，" }}</span>
     </div>
-
-    <div class="p-3">
+    <div class="mb-4">
          {{post.summary|safe}}
     </div>
-
 </div>
 
 {% endfor %}

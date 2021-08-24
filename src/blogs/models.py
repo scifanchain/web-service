@@ -22,7 +22,7 @@ class Category(models.Model):
     name = models.CharField(max_length=510, verbose_name="分类名称")
     status = models.PositiveSmallIntegerField(default=Status.STATUS_NORMAL, choices=Status.choices, verbose_name="状态")
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者")
-    created_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+    created = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
 
     class Meta:
         verbose_name = verbose_name_plural = "分类"
@@ -60,7 +60,8 @@ class Post(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者")
     pv = models.PositiveIntegerField(default=1)
     uv = models.PositiveIntegerField(default=1)
-    created_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+    created = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+    updated = models.DateTimeField(auto_now=True, verbose_name="创建时间")
 
     class Meta:
         verbose_name = verbose_name_plural = "博客"
@@ -97,10 +98,22 @@ class Comment(models.Model):
     content = models.CharField(max_length=2000, verbose_name="内容")
     status = models.PositiveSmallIntegerField(
         default=Status.STATUS_NORMAL, choices=Status.choices, verbose_name="状态")
-    created_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+    created = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
 
     class Meta:
         verbose_name = verbose_name_plural = "评论"
+
+    @staticmethod
+    def get_by_post(post_id):
+        try:
+            post = Post.objects.get(id=post_id)
+        except Post.DoesNotExist:
+            post = None
+            comment_list = []
+        else:
+            comment_list = post.comment_set.filter(status=Status.STATUS_NORMAL)
+
+        return comment_list
 
 
 class CommentForm(ModelForm):
@@ -108,7 +121,5 @@ class CommentForm(ModelForm):
         model = Comment
         fields = ['content']
         widgets = {
-            'nickname': TextInput(attrs={'class': 'form-control form-control-sm', }),
             'content': Textarea(attrs={'class': 'form-control form-control-sm', 'rows': 5, }),
-            'email': TextInput(attrs={'class': 'form-control form-control-sm', }),
         }
