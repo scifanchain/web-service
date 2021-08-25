@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% load editorjs %}
+{% load static%}
 
 {% block extrajs %}
   <!-- 加载 React -->
@@ -8,6 +9,8 @@
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
 {% endblock extrajs %}
 
 {% block content %}
@@ -18,47 +21,11 @@
       </div>
       <div class="col-md-10">
         <h3>{{ stage.title }}</h3>
-        {{ stage.content }}
+        <div id="editorjs" style="margin: 0 auto" class="border"></div>
+        <a href="" class="btn btn-primary">保存</a>
+        <div id="oxb"></div>
       </div>
     </div>
   </div>
-  <div id="editorjs" style="max-width: 750px; margin: 0 auto" class="border"></div>
-
-  <script>
-      axios.get('/works/api/stage/1/')
-          .then(function (response) {
-              // 处理成功情况
-              console.log(response);
-          })
-          .catch(function (error) {
-              // 处理错误情况
-              console.log(error);
-          })
-          .then(function () {
-              // 总是会执行
-          });
-
-      /**
-       * Initialize the Editor
-       */
-      const editor = new EditorJS({
-          autofocus: true,
-          data: {
-              url: "http://127.0.0.1:8000/works/api/stage/1/"
-          }
-      });
-
-      /**
-       * Add handler for the Save button
-       */
-      const saveButton = document.getElementById('save-button');
-      const output = document.getElementById('output');
-
-      saveButton.addEventListener('click', () => {
-          editor.save().then(savedData => {
-              output.innerHTML = JSON.stringify(savedData, null, 4);
-          })
-      })
-  </script>
 
 {% endblock %}
