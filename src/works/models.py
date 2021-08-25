@@ -35,12 +35,15 @@ class Story(models.Model):
     history = HistoricalRecords()
 
 
-class Chapter(models.Model):
+class Plot(models.Model):
     name = models.CharField(max_length=200, verbose_name="故事章节")
+    content = EditorJsJSONField(verbose_name='情节内容')
     order = models.IntegerField("次序", blank=True, null=True)
-    history = HistoricalRecords()
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者")
     belong_to_story = models.ForeignKey(Story, on_delete=models.CASCADE, verbose_name="所属故事")
+    created = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+    updated = models.DateTimeField(auto_now=True, verbose_name="修改时间")
+    history = HistoricalRecords()
 
 
 class Stage(models.Model):
@@ -51,7 +54,7 @@ class Stage(models.Model):
     status = models.PositiveSmallIntegerField("状态", default=Status.STATUS_NORMAL, choices=Status.choices)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者")
     belong_to_story = models.ForeignKey(Story, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="所属故事")
-    belong_to_chapter = models.ForeignKey(Chapter, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="所属章节")
+    belong_to_plot = models.ForeignKey(Plot, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="所属情节")
     pv = models.PositiveIntegerField("浏览量", default=1)
     uv = models.PositiveIntegerField("访问人数", default=1)
     history = HistoricalRecords()
