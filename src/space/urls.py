@@ -6,5 +6,6 @@ app_name = 'space'
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('change_avatar', views.change_avatar, name='change_avatar')
+    path('wallet/', views.wallet, name='wallet'),
+    path('change_avatar/', views.change_avatar, name='change_avatar')
 ]

@@ -11,13 +11,13 @@ class Status(IntegerChoices):
     STATUS_FROZEN = 2, '冻结'
 
 
-class StageKind(IntegerChoices):
-    KIND_NONE = 0, '未定义'
-    KIND_ERA = 1, '时间'
-    KIND_PLACE = 2, '地点'
-    KIND_PERSON = 3, '人物'
-    KIND_EVENT = 4, '事件'
-    KIND_CONCEPT = 5, '概念'
+class StageType(IntegerChoices):
+    TYPE_NONE = 0, '未定义'
+    TYPE_ERA = 1, '时间'
+    TYPE_PLACE = 2, '地点'
+    TYPE_PERSON = 3, '人物'
+    TYPE_EVENT = 4, '事件'
+    TYPE_CONCEPT = 5, '概念'
 
 
 class Display(IntegerChoices):
@@ -37,25 +37,26 @@ class Story(models.Model):
 
 class Chapter(models.Model):
     name = models.CharField(max_length=200, verbose_name="故事章节")
-    order = models.IntegerField()
+    order = models.IntegerField("次序", blank=True, null=True)
     history = HistoricalRecords()
-    belong_to_story = models.IntegerField(blank=True, default=0, verbose_name="所属故事")
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者")
+    belong_to_story = models.ForeignKey(Story, on_delete=models.CASCADE, verbose_name="所属故事")
 
 
 class Stage(models.Model):
-    title = models.CharField(max_length=200, verbose_name="标题")
-    summary = models.CharField(max_length=1024, blank=True, verbose_name="摘要")
-    content = EditorJsJSONField()
-    kind = models.PositiveSmallIntegerField(default=StageKind.KIND_NONE, choices=StageKind.choices, verbose_name="类型")
-    status = models.PositiveSmallIntegerField(default=Status.STATUS_NORMAL, choices=Status.choices, verbose_name="状态")
+    title = models.CharField("标题", max_length=200)
+    summary = models.CharField("摘要", max_length=1024, blank=True)
+    content = EditorJsJSONField(verbose_name='内容')
+    type = models.PositiveSmallIntegerField("类型", default=StageType.TYPE_NONE, choices=StageType.choices)
+    status = models.PositiveSmallIntegerField("状态", default=Status.STATUS_NORMAL, choices=Status.choices)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者")
-    belong_to_story = models.IntegerField(blank=True, default=0, verbose_name="所属故事")
-    belong_to_chapter = models.IntegerField(blank=True, default=0, verbose_name="所属章节")
-    pv = models.PositiveIntegerField(default=1)
-    uv = models.PositiveIntegerField(default=1)
+    belong_to_story = models.ForeignKey(Story, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="所属故事")
+    belong_to_chapter = models.ForeignKey(Chapter, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="所属章节")
+    pv = models.PositiveIntegerField("浏览量", default=1)
+    uv = models.PositiveIntegerField("访问人数", default=1)
     history = HistoricalRecords()
-    created = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
-    updated = models.DateTimeField(auto_now=True, verbose_name="修改时间")
+    created = models.DateTimeField("创建时间", auto_now_add=True)
+    updated = models.DateTimeField("修改时间", auto_now=True)
 
     class Meta:
         verbose_name = verbose_name_plural = "作品"
