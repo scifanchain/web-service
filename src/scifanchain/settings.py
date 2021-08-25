@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_editorjs_fields',
+    'rest_framework',
     'blogs',
     'works',
     'community',
