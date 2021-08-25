@@ -4,7 +4,8 @@ axios.get('http://127.0.0.1:8000/works/api/stage/1/')
         data = response.data
         const editor = new EditorJS({
             autofocus: true,
-            data: data
+            data: data,
+            readOnly: true,
         });
 
         console.log(response);
