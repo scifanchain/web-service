@@ -1,3 +1,4 @@
+
 const e = React.createElement;
 
 class LikeButton extends React.Component {
@@ -18,5 +19,8 @@ class LikeButton extends React.Component {
     );
   }
 }
+
+alert("my love")
+
 const domContainer = document.querySelector('#oxb');
 ReactDOM.render(e(LikeButton), domContainer);

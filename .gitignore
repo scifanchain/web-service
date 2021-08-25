@@ -1,7 +1,8 @@
 # IDE
 .idea/
 
-app/
+# 前端构建工具
+node_modules/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

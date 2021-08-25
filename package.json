@@ -1,0 +1,24 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "description": "赛凡链是一个面向未来的科幻创意产业区块链。本项目是赛凡链的web服务平台，采用Django+Django Rest Framework框架开发，提供应用逻辑处理、数据处理、api接口和等blog等服务。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scifanchain/web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scifanchain/web/issues"
+  },
+  "homepage": "https://github.com/scifanchain/web#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2"
+  }
+}
