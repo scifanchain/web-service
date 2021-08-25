@@ -59,3 +59,13 @@ html {
   position: relative;
   min-height: 100%;
 }
+
+/* 前端创作编辑器
+-------------------------------------------------- */
+.ce-block__content {
+    position: relative;
+    max-width: 950px; // Default is 650px. Increase the max-width as it fit your needs
+    margin: 0 auto;
+    -webkit-transition: background-color .15s ease;
+    transition: background-color .15s ease;
+}
