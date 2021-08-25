@@ -3,7 +3,6 @@ from django.urls import reverse
 from django.utils.html import format_html
 from .adminforms import PostAdminForm
 from .models import Post, Category, Comment
-from taggit.managers import TaggableManager
 
 
 @admin.register(Category)
