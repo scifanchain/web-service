@@ -9,11 +9,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>{% block title %}{% endblock %}</title>
+
   <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
   <link rel="bookmark" href="{% static 'favicon.ico' %}"/>
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'font/' %}bootstrap-icons.css">
+
   {% block extracss %}{% endblock %}
   {% block extrajs %}{% endblock %}
 </head>
@@ -110,11 +112,8 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-        crossorigin="anonymous">
-</script>
-
+<!-- 引入JS -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
 
 <!-- 加载Scifan的 React 组件 -->
 <script src="{% static 'js/dist/scifan.js' %}"></script>
