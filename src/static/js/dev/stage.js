@@ -1,26 +1,20 @@
+const {useState} = React
 
-const e = React.createElement;
+function Example() {
+  // 声明一个新的叫做 “count” 的 state 变量
+  const [count, setCount] = useState(0);
 
-class LikeButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { liked: false };
-  }
-
-  render() {
-    if (this.state.liked) {
-      return 'You liked this.';
-    }
-
-    return e(
-      'button',
-      { onClick: () => this.setState({ liked: true }) },
-      'Like'
-    );
-  }
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+    </div>
+  );
 }
 
-alert("my love")
-
-const domContainer = document.querySelector('#oxb');
-ReactDOM.render(e(LikeButton), domContainer);
+ReactDOM.render(
+  <Example />,
+  document.getElementById('oxb')
+);
