@@ -1,0 +1,18 @@
+{% extends "works/stage_detail.html" %}
+
+{% block extrajs %}
+  <!-- 加载 React -->
+  <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js" -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+{% endblock extrajs %}
+
+{% block stage-editor %}
+  <div>
+    <div id="stage-editor-wrap" style="margin: 0 auto;">
+      <div id="stage-editor"></div>
+    </div>
+  </div>
+{% endblock stage-editor %}
