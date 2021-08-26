@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% load editorjs %}
-{% load static%}
+{% load static %}
 
 {% block extrajs %}
   <!-- 加载 React -->
@@ -13,15 +13,68 @@
 
 {% block content %}
   <div class="container">
+    <div class="mb-4">
+      <div id="oxb"></div>
+      <h3 class="mb-4">{{ stage.title }}</h3>
+    </div>
     <div class="row">
-      <div class="col-md-2">
-
+      <div class="col-md-3">
+        <h6>引用人物</h6>
+        <h6>所在地点</h6>
+        <h6>发生时间</h6>
+        <h6>涉及概念</h6>
+        <h6>作者</h6>
       </div>
-      <div class="col-md-10">
-        <h3>{{ stage.title }}</h3>
-        <div id="editorjs" style="margin: 0 auto" class="border"></div>
-        <a href="" class="btn btn-primary">保存</a>
-        <div id="oxb"></div>
+      <div class="col-md-9">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="read-tab" data-bs-toggle="tab" data-bs-target="#read" type="button"
+                    role="tab" aria-controls="home" aria-selected="true">阅读
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="read-tab" data-bs-toggle="tab" data-bs-target="#read" type="button"
+                    role="tab" aria-controls="read" aria-selected="false">修改
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="setting-tab" data-bs-toggle="tab" data-bs-target="#setting" type="button"
+                    role="tab" aria-controls="setting" aria-selected="false">设置
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="poe-tab" data-bs-toggle="tab" data-bs-target="#poe" type="button"
+                    role="tab" aria-controls="poe" aria-selected="false">链上存证
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          {# ----阅读&修改 ---- #}
+          <div class="tab-pane fade show active" id="read" role="tabpanel" aria-labelledby="read-tab">
+            <div class="text-end">
+              <button class="btn btn-sm btn-primary mb-1 px-3 text-end" onclick="handleSave()">提交</button>
+            </div>
+            <div id="editorjs" style="margin: 0 auto;" class="border pt-5 bg-light"></div>
+            <a href="" class="btn btn-primary">保存</a>
+          </div>
+          {# ----设置 ---- #}
+          <div class="tab-pane fade" id="setting" role="tabpanel" aria-labelledby="setting-tab">
+            <h4>类型</h4>
+            <h4>成熟度</h4>
+            <h4>扩展</h4>
+          </div>
+          {# ----存证 ---- #}
+          <div class="tab-pane fade" id="poe" role="tabpanel" aria-labelledby="poe-tab">
+            <p>上链存证您写的文章。你可以在后续文章修改后，再次提交验证以存证。</p>
+            <h6>预计可获$SFC：<span class="bg-danger py-1 px-4 text-white fw-bold">13.8432</span></h6>
+            <p>当前存证状态：</p>
+            <p>当前存证Hash：</p>
+            <h4>存证历史</h4>
+            <ul>
+              <li>2021.8.15 Hash:rdlgdlgk493ifdkjgdfigj</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
