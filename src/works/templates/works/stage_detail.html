@@ -3,14 +3,6 @@
 {% load static %}
 {% load editorjs%}
 
-{% block extrajs %}
-  <!-- 加载 React -->
-  <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js" -->
-  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-  <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-{% endblock extrajs %}
 
 {% block content %}
   <div class="container">
@@ -29,12 +21,12 @@
       <div class="col-md-9">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="read-tab" data-bs-toggle="tab" data-bs-target="#read" type="button"
+            <button class="nav-link" id="read-tab" data-bs-toggle="tab" data-bs-target="#read" type="button"
                     role="tab" aria-controls="home" aria-selected="true">阅读
             </button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button"
+            <button class="nav-link active" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button"
                     role="tab" aria-controls="edit" aria-selected="false">修改
             </button>
           </li>
@@ -50,17 +42,18 @@
           </li>
         </ul>
         <div class="tab-content pt-3" id="myTabContent">
-          {# ----阅读&修改 ---- #}
+          {# ----阅读 ---- #}
           <div class="tab-pane fade show active" id="read" role="tabpanel" aria-labelledby="read-tab">
             <div id="stage" style="margin: 0 auto;">
               {{ stage.content | editorjs }}
             </div>
           </div>
-          {# ----阅读&修改 ---- #}
+          {# ----修改 ---- #}
           <div class="tab-pane fade show" id="edit" role="tabpanel" aria-labelledby="edit-tab">
-            <div id="stage-editor-wrap" style="margin: 0 auto;">
-              <div id="stage-editor"></div>
-            </div>
+
+            {% block stage-editor %}
+            {% endblock stage-editor %}
+
           </div>
           {# ----设置 ---- #}
           <div class="tab-pane fade" id="setting" role="tabpanel" aria-labelledby="setting-tab">

@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from django.http import Http404
 
+
 def index(request):
     return render(request, 'works/index.html')
 
@@ -74,3 +75,7 @@ class StageDetail(APIView):
         stage.delete()
         # 删除成功后返回204
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+def editor(request):
+    return render(request, 'works/stage_editor.html')
