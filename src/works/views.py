@@ -8,37 +8,27 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from django.http import Http404
+from rest_framework import generics, routers, serializers, viewsets
+
 
 
 def index(request):
     return render(request, 'works/index.html')
 
 
-def story_ist(request):
-    return render(request, 'works/story_list.html')
+class StageList(generics.ListCreateAPIView):
+    queryset = Stage.objects.all()
+    serializer_class = StageListSerializer
 
 
-def story_detail(request):
-    return render(request, 'works/story_detail.html')
+# ViewSets define the view behavior.
+class StageViewSet(viewsets.ModelViewSet):
+    queryset = Stage.objects.all()
+    serializer_class = StageListSerializer
 
-
-def stage_list_json(request):
-    stages = Stage.objects.all()
-    serializer = StageListSerializer(stages, many=True)
-    return JsonResponse(serializer.data, safe=False)
-
-
-def stage_detail(request, stage_id):
-    stage = Stage.objects.get(pk=stage_id)
-    return render(request, 'works/stage_detail.html', {'stage': stage})
-
-
-def stage_json(request, stage_id):
-    stage = Stage.objects.get(pk=stage_id)
-    stage_json = serializers.serialize('json', stage.content)
-    print(stage_json)
-
-    return JsonResponse(stage_json)
+    # 新增代码
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 class StageDetail(APIView):
@@ -75,7 +65,3 @@ class StageDetail(APIView):
         stage.delete()
         # 删除成功后返回204
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-def editor(request):
-    return render(request, 'works/stage_editor.html')

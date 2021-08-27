@@ -4,14 +4,21 @@
 
 {% block space_main %}
   <div class="px-5">
-  <div class="text-end">
-    <a href="{% url 'space:create_work' %}" class="btn btn-primary">创建新作品</a>
-  </div>
+    <div class="text-end">
+      <a href="{% url 'space:create_work' %}" class="btn btn-primary">创建新作品</a>
+    </div>
     <div>
       <h5 class="border-bottom">作品</h5>
+      <ul class="list-unstyled">
 
+        {% for stage in stages %}
+          <li class="">{{ stage.title }}</li>
+        {% endfor %}
+
+      </ul>
     </div>
     <div>
 
     </div>
+  </div>
 {% endblock %}
