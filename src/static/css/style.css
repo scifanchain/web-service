@@ -64,7 +64,7 @@ html {
 -------------------------------------------------- */
 .ce-block__content {
     position: relative;
-    max-width: 750px; // Default is 650px. Increase the max-width as it fit your needs
+    max-width: 650px; // Default is 650px. Increase the max-width as it fit your needs
     margin: 0 auto;
     -webkit-transition: background-color .15s ease;
     transition: background-color .15s ease;
