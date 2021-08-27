@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block extrajs %}
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="{% static 'js/dist/stage.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="container py-4">
+  <div class="mb-2 pt-3">保存</div>
+    <div id="stage-editor-wrap" class="border p-4 bg-light">
+      <div id="stage-editor"></div>
+    </div>
+  </div>
+  <script>
+      createEditor()
+  </script>
+
+{% endblock %}

@@ -19,8 +19,25 @@ def change_avatar(request):
     return HttpResponse(res)
 
 
+def change_password(request):
+    return render(request, 'space/change_password.html')
+
+
 def home(request):
     return render(request, 'space/home.html')
+
+
+def profile(request):
+    return render(request, 'space/profile.html')
+
+
+def works(request):
+    return render(request, 'space/works.html')
+
+
+def create_work(request):
+    return render(request, 'space/create_work.html')
+
 
 def wallet(request):
     substrate = SubstrateInterface(
@@ -33,6 +50,5 @@ def wallet(request):
     if keypair.verify("Test123", signature):
         print('Verified')
         print(keypair)
-
 
     return render(request, 'space/wallet.html')
