@@ -5,10 +5,12 @@ const editor = new EditorJS({
     autofocus: true,
     holder: 'stage-editor',
     readOnly: false,
-    minHeight: 40,
+    minHeight: 241,
 });
 
 function submitStage() {
+    // 验证标题
+
     editor.isReady.then(() => {
         editor.save().then((outputData) => {
             console.log('Article data: ', outputData)

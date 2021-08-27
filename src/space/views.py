@@ -7,6 +7,7 @@ from substrateinterface import SubstrateInterface, Keypair
 from substrateinterface.exceptions import SubstrateRequestException
 
 from works.models import Stage
+from .forms import StageForm
 
 def change_avatar(request):
     if request.user.is_authenticated:
