@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from substrateinterface import SubstrateInterface, Keypair
 from substrateinterface.exceptions import SubstrateRequestException
 
+from works.models import Stage
 
 def change_avatar(request):
     if request.user.is_authenticated:
@@ -32,7 +33,8 @@ def profile(request):
 
 
 def works(request):
-    return render(request, 'space/works.html')
+    stages = Stage.objects.all()
+    return render(request, 'space/works.html', {"stages": stages})
 
 
 def create_work(request):

@@ -9,6 +9,7 @@ class StageListSerializer(serializers.ModelSerializer):
             'id',
             'title',
             'content',
+            'owner',
             'created',
             'updated',
         ]

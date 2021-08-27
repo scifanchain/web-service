@@ -16,8 +16,8 @@
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'font/' %}bootstrap-icons.css">
 
-  {% block extracss %}{% endblock %}
-  {% block extrajs %}{% endblock %}
+  {% block extraCss %}{% endblock %}
+  {% block extraJsTop %}{% endblock %}
 </head>
 <body>
 <header class="bg-dark">
@@ -115,7 +115,8 @@
 <!-- 引入JS -->
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
-<!-- 加载Scifan的 React 组件 -->
+<!-- 加载Scifan的js组件或函数 -->
+{% block extraJsBottom %}{% endblock %}
 
 </body>
 </html>
