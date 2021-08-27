@@ -12,10 +12,10 @@ def change_avatar(request):
         path = settings.BASE_DIR / "media/avatars/{}".format(request.user.date_joined.year)
         random_avatar = pa.Avatar.random()
         random_avatar.render("{}/{}.svg".format(path, request.user.username))
-        # return redirect('space:home')
-        res = True
+
+        res = "/media/avatars/" + format(request.user.date_joined.year) + "/" + request.user.username
     else:
-        res = False
+        res = ''
     return HttpResponse(res)
 
 
