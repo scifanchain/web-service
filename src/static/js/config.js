@@ -1,6 +1,6 @@
-const config = (function (cfg) {
-    cfg.api = {
-        url : 'http://127.0.0.1:8000/api/',
-    }
-    return cfg;
-})(window.config || {})
+const config = {
+  "APP_NAME": "Scifanchain",
+  "API_URL": "http://127.0.0.1:8000/api/"
+}
+
+export default config;

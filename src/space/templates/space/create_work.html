@@ -2,46 +2,17 @@
 {% load static %}
 
 {% block extraJsTop %}
-  <script src="{% static 'js/dist/component.bundle.js' %}"></script>
+
 {% endblock %}
 
 {% block content %}
-  <div class="container py-4">
-    <div class="row">
-      <div class="col-md-3">
-        <h6>渐进式的创作</h6>
-        <p class="small">你的作品可以在后续不断演化。</p>
+  <div id="stage-wrap" class="container py-4">
 
-      </div>
-      <div class="col-md-8">
-        <div id="app">
-          <input type="text" class="form-control mb-2 bg-light" required="required" />
-        </div>
-        <div id="stage-editor-wrap" class="border p-4 bg-light">
-{#          <div id="stage-editor"></div>#}
-        </div>
-      </div>
-      <div class="col-md-1">
-        <div class="sticky-top">
-          <a class="btn btn-small btn-primary px-2 mb-2" href="{% url 'space:works' %}">
-            <i class="bi-reply-all-fill me-1"></i>
-            <span class="small">返回</span>
-          </a>
-          <a class="btn btn-small btn-primary px-2 mb-2" onclick="saveStage()">
-            <i class="bi-file-earmark-check-fill me-1"></i>
-            <span class="small">保存</span>
-          </a>
-          <a class="btn btn-small btn-primary px-2 mb-2" onclick="submitStage()">
-            <i class="bi-file-arrow-up-fill me-1"></i>
-            <span class="small">提交</span>
-          </a>
-        </div>
-      </div>
-    </div>
   </div>
 
 {% endblock %}
 
 {% block extraJsBottom %}
   <script src="{% static 'js/dist/editor.bundle.js' %}"></script>
+  <script src="{% static 'js/dist/component.bundle.js' %}"></script>
 {% endblock %}
