@@ -91,6 +91,23 @@ export function StageEditor() {
             <div className={"col-md-3"}>
                 <h6>渐进式的创作</h6>
                 <p className="small">你的作品可以在后续不断演化。</p>
+                <table className="table caption-top">
+                    <caption>List of users</caption>
+                    <thead>
+                    <tr>
+                        <td>字数</td>
+                        <td>Token</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>5051</td>
+                        <td>50</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h5>内容元素</h5>
+                人物
             </div>
             <div className={"col-md-8"}>
                 <input type="text" className={"form-control mb-2 bg-light"} onChange={handleChange}/>
