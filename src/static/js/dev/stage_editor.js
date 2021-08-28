@@ -1,6 +1,8 @@
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 axios.defaults.xsrfCookieName = "csrftoken"
 
+import config from '../config'
+
 const editor = new EditorJS({
     autofocus: true,
     holder: 'stage-editor',
@@ -15,7 +17,7 @@ function submitStage() {
         editor.save().then((outputData) => {
             console.log('Article data: ', outputData)
             const putData = {"title": "unity", "content": outputData, "owner": 1}
-            axios.post('http://127.0.0.1:8000/api/stages/', putData)
+            axios.post(config.api.url + 'stages/', putData)
                 .then(function (response) {
                     // 处理成功情况
                     // 返回创作空间作品列表页面

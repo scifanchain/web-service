@@ -99,19 +99,21 @@
 <div class="container-fluid bg-light">
   <div class="container">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3">
-      <p class="col-md-6 mb-0 text-muted">&copy; 2021 Scifanchain.com 赛凡链</p>
+      <p class="col-md-3 mb-0 text-muted">&copy; 2021 Scifanchain.com 赛凡链</p>
       <ul class="nav col-md-6 justify-content-end">
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">白皮书</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">文档</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">问答</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">用户手册</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">关于我们</a></li>
       </ul>
+      <p class="col-md-3 mb-0 text-muted text-end">github</p>
     </footer>
+
   </div>
 </div>
 
 <!-- 引入JS -->
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/dist/main.bundle.js' %}"></script>
 
 <!-- 加载Scifan的js组件或函数 -->
 {% block extraJsBottom %}{% endblock %}

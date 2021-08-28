@@ -2,9 +2,10 @@
 {% load static %}
 
 {% block extraJsTop %}
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="https://unpkg.com/vue@next"></script>
 {% endblock %}
 
 {% block content %}
@@ -41,26 +42,13 @@
             <span class="small">提交</span>
           </a>
         </div>
-
       </div>
     </div>
-
   </div>
-
-  <script>
-      Vue.createApp({
-          data() {
-              return {
-                  title: ''
-              }
-          }
-      }).mount('#app')
-  </script>
 
 {% endblock %}
 
 
-
 {% block extraJsBottom %}
-  <script src="{% static 'js/dist/stage_editor.js' %}"></script>
+  <script src="{% static 'js/dist/stage-editor.js' %}"></script>
 {% endblock %}
