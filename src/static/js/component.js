@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
+
 import config from "./config"
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 axios.defaults.xsrfCookieName = "csrftoken"
-
 
 export function StageEditor() {
     const [dataStage, setDataStage] = useState({})
@@ -14,25 +14,22 @@ export function StageEditor() {
     const [url, setUrl] = useState('')
     const [isReadOnly, setIsReadOnly] = useState(0)
 
+    const [title, setTitle] = useState('')
 
     // get stage content
     // url参数锁定该方法在页面不变更只执行一次
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/stages/1/')
+        axios.get(config.API_URL + 'stages/1/')
             .then(function (response) {
                 // 处理成功情况
                 setDataStage(response.data)
                 console.log(response);
-                let k = true;
-                if (isReadOnly !== 0){
-                    k = false;
-                }
 
                 const editor = new EditorJS({
                     autofocus: true,
-                    holderId: 'stage-editor',
+                    holder: 'stage-editor',
                     data: response.data['content'],
-                    readOnly: k,
+                    readOnly: true,
                     minHeight: 40,
                     onChange: () => {
                         editor.save().then((outputData) => {
@@ -53,24 +50,18 @@ export function StageEditor() {
                 // 总是会执行
                 console.log("OK!")
             });
-    }, [url,isReadOnly]);
+    }, [url, isReadOnly]);
 
-
-    const edit = () => {
-        setIsReadOnly(1)
-        console.log(isReadOnly)
+    function handleChange(e) {
+        setTitle(e.target.value)
+        console.log(title)
     }
 
-    const edit2 = () =>{
-        setIsReadOnly(2)
-        console.log(isReadOnly)
-    }
-
-    // save stage data
-    const saveStage = () => {
-        console.log(data)
+    // 验证标题
+    function validTitle() {
 
     }
+
 
     const putStage = () => {
 
@@ -96,18 +87,34 @@ export function StageEditor() {
     }
 
     return (
-        <div>
-            <div>已保存</div>
-            <div id={"menu"} className={"text-end mb-1 pt-2"}>
-                <span className={"btn btn-sm px-3 btn-primary mx-3"} onClick={edit}>保存</span>
-                <span className={"btn btn-sm px-3 btn-primary"} onClick={edit2}>提交</span>
+        <div className={"row"}>
+            <div className={"col-md-3"}>
+                <h6>渐进式的创作</h6>
+                <p className="small">你的作品可以在后续不断演化。</p>
             </div>
-            <div id={"stage-editor"}/>
+            <div className={"col-md-8"}>
+                <input type="text" className={"form-control mb-2 bg-light"} onChange={handleChange}/>
+                <div className={"stage-editor-wrap bg-light"}>
+                    <div className={"border rounded"} id={"stage-editor"}></div>
+                </div>
+            </div>
+            <div className={"col-md-1"}>
+                <div className="sticky-top">
+                    <a className="btn btn-small btn-primary px-2 mb-2" onClick={putStage}>
+                        <i className="bi-file-earmark-check-fill me-1"></i>
+                        <span className="small">保存</span>
+                    </a>
+                    <a className="btn btn-small btn-primary px-2 mb-2" onClick={postStage}>
+                        <i className="bi-file-arrow-up-fill me-1"/>
+                        <span className="small">提交</span>
+                    </a>
+                </div>
+            </div>
         </div>
     )
 }
 
 ReactDOM.render(
     <StageEditor/>,
-    document.getElementById('stage-editor-wrap')
+    document.getElementById('stage-wrap')
 );
