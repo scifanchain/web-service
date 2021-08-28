@@ -1,46 +1,42 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
-
-import App from './App';
+import config from "./config"
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 axios.defaults.xsrfCookieName = "csrftoken"
 
 
-function StageEditor() {
+export function StageEditor() {
     const [dataStage, setDataStage] = useState({})
     const [method, setMethod] = useState('')
     const [url, setUrl] = useState('')
+    const [isReadOnly, setIsReadOnly] = useState(0)
+
 
     // get stage content
     // url参数锁定该方法在页面不变更只执行一次
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/works/api/stage/1/')
+        axios.get('http://127.0.0.1:8000/api/stages/1/')
             .then(function (response) {
                 // 处理成功情况
                 setDataStage(response.data)
                 console.log(response);
+                let k = true;
+                if (isReadOnly !== 0){
+                    k = false;
+                }
+
                 const editor = new EditorJS({
                     autofocus: true,
                     holderId: 'stage-editor',
-                    data: response.data,
-                    readOnly: false,
+                    data: response.data['content'],
+                    readOnly: k,
                     minHeight: 40,
-                    tools: {
-                        header: {
-                            class: Header,
-                            inlineToolbar: ['link']
-                        },
-                        list: {
-                            class: List,
-                            inlineToolbar: true
-                        }
-                    },
                     onChange: () => {
                         editor.save().then((outputData) => {
-                            setDataStage(outputData)
+                            // setDataStage(outputData)
                             console.log(outputData);
                         }).catch
                         ((error) => {
@@ -57,12 +53,30 @@ function StageEditor() {
                 // 总是会执行
                 console.log("OK!")
             });
-    }, [url]);
+    }, [url,isReadOnly]);
 
+
+    const edit = () => {
+        setIsReadOnly(1)
+        console.log(isReadOnly)
+    }
+
+    const edit2 = () =>{
+        setIsReadOnly(2)
+        console.log(isReadOnly)
+    }
 
     // save stage data
     const saveStage = () => {
         console.log(data)
+
+    }
+
+    const putStage = () => {
+
+    }
+
+    const postStage = () => {
         const putData = {"title": "unity", "content": data, "owner": 1}
         const options = {
             method: 'PUT',
@@ -81,22 +95,14 @@ function StageEditor() {
             });
     }
 
-    const putStage = () => {
-
-    }
-
-    const postStage = () => {
-
-    }
-
     return (
         <div>
             <div>已保存</div>
             <div id={"menu"} className={"text-end mb-1 pt-2"}>
-                <span className={"btn btn-sm px-3 btn-primary mx-3"} onClick={putStage}>保存</span>
-                <span className={"btn btn-sm px-3 btn-primary"} onClick={postStage}>提交</span>
+                <span className={"btn btn-sm px-3 btn-primary mx-3"} onClick={edit}>保存</span>
+                <span className={"btn btn-sm px-3 btn-primary"} onClick={edit2}>提交</span>
             </div>
-            <div id={"stage-editor"} className={"border bg-light pt-4"}/>
+            <div id={"stage-editor"}/>
         </div>
     )
 }
@@ -104,11 +110,4 @@ function StageEditor() {
 ReactDOM.render(
     <StageEditor/>,
     document.getElementById('stage-editor-wrap')
-);
-
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
 );
