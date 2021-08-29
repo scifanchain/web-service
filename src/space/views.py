@@ -39,7 +39,7 @@ def works(request):
     return render(request, 'space/works.html', {"stages": stages})
 
 
-def stage(request, stage_id):
+def get_stage(request, stage_id):
     stage = get_object_or_404(Stage, pk=stage_id)
     return render(request, 'space/stage.html', {'stage': stage})
 
