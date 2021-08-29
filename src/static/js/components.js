@@ -9,6 +9,7 @@ axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 axios.defaults.xsrfCookieName = "csrftoken"
 
 export function StageEditor() {
+    const userId = document.getElementById('StageWrap').getAttribute('data-userId')
     const [dataStage, setDataStage] = useState({})
     const [method, setMethod] = useState('')
     const [url, setUrl] = useState('')
@@ -18,6 +19,8 @@ export function StageEditor() {
     // get stage content
     // url参数锁定该方法在页面不变更只执行一次
     useEffect(() => {
+
+
         axios.get(config.API_URL + 'stages/1/')
             .then(function (response) {
                 // 处理成功情况
@@ -51,6 +54,8 @@ export function StageEditor() {
             });
     }, [url]);
 
+    // 标题值改变
+    // todo: 验证是否有重名标题，有的话给出提示
     function handleChange(e) {
         setTitle(e.target.value)
         if (title.length >= 1) {
@@ -59,26 +64,18 @@ export function StageEditor() {
         console.log(title)
     }
 
-    // 验证标题
-    function validTitle() {
+    // 验证标题是否为空
+    function titleValidated() {
         if (title.length < 1) {
             setTitleError("标题不能为空")
+            return false
         } else {
             setTitleError('')
         }
+        return true
     }
 
-    const putStage = () => {
-        validTitle()
-    }
-
-    const postStage = () => {
-        const putData = {"title": title, "content": dataStage, "owner": 1}
-        const options = {
-            method: 'PUT',
-            data: putData,
-            url: 'http://127.0.0.1:8000/works/api/stage/1/',
-        };
+    function submitStage(options) {
         axios(options)
             .then(function (response) {
                 if (method === 'post') {
@@ -89,6 +86,24 @@ export function StageEditor() {
             .catch(function (error) {
                 console.log(error);
             });
+    }
+
+    // 保存
+    const putStage = () => {
+        titleValidated()
+    }
+
+    // 提交
+    const postStage = () => {
+        if (titleValidated()) {
+            const options = {
+                method: 'post',
+                data: {"title": title, "content": dataStage, "owner": userId},
+                url: config.API_URL + 'stages/',
+            };
+            submitStage(options);
+            window.location.href = "/space/works/";
+        }
     }
 
     return (
@@ -139,7 +154,43 @@ export function StageEditor() {
     )
 }
 
-ReactDOM.render(
-    <StageEditor/>,
-    document.getElementById('stage-wrap')
-);
+
+export function StageView() {
+    useEffect(() => {
+        axios.get(config.API_URL + 'stages/1/')
+            .then(function (response) {
+                // 处理成功情况
+                setDataStage(response.data)
+                console.log(response);
+
+                const editor = new EditorJS({
+                    autofocus: true,
+                    holder: 'stage-editor',
+                    data: dataStage,
+                    readOnly: false,
+                    minHeight: 40,
+                    onChange: () => {
+                        editor.save().then((outputData) => {
+                            setDataStage(outputData)
+                            console.log(outputData);
+                        }).catch
+                        ((error) => {
+                            console.log('Saving failed: ', error)
+                        });
+                    }
+                });
+            })
+            .catch(function (error) {
+                // 处理错误情况
+                console.log(error);
+            })
+            .then(function () {
+                // 总是会执行
+                console.log("OK!")
+            });
+    }, [url]);
+
+    return (
+        <div>gooddgdsgdsgdsgsdgsd</div>
+    )
+}

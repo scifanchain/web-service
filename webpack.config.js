@@ -10,6 +10,7 @@ module.exports = {
     entry: {
         main: SRC_PATH + "/main.js",
         components: SRC_PATH + "/components.js",
+        index: SRC_PATH + "/index.js",
     },
     output: {
         path: DIST_PATH,

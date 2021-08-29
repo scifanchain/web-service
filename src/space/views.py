@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 import python_avatars as pa
 from django.conf import settings
 from django.http import HttpResponse
@@ -8,6 +8,7 @@ from substrateinterface.exceptions import SubstrateRequestException
 
 from works.models import Stage
 from .forms import StageForm
+
 
 def change_avatar(request):
     if request.user.is_authenticated:
@@ -36,6 +37,11 @@ def profile(request):
 def works(request):
     stages = Stage.objects.all()
     return render(request, 'space/works.html', {"stages": stages})
+
+
+def stage(request, stage_id):
+    stage = get_object_or_404(Stage, pk=stage_id)
+    return render(request, 'space/stage.html', {'stage': stage})
 
 
 def create_work(request):
