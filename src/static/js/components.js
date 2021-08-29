@@ -23,12 +23,12 @@ export function StageEditor() {
     // get stage content
     // url参数锁定该方法在页面不变更只执行一次
     useEffect(() => {
-        if (stageId) {
+        if (stageId) { // 编辑页面才会传入stageId
             axios.get('http://127.0.0.1:8000/api/stages/23/').then(function (res) {
                 initEditor(res.data['content'])
                 console.log(res.data['content']);
             })
-        } else {
+        } else { // 新创建页面，初始化数据dataStage没有值
             initEditor(dataStage);
         }
 
@@ -50,9 +50,8 @@ export function StageEditor() {
                 }
             });
         }
-
-
     }, [url]);
+
 
     // 标题值改变
     // todo: 验证是否有重名标题，有的话给出提示
@@ -103,7 +102,7 @@ export function StageEditor() {
             const options = {
                 method: 'put',
                 data: {"title": title, "content": dataStage, "owner": userId},
-                url: config.API_URL + 'stages/',
+                url: config.API_URL + 'stages/' + userId,
             };
             submitStage(options);
             window.location.href = "/space/works/";
