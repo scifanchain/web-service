@@ -6,7 +6,21 @@
 {% endblock %}
 
 {% block content %}
-  <div id="StageViewWrap" class="container py-4" data-userId="{{ user.id }}" data-stageId="{{ stage.id }}"></div>
+  <div class="row">
+    <div class="col-md-2">
+      <h6>作品属性</h6>
+    </div>
+    <div class="col-md-8">
+      <div class="mb-3">导航</div>
+      <h4>{{ stage.title }}</h4>
+      <div id="StageViewWrap" class="py-4 bg-light" data-userId="{{ user.id }}" data-stageId="{{ stage.id }}"></div>
+    </div>
+    <div class="col-md-2">
+      <h6>链上数据</h6>
+    </div>
+  </div>
+
+
 
 {% endblock %}
 
