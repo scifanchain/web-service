@@ -1,71 +1,80 @@
-a {color: #0dcaf0}
+a {
+    color: #0dcaf0
+}
 
-.btn-sfc {background-color: #0dcaf0; color: white; font-weight: bold;}
+.btn-sfc {
+    background-color: #0dcaf0;
+    color: white;
+    font-weight: bold;
+}
 
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .avatar {
-  width: 160px;
+    width: 160px;
 }
 
 .avatar-tiny {
-  width: 24px;
+    width: 24px;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 1rem;
+    font-size: 1rem;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 1.05rem;
-  }
+    html {
+        font-size: 1.05rem;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 /* 前端创作编辑器
 -------------------------------------------------- */
 .ce-block__content {
     position: relative;
-    max-width: 650px; // Default is 650px. Increase the max-width as it fit your needs
-    margin: 0 auto;
+    text-align: justify;
+    text-justify: inter-word;
+    max-width: 80%;  //Default is 650 px . Increase the max-width as it fit your needs margin: 0 auto;
     -webkit-transition: background-color .15s ease;
     transition: background-color .15s ease;
 }
