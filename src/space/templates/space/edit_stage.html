@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block extraJsTop %}
+
+{% endblock %}
+
+{% block content %}
+  <div id="StageEditorWrap" class="container py-4" data-userId="{{ user.id }}" data-stageId="{{ stage.id }}"></div>
+{% endblock %}
+
+{% block extraJsBottom %}
+  <script src="{% static 'js/dist/components.bundle.js' %}"></script>
+  <script src="{% static 'js/dist/index.bundle.js' %}"></script>
+{% endblock %}

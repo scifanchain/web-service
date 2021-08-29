@@ -10,6 +10,8 @@ axios.defaults.xsrfCookieName = "csrftoken"
 
 export function StageEditor() {
     const userId = document.getElementById('StageEditorWrap').getAttribute('data-userId')
+    const stageId = document.getElementById('StageEditorWrap').getAttribute('data-stageId')
+
     const [dataStage, setDataStage] = useState({})
     const [method, setMethod] = useState('')
     const [url, setUrl] = useState('')
@@ -17,25 +19,39 @@ export function StageEditor() {
     const [titleError, setTitleError] = useState('')
     const [contentError, setContentError] = useState('')
 
+
     // get stage content
     // url参数锁定该方法在页面不变更只执行一次
     useEffect(() => {
-        const editor = new EditorJS({
-            autofocus: true,
-            holder: 'StageEditor',
-            data: dataStage,
-            readOnly: false,
-            minHeight: 120,
-            onChange: () => {
-                editor.save().then((outputData) => {
-                    setDataStage(outputData)
-                    console.log(outputData);
-                }).catch
-                ((error) => {
-                    console.log('Saving failed: ', error)
-                });
-            }
-        });
+        if (stageId) {
+            axios.get('http://127.0.0.1:8000/api/stages/23/').then(function (res) {
+                initEditor(res.data['content'])
+                console.log(res.data['content']);
+            })
+        } else {
+            initEditor(dataStage);
+        }
+
+        // 初始化编加器
+        function initEditor(data) {
+            const editor = new EditorJS({
+                autofocus: true,
+                holder: 'StageEditor',
+                data: data,
+                readOnly: false,
+                minHeight: 120,
+                onChange: () => {
+                    editor.save().then((outputData) => {
+                        setDataStage(outputData)
+                    }).catch
+                    ((error) => {
+                        console.log('Saving failed: ', error)
+                    });
+                }
+            });
+        }
+
+
     }, [url]);
 
     // 标题值改变
@@ -83,7 +99,7 @@ export function StageEditor() {
 
     // 保存
     const putStage = () => {
-         if (titleValidated() && contentValidated()) {
+        if (titleValidated() && contentValidated()) {
             const options = {
                 method: 'put',
                 data: {"title": title, "content": dataStage, "owner": userId},

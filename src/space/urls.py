@@ -11,7 +11,7 @@ urlpatterns = [
     # stages
     path('stage/<int:stage_id>/', views.get_stage, name='stage'),
     path('create_stage/', views.create_stage, name='create_stage'),
-    path('edit_stage/', views.edit_stage, name='edit_stage'),
+    path('edit_stage/<int:stage_id>/', views.edit_stage, name='edit_stage'),
     # wallet
     path('wallet/', views.wallet, name='wallet'),
     # password
