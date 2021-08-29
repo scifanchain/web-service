@@ -9,49 +9,33 @@ axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 axios.defaults.xsrfCookieName = "csrftoken"
 
 export function StageEditor() {
-    const userId = document.getElementById('StageWrap').getAttribute('data-userId')
+    const userId = document.getElementById('StageEditorWrap').getAttribute('data-userId')
     const [dataStage, setDataStage] = useState({})
     const [method, setMethod] = useState('')
     const [url, setUrl] = useState('')
     const [title, setTitle] = useState('')
     const [titleError, setTitleError] = useState('')
+    const [contentError, setContentError] = useState('')
 
     // get stage content
     // url参数锁定该方法在页面不变更只执行一次
     useEffect(() => {
-
-
-        axios.get(config.API_URL + 'stages/1/')
-            .then(function (response) {
-                // 处理成功情况
-                setDataStage(response.data)
-                console.log(response);
-
-                const editor = new EditorJS({
-                    autofocus: true,
-                    holder: 'stage-editor',
-                    data: dataStage,
-                    readOnly: false,
-                    minHeight: 40,
-                    onChange: () => {
-                        editor.save().then((outputData) => {
-                            setDataStage(outputData)
-                            console.log(outputData);
-                        }).catch
-                        ((error) => {
-                            console.log('Saving failed: ', error)
-                        });
-                    }
+        const editor = new EditorJS({
+            autofocus: true,
+            holder: 'StageEditor',
+            data: dataStage,
+            readOnly: false,
+            minHeight: 120,
+            onChange: () => {
+                editor.save().then((outputData) => {
+                    setDataStage(outputData)
+                    console.log(outputData);
+                }).catch
+                ((error) => {
+                    console.log('Saving failed: ', error)
                 });
-            })
-            .catch(function (error) {
-                // 处理错误情况
-                console.log(error);
-            })
-            .then(function () {
-                // 总是会执行
-                console.log("OK!")
-            });
+            }
+        });
     }, [url]);
 
     // 标题值改变
@@ -75,6 +59,15 @@ export function StageEditor() {
         return true
     }
 
+    function contentValidated() {
+        console.log(dataStage);
+        if (dataStage.blocks.length < 1) {
+            setContentError("内容为空。如果你是从别的地方复制过来的内容，请在编辑器中做些修改，这样编辑器才能获取到内容。")
+            return false
+        }
+        return true
+    }
+
     function submitStage(options) {
         axios(options)
             .then(function (response) {
@@ -90,12 +83,20 @@ export function StageEditor() {
 
     // 保存
     const putStage = () => {
-        titleValidated()
+         if (titleValidated() && contentValidated()) {
+            const options = {
+                method: 'put',
+                data: {"title": title, "content": dataStage, "owner": userId},
+                url: config.API_URL + 'stages/',
+            };
+            submitStage(options);
+            window.location.href = "/space/works/";
+        }
     }
 
     // 提交
     const postStage = () => {
-        if (titleValidated()) {
+        if (titleValidated() && contentValidated()) {
             const options = {
                 method: 'post',
                 data: {"title": title, "content": dataStage, "owner": userId},
@@ -134,8 +135,11 @@ export function StageEditor() {
                 {titleError !== '' &&
                 <p className={"bg-danger"}>{titleError}</p>
                 }
+                {contentError !== '' &&
+                <p className={"bg-danger"}>{contentError}</p>
+                }
                 <div className={"stage-editor-wrap bg-light"}>
-                    <div className={"border rounded"} id={"stage-editor"}></div>
+                    <div className={"border rounded"} id={"StageEditor"}></div>
                 </div>
             </div>
             <div className={"col-md-1"}>
@@ -156,28 +160,18 @@ export function StageEditor() {
 
 
 export function StageView() {
+    const stageId = document.getElementById("StageViewWrap").getAttribute("data-stageId")
+    console.log(stageId)
     useEffect(() => {
-        axios.get(config.API_URL + 'stages/1/')
+        axios.get(config.API_URL + 'stages/' + stageId + '/')
             .then(function (response) {
-                // 处理成功情况
-                setDataStage(response.data)
                 console.log(response);
-
                 const editor = new EditorJS({
-                    autofocus: true,
-                    holder: 'stage-editor',
-                    data: dataStage,
-                    readOnly: false,
-                    minHeight: 40,
-                    onChange: () => {
-                        editor.save().then((outputData) => {
-                            setDataStage(outputData)
-                            console.log(outputData);
-                        }).catch
-                        ((error) => {
-                            console.log('Saving failed: ', error)
-                        });
-                    }
+                    autofocus: false,
+                    holder: 'stageView',
+                    data: response.data['content'],
+                    readOnly: true,
+                    minHeight: 120,
                 });
             })
             .catch(function (error) {
@@ -188,9 +182,9 @@ export function StageView() {
                 // 总是会执行
                 console.log("OK!")
             });
-    }, [url]);
+    }, []);
 
     return (
-        <div>gooddgdsgdsgdsgsdgsd</div>
+        <div id={"stageView"}></div>
     )
 }
