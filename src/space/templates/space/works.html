@@ -12,7 +12,9 @@
       <ul class="list-unstyled">
 
         {% for stage in stages %}
-          <li class="">{{ stage.title }}</li>
+          <li class="">
+            <a href="{% url 'space:stage' stage.id %}">{{ stage.title }}</a>
+          </li>
         {% endfor %}
 
       </ul>
