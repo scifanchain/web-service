@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import ReactDOM from 'react-dom';
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
@@ -12,9 +12,9 @@ export function StageEditor() {
     const [dataStage, setDataStage] = useState({})
     const [method, setMethod] = useState('')
     const [url, setUrl] = useState('')
-    const [isReadOnly, setIsReadOnly] = useState(0)
-
     const [title, setTitle] = useState('')
+
+    const allow_title = useRef(false)
 
     // get stage content
     // url参数锁定该方法在页面不变更只执行一次
@@ -28,12 +28,12 @@ export function StageEditor() {
                 const editor = new EditorJS({
                     autofocus: true,
                     holder: 'stage-editor',
-                    data: response.data['content'],
-                    readOnly: true,
+                    data: dataStage,
+                    readOnly: false,
                     minHeight: 40,
                     onChange: () => {
                         editor.save().then((outputData) => {
-                            // setDataStage(outputData)
+                            setDataStage(outputData)
                             console.log(outputData);
                         }).catch
                         ((error) => {
@@ -50,7 +50,7 @@ export function StageEditor() {
                 // 总是会执行
                 console.log("OK!")
             });
-    }, [url, isReadOnly]);
+    }, [url]);
 
     function handleChange(e) {
         setTitle(e.target.value)
@@ -59,7 +59,9 @@ export function StageEditor() {
 
     // 验证标题
     function validTitle() {
-
+        if (title.length > 1) {
+            allow_title.current = true
+        }
     }
 
 
@@ -111,6 +113,9 @@ export function StageEditor() {
             </div>
             <div className={"col-md-8"}>
                 <input type="text" className={"form-control mb-2 bg-light"} onChange={handleChange}/>
+                {allow_title &&
+                <p className={"bg-danger"} id={"titleError"}>请输入标题</p>
+                }
                 <div className={"stage-editor-wrap bg-light"}>
                     <div className={"border rounded"} id={"stage-editor"}></div>
                 </div>

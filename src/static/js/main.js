@@ -1,4 +1,6 @@
 import axios from "axios";
+import React, {useState, useEffect} from 'react';
+import ReactDOM from 'react-dom'
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 axios.defaults.xsrfCookieName = "csrftoken"
@@ -7,7 +9,7 @@ import config from './config'
 
 
 function changeAvatar() {
-    axios.get(config.api.uri + 'space/change_avatar')
+    axios.get(config.API_URL + 'space/change_avatar')
         .then(function (res) {
             if (res.data !== "") {
                 console.log(res.data)
@@ -17,3 +19,5 @@ function changeAvatar() {
             }
         })
 }
+
+

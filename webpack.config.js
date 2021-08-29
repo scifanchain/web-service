@@ -8,15 +8,8 @@ const DIST_PATH = PATH.resolve(__dirname, './src/static/js/dist');
 
 module.exports = {
     entry: {
-        main: {
-            import: SRC_PATH + '/main.js',
-            dependOn: 'editor',
-        },
-        component: {
-            import: SRC_PATH + '/component.js',
-            dependOn: 'editor',
-        },
-        editor: '@editorjs/editorjs',
+        main: SRC_PATH + "/main.js",
+        components: SRC_PATH + "/components.js",
     },
     output: {
         path: DIST_PATH,
@@ -39,12 +32,38 @@ module.exports = {
             }
         ]
     },
-    // 生成为生产环境优化的文件
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+            minSize: 30000,
+            minRemainingSize: 0,
+            minChunks: 1,
+            maxAsyncRequests: 30,
+            maxInitialRequests: 30,
+            enforceSizeThreshold: 50000,
+            cacheGroups: {
+                defaultVendors: {
+                    name: "vendor",
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10,
+                    reuseExistingChunk: true,
+                },
+                default: {
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true,
+                },
+            }
+        },
+    },
+    // // 生产环境优化
     // devtool: 'source-map',
     // plugins: [
+    //     // 生产环境优化
     //     new UglifyJSPlugin({
     //         sourceMap: true
     //     }),
+    //     // 生产环境压缩
     //     new CompressionWebpackPlugin({
     //         test: /\.js$|\.css$/,
     //         threshold: 10240,
