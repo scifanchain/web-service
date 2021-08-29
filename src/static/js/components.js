@@ -13,8 +13,7 @@ export function StageEditor() {
     const [method, setMethod] = useState('')
     const [url, setUrl] = useState('')
     const [title, setTitle] = useState('')
-
-    const allow_title = useRef(false)
+    const [titleError, setTitleError] = useState('')
 
     // get stage content
     // url参数锁定该方法在页面不变更只执行一次
@@ -54,23 +53,27 @@ export function StageEditor() {
 
     function handleChange(e) {
         setTitle(e.target.value)
+        if (title.length >= 1) {
+            setTitleError('')
+        }
         console.log(title)
     }
 
     // 验证标题
     function validTitle() {
-        if (title.length > 1) {
-            allow_title.current = true
+        if (title.length < 1) {
+            setTitleError("标题不能为空")
+        } else {
+            setTitleError('')
         }
     }
 
-
     const putStage = () => {
-
+        validTitle()
     }
 
     const postStage = () => {
-        const putData = {"title": "unity", "content": data, "owner": 1}
+        const putData = {"title": title, "content": dataStage, "owner": 1}
         const options = {
             method: 'PUT',
             data: putData,
@@ -113,8 +116,8 @@ export function StageEditor() {
             </div>
             <div className={"col-md-8"}>
                 <input type="text" className={"form-control mb-2 bg-light"} onChange={handleChange}/>
-                {allow_title &&
-                <p className={"bg-danger"} id={"titleError"}>请输入标题</p>
+                {titleError !== '' &&
+                <p className={"bg-danger"}>{titleError}</p>
                 }
                 <div className={"stage-editor-wrap bg-light"}>
                     <div className={"border rounded"} id={"stage-editor"}></div>
