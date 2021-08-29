@@ -45,11 +45,12 @@ def get_stage(request, stage_id):
 
 
 def create_stage(request):
-    return render(request, 'space/create_work.html')
+    return render(request, 'space/create_stage.html')
 
 
 def edit_stage(request, stage_id):
-    return render(request, 'space/edit_work.html')
+    stage = get_object_or_404(Stage, pk=stage_id)
+    return render(request, 'space/edit_stage.html', {'stage': stage})
 
 
 def wallet(request):
