@@ -57,7 +57,6 @@ def wallet(request):
     substrate = SubstrateInterface(
         url="ws://127.0.0.1:9944",
     )
-
     mnemonic = Keypair.generate_mnemonic()
     keypair = Keypair.create_from_mnemonic(mnemonic)
     signature = keypair.sign("Test123")
