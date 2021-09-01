@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block title %}首页{% endblock %}
 
@@ -7,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="bg-dark text-secondary px-4 py-5 text-center">
+  <div class="text-secondary px-4 py-5 text-center" id="topshow">
     <div class="py-5">
       <h1 class="display-5 fw-bold text-white">科幻价值缔造</h1>
       <div class="col-lg-6 mx-auto">
@@ -30,7 +31,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="h-100 p-5 bg-light border rounded-3 headline">
+        <div class="h-100 p-5 bg-dark rounded-3 headline">
           <h2>第一次远征招募</h2>
           <p>星河骑士汇聚的队伍正在成为一个远征舰队，所有渴望步入星空的勇者们都在被招募之列。远征舰队将在银河系第二象限的边缘开拓星际外交，无数前所未见的文明将由你们发现。</p>
           <button class="btn btn-outline-secondary" type="button">报名应征</button>
