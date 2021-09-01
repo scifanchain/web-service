@@ -32,6 +32,13 @@ a.navbar-brand {
     width: 24px;
 }
 
+#topshow {
+    background-color: #000000;
+    background-image: url('../img/bg_01.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
