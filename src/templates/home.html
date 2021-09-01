@@ -2,6 +2,10 @@
 
 {% block title %}首页{% endblock %}
 
+{% block extraJsTop %}
+  <script src="https://unpkg.com/scrollreveal"></script>
+{% endblock %}
+
 {% block content %}
   <div class="bg-dark text-secondary px-4 py-5 text-center">
     <div class="py-5">
@@ -16,17 +20,17 @@
     </div>
   </div>
 
-  <section class="container">
+  <section class="container ">
     <div class="row align-items-md-stretch mt-4">
       <div class="col-md-6">
-        <div class="h-100 p-5 text-white bg-dark rounded-3">
+        <div class="h-100 p-5 text-white bg-dark rounded-3 headline">
           <h2>意谛</h2>
           <p>银河星旋的人类文明高度发达，数百万计的文明星球在璀璨银河生生不息，体现着创造主的荣耀。人类不断提开宇宙的奥秘，其中一个里程碑式的重大发现是意识的神秘载体——意子。</p>
           <button class="btn btn-outline-light" type="button">探查究竟</button>
         </div>
       </div>
       <div class="col-md-6">
-        <div class="h-100 p-5 bg-light border rounded-3">
+        <div class="h-100 p-5 bg-light border rounded-3 headline">
           <h2>第一次远征招募</h2>
           <p>星河骑士汇聚的队伍正在成为一个远征舰队，所有渴望步入星空的勇者们都在被招募之列。远征舰队将在银河系第二象限的边缘开拓星际外交，无数前所未见的文明将由你们发现。</p>
           <button class="btn btn-outline-secondary" type="button">报名应征</button>
@@ -35,7 +39,7 @@
     </div>
   </section>
 
-  <section class="container py-3">
+  <section class="container py-3 headline">
     <div class="row">
       <div class="col-12">
         <p>
@@ -56,7 +60,7 @@
     </div>
   </section>
 
-  <section class="container mb-4">
+  <section class="container mb-4 headline">
     <h2>最新作品</h2>
     <hr class="mt-3">
     <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
@@ -91,42 +95,106 @@
         <div class="p-3 border bg-light">Row column</div>
       </div>
     </div>
-      </section>
+  </section>
 
-  <section class="container">
-     <h2>社区</h2>
+  <section class="container mb-4 headline">
+    <h2>最新作品</h2>
     <hr class="mt-3">
-  <p>
-          “I love painting because you could draw whatever you want, use any colors you like, it feels like the softest
-          fur to me. ”
-        </p>
-  <p>
-          “I love painting because you could draw whatever you want, use any colors you like, it feels like the softest
-          fur to me. ”
-        </p>
-  <p>
-          “I love painting because you could draw whatever you want, use any colors you like, it feels like the softest
-          fur to me. ”
-        </p>
-  <p>
-          “I love painting because you could draw whatever you want, use any colors you like, it feels like the softest
-          fur to me. ”
-        </p>
-  <p>
-          “I love painting because you could draw whatever you want, use any colors you like, it feels like the softest
-          fur to me. ”
-        </p>
-  <p>
-          “I love painting because you could draw whatever you want, use any colors you like, it feels like the softest
-          fur to me. ”
-        </p>
+    <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+      <div class="col">
+        <div class="p-3 border bg-light">Row column</div>
+      </div>
+      <div class="col">
+        <div class="p-3 border bg-light">Row column</div>
+      </div>
+      <div class="col">
+        <div class="p-3 border bg-light">Row column</div>
+      </div>
+      <div class="col">
+        <div class="p-3 border bg-light">Row column</div>
+      </div>
+      <div class="col">
+        <div class="p-3 border bg-light">Row column</div>
+      </div>
+      <div class="col">
+        <div class="p-3 border bg-light">Row column</div>
+      </div>
+      <div class="col">
+        <div class="p-3 border bg-light">Row column</div>
+      </div>
+      <div class="col">
+        <div class="p-3 border bg-light">Row column</div>
+      </div>
+      <div class="col">
+        <div class="p-3 border bg-light">Row column</div>
+      </div>
+      <div class="col">
+        <div class="p-3 border bg-light">Row column</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container headline">
+    <h2>社区</h2>
+    <hr class="mt-3">
+    <p>
+      “I love painting because you could draw whatever you want, use any colors you like, it feels like the softest
+      fur to me. ”
+    </p>
+    <p>
+      “I love painting because you could draw whatever you want, use any colors you like, it feels like the softest
+      fur to me. ”
+    </p>
+    <p>
+      “I love painting because you could draw whatever you want, use any colors you like, it feels like the softest
+      fur to me. ”
+    </p>
+    <p>
+      “I love painting because you could draw whatever you want, use any colors you like, it feels like the softest
+      fur to me. ”
+    </p>
+    <p>
+      “I love painting because you could draw whatever you want, use any colors you like, it feels like the softest
+      fur to me. ”
+    </p>
+    <p>
+      “I love painting because you could draw whatever you want, use any colors you like, it feels like the softest
+      fur to me. ”
+    </p>
+  </section>
+
+  <section class="bg-info p-4 p-md-5 text-white rounded">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 headline">
+          <h2>区块链引擎</h2>
+          <hr>
+          <p>星河宇宙概念框架</p>
+          <ul>
+            <li>星际飞船</li>
+            <li>星际飞船</li>
+            <li>星际飞船</li>
+          </ul>
+        </div>
+        <div class="col-md-6 headline">
+          <h2>区块链引擎</h2>
+          <hr>
+          <p>星河宇宙概念框架</p>
+          <ul>
+            <li>星际飞船</li>
+            <li>星际飞船</li>
+            <li>星际飞船</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="bg-dark p-4 p-md-5 text-white rounded">
-    <div class="container">
+    <div class="container headline">
       <h2>星河宇宙概念框架</h2>
       <hr>
-    <p>星河宇宙概念框架</p>
+      <p>星河宇宙概念框架</p>
       <ul>
         <li>星际飞船</li>
         <li>星际飞船</li>
@@ -143,5 +211,33 @@
       </ul>
     </div>
   </section>
+
+
+  <section class="bg-dark p-4 p-md-5 text-white rounded">
+    <div class="container headline">
+      <h2>独创的写作编辑器标签</h2>
+      <hr>
+      <p>星河宇宙概念框架</p>
+      <ul>
+        <li>星际飞船</li>
+        <li>星际飞船</li>
+        <li>星际飞船</li>
+        <li>星际飞船</li>
+        <li>星际飞船</li>
+        <li>星际飞船</li>
+        <li>星际飞船</li>
+        <li>星际飞船</li>
+        <li>星际飞船</li>
+        <li>星际飞船</li>
+        <li>星际飞船</li>
+        <li>星际飞船</li>
+      </ul>
+    </div>
+  </section>
+
+  <script>
+      ScrollReveal().reveal('.headline', {delay: 100, reset: true, easing: 'cubic-bezier(0.5, 0, 0, 1)', scale: 0.85});
+  </script>
+
 {% endblock %}
 
