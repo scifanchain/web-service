@@ -19,5 +19,3 @@ function changeAvatar() {
             }
         })
 }
-
-

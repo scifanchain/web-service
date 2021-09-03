@@ -11,7 +11,7 @@ class Status(IntegerChoices):
     STATUS_DELETED = 0, '删除'
     STATUS_NORMAL = 1, '正常'
     STATUS_FROZEN = 2, '冻结'
-
+    
 
 class Display(IntegerChoices):
     SHOW = 1, '显示'
