@@ -81,7 +81,26 @@ html {
     position: relative;
     text-align: justify;
     text-justify: inter-word;
-    max-width: 80%;  //Default is 650 px . Increase the max-width as it fit your needs margin: 0 auto;
+    max-width: 80%; 
     -webkit-transition: background-color .15s ease;
     transition: background-color .15s ease;
+}
+
+#idea {
+    background-image: url("../img/bg_02.png");
+    background-repeat: no-repeat;
+    background-position: center left;
+}
+
+#section-block-chain {
+    background-image: url("../img/bg_02.jpg");
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
+#section-partners {
+    background-image: url("../img/bg_03.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
 }
