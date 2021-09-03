@@ -87,11 +87,31 @@ html {
     transition: background-color .15s ease;
 }
 
+
+/* 首页创作编辑器
+-------------------------------------------------- */
+
+p{
+    line-height: 2rem;
+}
+
+.home-icon {
+    font-size:120px;
+}
+
 #idea {
     background-image: url("../img/bg_02.png");
     background-repeat: no-repeat;
     background-position: center left;
 }
+
+#section-intro {
+    background-image: url("../img/bg_10.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+
 
 #section-block-chain {
     background-image: url("../img/bg_08.jpg");
