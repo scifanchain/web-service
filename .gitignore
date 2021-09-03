@@ -2,6 +2,9 @@
 .idea/
 .vscode/
 
+# Mac OS
+*/.DS_Store
+
 # 前端构建工具
 node_modules/
 
