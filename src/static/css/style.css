@@ -18,7 +18,8 @@ a.navbar-brand {
 }
 
 /* Provide sufficient contrast against white background */
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
@@ -81,7 +82,7 @@ html {
     position: relative;
     text-align: justify;
     text-justify: inter-word;
-    max-width: 80%; 
+    max-width: 80%;
     -webkit-transition: background-color .15s ease;
     transition: background-color .15s ease;
 }
@@ -98,8 +99,16 @@ html {
     background-position: center right;
 }
 
-#section-partners {
+#section-framework {
     background-image: url("../img/bg_03.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+
+}
+
+#section-partners {
+    background-image: url("../img/bg_09.jpg");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
