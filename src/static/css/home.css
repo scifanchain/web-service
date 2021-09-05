@@ -4,12 +4,25 @@
 body {
     background-color: #000000;
     color: #F5F5F5;
+    background-image: url("../img/bg_09.jpg");
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: 20%;
 }
 
 p {
     line-height: 1.8rem;
     color: #ced4da;
 }
+
+a:active {
+    color: #eeeeee;
+}
+
+a:visited{
+    color: #0dcaf0;
+}
+
 
 .home-icon {
     font-size: 120px;
@@ -37,7 +50,7 @@ p {
 }
 
 #section-framework {
-    background-image: url("../img/bg_03.png");
+    background-image: url("../img/bg_03.jpg");
     background-repeat: no-repeat;
     background-position: center right;
     background-size: 50%;
@@ -49,4 +62,11 @@ p {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
+}
+
+#coming {
+    background-image: url("../img/coming.jpg");
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: 20%;
 }
