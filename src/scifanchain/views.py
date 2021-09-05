@@ -10,6 +10,10 @@ def home(request):
     return render(request, 'home.html')
 
 
+def coming(request):
+    return render(request, 'coming.html')
+
+
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)

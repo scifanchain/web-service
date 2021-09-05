@@ -1,7 +1,12 @@
 {% extends 'layout.html' %}
 {% load static %}
 
-{% block title %}首页{% endblock %}
+{% block title %}Home{% endblock %}
+
+{% block extraCss %}
+<link href="{% static 'css/home.css' %}" rel="stylesheet">
+{% endblock extraCss %}
+
 
 {% block extraJsTop %}
 <script src="https://unpkg.com/scrollreveal"></script>
@@ -12,23 +17,35 @@
 <section class="py-5">
   <div class="text-secondary text-center" id="topshow">
     <div class="pt-5">
-      <h1 class="display-5 fw-bold text-white mb-4">New Sci-Fan <br /> New Value <br /> New Creation</h1>
+      <h1 class="display-5 fw-bold text-white mb-4">New Value <br /> New Sci-Fan <br /> New Creation</h1>
       <div class="col-lg-6 mx-auto">
-        <p class="fs-5 mb-4">无论是一个有想象力的创意，还是一篇科幻故事，一个视觉作品，都可以在以区块链为主导的Web3.0时代被赋予全新价值。</p>
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <p class="fs-5 mb-4">Whether it is an imaginative idea, a science fiction story or a visual work, it can be
+          given new value in the Web3.0 era dominated by blockchain.</p>
+        {% comment %} <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
           <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">开始创作</button>
           <button type="button" class="btn btn-outline-light btn-lg px-4">访问社区</button>
+        </div> {% endcomment %}
+
+        <h5 class="text-white-50">Open registration countdown</h5>
+
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">
+            <span id="_d">00</span>
+            <span id="_h">00</span>
+            <span id="_m">00</span>
+            <span id="_s">00</span>
+          </button>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="py-5" id="idea">
+{% comment %} <section class="py-5" id="idea">
   <div class="container">
     <div class="row align-items-md-stretch bg-transparent">
       <div class="col-md-6">
-        <div class="h-100 p-5 text-white border opacity-75 rounded-3 headline" style="background: #000;">
+        <div class="h-100 p-5 text-white opacity-75 headline" style="background: #000;">
           <h2 class="text-info">章鱼网络加速器计划</h2>
           <p>赛凡链正处于章鱼网络加速器中进行孵化，按照计划，上线后将得到一批验证人来确保链数据的安全。</p>
           <button class="btn btn-outline-light" type="button">探查究竟</button>
@@ -43,18 +60,26 @@
       </div>
     </div>
   </div>
-</section>
+</section> {% endcomment %}
 
-<section class="py-5" id="section-intro">
+<section class="py-5" id="vision">
   <div class="container">
     <div class="row">
+      <h1 class="pb-5 text-center">Philosophy and Vision</h1>
       <div class="col-md-6 headline">
-        <h1 class="mb-4">About ScifanChain</h1>
         <p>
-          赛凡链是一个专注于科幻产业的应用型区块链。Sci-fan-chain分别代表science（科学）、fantasy（幻想）和blockchain（区块链）。赛凡链的理念是重塑科幻产业生产关系，让科幻产业价值的创造更加高效，分配更加合理公平，其核心目标在于捕获科幻产业的价值，充分利用新思维、新技术和新的生态建设模式，使创作者、读者、投资者、传播者、运营者之间以前所未有的模式创造性地合作，促进这个产业的高速发展。
+          Scifan chain is an applied blockchain focusing on science fiction industry. Sci-Fan-Chain stands for science,
+          fantasy and blockchain respectively. The concept of scifan chain is to reshape the production relationship of
+          science fiction industry, make the creation of science fiction industry value more efficient, and the
+          distribution more reasonable and fair. Its core goal is to capture the value of science fiction industry, make
+          full use of new thinking, new technology and new ecological construction mode, and enable creators, readers,
+          investors, communicators and operators to cooperate creatively in an unprecedented mode, Promote the rapid
+          development of this industry.
         </p>
         <p>
-          赛凡链以最新区块链技术为基础，结合应用层和客户端，打造一个去中心化、开放包容、安全智慧的科幻创作应用链，为充满无限可能的科幻生态注入生机，开创数字艺术的新模式。
+          Based on advanced blockchain technology and combined with application layer and client, Scifan chain creates a
+          decentralized, open, inclusive, safe and intelligent science fiction creation application chain to inject
+          vitality into the science fiction ecology full of infinite possibilities.
         </p>
       </div>
 
@@ -66,26 +91,35 @@
   </div>
 </section>
 
-<div class="album py-5">
+
+<section class="album pb-5" id="intro">
   <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 opacity-75">
       <div class="col headline">
-        <div class="card border-info bg-dark">
+        <div class="card  bg-dark h-100">
           {% comment %} <img src="{% static 'img/new_scifan_04.jpg' %}" alt=""> {% endcomment %}
           <i class="bi-disc-fill text-center home-icon text-info"></i>
 
-          <div class="card-body bg-dark small text-info">
-            <p class="card-text">我们已身处科幻时代！人们对身处实现世界的深广探索和思考，驱使我们以前所未有的目光探究星空和心灵的奥秘。新的语言正在诞生，科幻艺术的创作、阅读和传播模式面临全面革新。</p>
+          <div class="card-body bg-dark small">
+            <p class="card-text">
+              We are in the age of science fiction! People's deep and wide exploration and thinking about the world
+              drives us to explore the mysteries of the stars and the soul with unprecedented eyes. A new language is
+              being born, and the creation, reading and communication mode of science fiction art is facing
+              comprehensive innovation.
+            </p>
           </div>
         </div>
       </div>
 
       <div class="col headline">
-        <div class="card border-info bg-dark">
+        <div class="card  bg-dark h-100">
           <i class="bi-currency-bitcoin text-center home-icon text-info"></i>
-          <div class="card-body bg-dark text-info small">
+          <div class="card-body bg-dark small">
             <p class="card-text">
-              以人的创造劳动为核心来计算价值，链上价值体现的是所有用户的真实创造价值，以区块链通证为基础打造作品创作、传播和应用的驱动引擎，构成独特的作品区块链基因图谱，为科幻产业注入澎湃动力。
+              Capture the value of works, transform them into corresponding resources and release energy. Through the
+              token economic model of blockchain, creators can get financial support in the early stage of creation, so
+              as to focus on creation. The application of token stimulates the imagination and creative enthusiasm of
+              all practitioners.
             </p>
 
           </div>
@@ -93,90 +127,92 @@
       </div>
 
       <div class="col headline">
-        <div class="card shadow-sm border-info bg-dark">
+        <div class="card shadow-sm bg-dark h-100">
           <i class="bi-tropical-storm text-center home-icon text-info"></i>
 
-          <div class="card-body bg-dark small text-info">
+          <div class="card-body bg-dark small">
             <p class=" card-text">
-              建设基于平衡寻优算法的现代磋商模式，把产业的所有权、运营权交还给由从业者治理的社区，引入去中心化的共识机制发展生态，激发创造性，激活无限可能，缔造积极进取、锐意图新的新文明。</p>
+              Create a modern negotiation model based on the balanced optimization algorithm, return the ownership and
+              operation rights of the industry to the communities governed by practitioners, introduce a decentralized
+              consensus mechanism, develop ecology, stimulate creativity, activate unlimited possibilities, and create a
+              new culture that is proactive and determined to seek new ideas.</p>
           </div>
         </div>
       </div>
 
     </div>
   </div>
-</div>
+</section>
 
 <section class="py-lg-5 backgroundline" id="section-block-chain">
   <div class="container">
     <div class="row text-center">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="">Substrate-BlockChain</h1>
-        <h1 class="mb-4">区块链引擎驱动</h1>
-        <p class="lead">
-          赛凡链的首批用户是一批科幻作家、读者和支持者。作家在赛凡链创作作品，读者和支持者帮助作品的创作和流通，他们付出劳动，得到Token激励。
-        </p>
-        <p class="text-info">
-          赛凡链采用人的创作来替代算法挖矿，我们深信语言文字、科学和艺术、想象和思考、星空宇宙都饱含价值，而能把它们挖掘出来的是创作者，算法对此无能为力。赛凡链的Token经济建立在人的创造力和劳动的基础上，我们的一系列算法和协议都围绕着创造过程设计，以求合理地表达不同阶段作品的价值。简单来说，我们采用字数为参考来表达作品的数量价值，以品级、成熟度来表示作品的质量价值，数量价值由程序统计给出，而质量价值则由社区通过全员投票来评定。
-        </p>
-      </div>
+      <h1 class="pb-3">Technical Architecture</h1>
+      <h2 class="pb-5 text-white-50">Combining science fiction industry with blockchain</h2>
     </div>
 
     <div class="row">
-      <div class="col-md-6 headline">
-        <h2>区块链引擎</h2>
-        <hr>
-        <p>星河宇宙概念框架</p>
-        <ul>
-          <li>星际飞船</li>
-          <li>星际飞船</li>
-          <li>星际飞船</li>
-        </ul>
+
+      <div class="col-md-8 col-12">
+        <img src="{% static 'img/structure.png' %}" alt="" class="img-fluid">
       </div>
-      <div class="col-md-6 text-end headline">
-        <h2>区块链引擎</h2>
-        <hr>
-        <p>星河宇宙概念框架</p>
-        <ul>
-          <li>星际飞船</li>
-          <li>星际飞船</li>
-          <li>星际飞船</li>
-        </ul>
+
+      <div class="col-md-4 col-12">
+        <p>
+          Saifan chain obtains the resources and value of science fiction industry chain from the upstream. After a
+          series of technical processing, it finally allows them to be applied in reality to form a complete closed
+          loop.
+        </p>
+        <p>
+          The value of all works on the saifan chain has access to the real world. Written works can derive CG, 3D
+          models, VR, film and television works, can become paper publications and electronic publications, and can be
+          directly distributed online to readers by subscription. They will eventually produce real value. When the
+          chain gradually develops and matures, it will become an infrastructure of the whole science fiction industry.
+          All kinds of offline companies, institutions and employees can attach their labor achievements to the chain.
+          At that time, the saifan chain captures the value of all industries, and these values really belong to the
+          people who created it and will not be deprived by any privileged, chaebol or monopolist.
+        </p>
+
       </div>
+
+
     </div>
   </div>
 </section>
 
 
-<section class="py-lg-5 text-white rounded">
+<section class="py-lg-5 text-white rounded" id="section-framework">
   <div class="container">
-    <div class="row text-center">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h1>SFC-DOVS</h1>
-        <h1>高效作品生产流程</h1>
-        <p class="lead text-muted text-info">
-          我们让整个赛凡链的作品能够互相渗透、融合，构建出一个有完整世界观的宇宙，可以无穷无尽地演化。赛凡链是科幻文学创作上与互联网技术的独特创新，真正体现Web3.0的宏伟愿景。我们相信，在科幻与Web3.0谜一般的基因混合下，令人激动的、前所未有的新事物会被缔造出来。
+    <div class="row">
+      <h1 class="pb-3 text-center">Unique Value</h1>
+      <h3 class="pb-5 text-white-50 text-center">Create science fiction that combines multiple genes</h3>
+      <div class="col-lg-4 text-white headline">
+        <p>
+          Every work on the saifan chain has unique value. A variety of technologies are used in the creation process of
+          works. They all constitute the gene of works, making its significance far beyond its own content.
+        </p>
+        <p>
+          Saifan chain uses human creation to replace algorithm mining. We firmly believe that language, science and
+          art,
+          imagination and thinking, and the starry universe are full of value, and the creators can dig them out, and
+          the
+          algorithm can't do anything about it. The token economy of saifan chain is based on human creativity and
+          labor.
+          A series of algorithms and protocols are designed around the creative process in order to reasonably express
+          the
+          value of works in different stages. In short, we use the number of words as a reference to express the
+          quantitative value of the works, and the quality value of the works is expressed by grade and maturity. The
+          quantitative value is given by program statistics, and the quality value is evaluated by the community through
+          full voting.
         </p>
       </div>
-    </div>
-
-  </div>
-
-</section>
-
-<section class="py-lg-5 text-white backgroundline" id="section-framework">
-  <div class="container headline">
-    <div class="row text-center">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h1>Universe Framework</h1>
-        <h1>先进的宇宙概念框架</h1>
-        <p class="lead text-info">
-          赛凡链为创作者提供一个基本的结构，描绘了自洽的宇宙和世界图景，该图景足够宏大，有向外和向内两个维度，向外可以拓展到无限星空，而向内，则深入人类的精神世界。基于该框架进行创作，会在艺术、科学、哲学、宗教上进行自然而然的、拥有相当深度和广度的对话、碰撞。
-        </p>
+      <div class="col-lg-8 col-md-8 headline">
+        <img src="{% static 'img/DNA.svg' %}" alt="" class="img-fluid">
       </div>
     </div>
   </div>
 </section>
+
 
 <section class="py-lg-5 text-white backgroundline">
   <div class="container headline">
@@ -185,7 +221,7 @@
         <h1>Roadmap</h1>
       </div>
       <div class="col-12">
-        <img src="{% static 'img/roadmap.svg' %}" alt="">
+        <img src="{% static 'img/roadmap.svg' %}" alt="" class="img-fluid">
       </div>
     </div>
   </div>
@@ -196,34 +232,57 @@
 <section class="py-lg-5 text-white backgroundline">
   <div class="container headline">
     <h1 class="text-center pb-5">Team Member</h1>
-    <div class="row row-cols-4 text-center">
-      <figure class="figure px-5">
-        <img src="{% static 'img/unity.jpg' %}" class="figure-img img-fluid rounded-circle" alt="...">
-        <figcaption class="figure-caption">unity（欧雪冰），独立开发者，科幻作家，应用层、前端开发。</figcaption>
-      </figure>
-      <figure class="figure px-5">
-        <img src="{% static 'img/chaijie.jpg' %}" class="figure-img img-fluid rounded-circle" alt="...">
-        <figcaption class="figure-caption">柴杰，中国科学技术大学微电子学院研究生，rust中文开源期刊编辑部成员。Substrate开发。</figcaption>
-      </figure>
-      <figure class="figure px-5">
-        <img src="{% static 'img/lixing.jpg' %}" class="figure-img img-fluid rounded-circle" alt="...">
-        <figcaption class="figure-caption">April（李星），白皮书撰写，创意文案，组织推广。</figcaption>
-      </figure>
-      <figure class="figure px-5">
-        <img src="{% static 'img/stven.jpg' %}" class="figure-img img-fluid rounded-circle" alt="...">
-        <figcaption class="figure-caption">Stvenyin，拥有丰富的开发经验，深耕区块链技术多年，Substrate开发。
-        </figcaption>
-      </figure>
+    <div class="row text-center">
+
+      <div class="col-md-3 px-5">
+        <img src="{% static 'img/unity.jpg' %}" class="figure-img img-fluid rounded-circle mb-3" alt="...">
+        <h6 class="fw-bold">Unity</h6>
+        <p class="text-white-50 small">
+          founder, independent developer, science fiction writer, responsible
+          for application layer and client development.
+        </p>
+      </div>
+
+      <div class="col-md-3 px-5">
+        <img src="{% static 'img/chaijie.jpg' %}" class="figure-img img-fluid rounded-circle mb-3" alt="...">
+        <h6 class="fw-bold">Chai Jie</h6>
+        <p class="text-white-50 small">
+          graduate student, School of microelectronics, University of science and technology of China, member
+          of the editorial department of trust Chinese open source journal, developed by substrate.
+        </p>
+      </div>
+
+      <div class="col-md-3 px-5">
+        <img src="{% static 'img/lixing.jpg' %}" class="figure-img img-fluid rounded-circle mb-3" alt="...">
+        <h6 class="fw-bold">April</h6>
+        <p class="text-white-50 small">
+          creative copywriter, responsible for the organization and promotion of
+          community activities.
+        </p>
+      </div>
+
+      <div class="col-md-3 px-5">
+        <img src="{% static 'img/stven.jpg' %}" class="figure-img img-fluid rounded-circle mb-3" alt="...">
+        <h6 class="fw-bold">Stevenyin</h6>
+        <p class="small">
+          with rich development experience, has been deeply engaged in
+          blockchain technology for many years and has been developed by substrate.
+        </p>
+      </div>
+
     </div>
   </div>
 </section>
 
 <section class="py-lg-5">
   <div class="container headline">
-    <h1 class="text-center pb-5">Partners</h1>
+    <h1 class="text-center pb-5">Ecosystem</h1>
     <div class="row text-center">
       <div class="col-md-2 mx-auto">
         <img src="{% static 'img/octopus_logo_white.png' %}" alt="" class="px-4 img-fluid">
+      </div>
+      <div class="col-md-2 mx-auto">
+        <img src="{% static 'img/logo_near.png' %}" alt="" class="px-4 img-fluid">
       </div>
     </div>
   </div>
@@ -243,5 +302,46 @@
     scale: 0.5
   });
 </script>
+
+
+<script type="text/javascript">
+  function Appendzero(obj) {
+    if (obj < 10) return "0" + "" + obj;
+    else return obj;
+  }
+
+  function countTime() {
+    //获取当前时间  
+    var date = new Date();
+    var now = date.getTime();
+    //设置截止时间  
+    var str = "2021/10/1 00:00:00";
+    var endDate = new Date(str);
+    var end = endDate.getTime();
+
+    //时间差  
+    var leftTime = end - now;
+    //定义变量 d,h,m,s保存倒计时的时间  
+    var d, h, m, s;
+    if (leftTime >= 0) {
+      d = Math.floor(leftTime / 1000 / 60 / 60 / 24);
+      h = Math.floor(leftTime / 1000 / 60 / 60 % 24);
+      m = Math.floor(leftTime / 1000 / 60 % 60);
+      s = Math.floor(leftTime / 1000 % 60);
+    }
+
+    //将倒计时赋值到div中  
+    document.getElementById("_d").innerHTML = Appendzero(d) + " D ";
+    document.getElementById("_h").innerHTML = Appendzero(h) + " H ";
+    document.getElementById("_m").innerHTML = Appendzero(m) + " M ";
+    document.getElementById("_s").innerHTML = Appendzero(s) + " S ";
+    //递归每秒调用countTime方法，显示动态时间效果  
+    setTimeout(countTime, 1000);
+
+  }
+  countTime();
+</script>
+
+
 
 {% endblock %}
