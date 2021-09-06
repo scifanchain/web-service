@@ -1,8 +1,0 @@
-[client]
-host = localhost
-port = 3306
-database = sfc_web_db
-user = root
-password = oxbme
-default-character-set = utf8
-auth_plugin = mysql_native_password
