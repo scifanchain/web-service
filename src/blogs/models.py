@@ -37,16 +37,6 @@ class Category(models.Model):
         return categories
 
 
-class Archive(models.Model):
-    year = models.CharField(verbose_name=_('年份'), max_length=10)
-
-    class Meta:
-        verbose_name = verbose_name_plural = _("年份")
-
-    def __str__(self) -> str:
-        return self.year
-
-
 class Post(models.Model):
     title = models.CharField(max_length=200, verbose_name="标题")
     summary = models.CharField(max_length=1024, blank=True, verbose_name="摘要")
@@ -92,6 +82,16 @@ class Post(models.Model):
     def hot_posts(cls):
         return cls.objects.filter(status=Status.STATUS_NORMAL).only('id', 'title').order_by('-pv')
 
+
+class Archive(models.Model):
+    time = models.CharField(verbose_name=_('年月'), max_length=10)
+    count = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = verbose_name_plural = _("年月")
+
+    def __str__(self) -> str:
+        return self.time
 
 class Comment(models.Model):
     target = models.ForeignKey(

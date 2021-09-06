@@ -50,6 +50,16 @@ class PostAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         obj.owner = request.user
+        # 按年份存档及数量
+        try:
+            t = Archive.objects.get(
+                time=str(obj.created.year) + "-" + str(obj.created.month))
+            t.count = F('count') + 1
+        except:
+            t = Archive(time=str(obj.created.year) +
+                        "-" + str(obj.created.month))
+        t.save()
+
         return super(PostAdmin, self).save_model(request, obj, form, change)
 
     def get_queryset(self, request):
