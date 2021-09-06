@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
 
-import config from "./config"
+import config from "../config"
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 axios.defaults.xsrfCookieName = "csrftoken"
 
+// Stage编辑组件
 export function StageEditor() {
     const userId = document.getElementById('StageEditorWrap').getAttribute('data-userId')
     const stageId = document.getElementById('StageEditorWrap').getAttribute('data-stageId')
@@ -18,7 +19,6 @@ export function StageEditor() {
     const [title, setTitle] = useState('')
     const [titleError, setTitleError] = useState('')
     const [contentError, setContentError] = useState('')
-
 
     // get stage content
     // url参数锁定该方法在页面不变更只执行一次
@@ -173,7 +173,7 @@ export function StageEditor() {
     )
 }
 
-
+// stage显示组件
 export function StageView() {
     const stageId = document.getElementById("StageViewWrap").getAttribute("data-stageId")
     console.log(stageId)

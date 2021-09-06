@@ -60,6 +60,7 @@ def wallet(request):
     mnemonic = Keypair.generate_mnemonic()
     keypair = Keypair.create_from_mnemonic(mnemonic)
     signature = keypair.sign("Test123")
+    
     if keypair.verify("Test123", signature):
         print('Verified')
         print(keypair)
