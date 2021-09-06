@@ -2,7 +2,9 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 from .adminforms import PostAdminForm
-from .models import Post, Category, Comment
+from .models import Post, Category, Comment, Archive
+import datetime
+from django.db.models import F
 
 
 @admin.register(Category)
@@ -13,6 +15,9 @@ class CategoryAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.owner = request.user
         return super(CategoryAdmin, self).save_model(request, obj, form, change)
+
+class ArchiveAdmin(admin.ModelAdmin):
+    list_display = ('time', 'count')
 
 
 @admin.register(Post)
@@ -53,14 +58,14 @@ class PostAdmin(admin.ModelAdmin):
         # 按年份存档及数量
         try:
             t = Archive.objects.get(
-                time=str(obj.created.year) + "-" + str(obj.created.month))
+                time=str(datetime.datetime.now().year) + "-" + str(datetime.datetime.now().strftime('%m')))
             t.count = F('count') + 1
         except:
-            t = Archive(time=str(obj.created.year) +
-                        "-" + str(obj.created.month))
+            t = Archive(time=str(datetime.datetime.now().year) +
+                        "-" + str(datetime.datetime.now().strftime('%m')))
         t.save()
 
-        return super(PostAdmin, self).save_model(request, obj, form, change)
+        return super().save_model(request, obj, form, change)
 
     def get_queryset(self, request):
         qs = super(PostAdmin, self).get_queryset(request)

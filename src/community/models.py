@@ -1,6 +1,18 @@
 from django.db import models
 from django.db.models.enums import IntegerChoices
 from django.contrib.auth.models import User
+from django.utils.translation import gettext as _
+
+
+class Status(IntegerChoices):
+    STATUS_DELETED = 0, _('删除')
+    STATUS_NORMAL = 1, _('正常')
+    STATUS_FROZEN = 2, _('冻结')
+
+
+class Display(IntegerChoices):
+    SHOW = 1, _('显示')
+    HIDE = 0, _('隐藏')
 
 
 class TopicCategory(models.Model):
@@ -18,7 +30,7 @@ class Topic(models.Model):
     updated = models.DateTimeField(auto_now=True, verbose_name="修改时间")
 
 
-class Comment(models.Model):
+class Reply(models.Model):
     target = models.ForeignKey(
         Topic, verbose_name=_("评论主题"), on_delete=models.CASCADE)
     content = models.CharField(max_length=500, verbose_name=_("内容"))

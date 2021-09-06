@@ -12,7 +12,7 @@ class Status(IntegerChoices):
     STATUS_DELETED = 0, _('删除')
     STATUS_NORMAL = 1, _('正常')
     STATUS_FROZEN = 2, _('冻结')
-    
+
 
 class Display(IntegerChoices):
     SHOW = 1, _('显示')
@@ -21,8 +21,10 @@ class Display(IntegerChoices):
 
 class Category(models.Model):
     name = models.CharField(max_length=510, verbose_name=_("分类名称"))
-    status = models.PositiveSmallIntegerField(default=Status.STATUS_NORMAL, choices=Status.choices, verbose_name=_("状态"))
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("作者"))
+    status = models.PositiveSmallIntegerField(
+        default=Status.STATUS_NORMAL, choices=Status.choices, verbose_name=_("状态"))
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name=_("作者"))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_("创建时间"))
 
     class Meta:
@@ -37,18 +39,32 @@ class Category(models.Model):
         return categories
 
 
+class Archive(models.Model):
+    time = models.CharField(verbose_name=_('年月'), max_length=10)
+    count = models.IntegerField(default=1)
+
+    class Meta:
+        verbose_name = verbose_name_plural = _("年月")
+
+    def __str__(self) -> str:
+        return self.time
+
+
 class Post(models.Model):
     title = models.CharField(max_length=200, verbose_name=_("标题"))
-    summary = models.CharField(max_length=1024, blank=True, verbose_name=_("摘要"))
+    summary = models.CharField(
+        max_length=1024, blank=True, verbose_name=_("摘要"))
     content = MDTextField(
         verbose_name=_("正文"), help_text=_("请使用MarkDown格式"), default="")
     status = models.PositiveSmallIntegerField(
         default=Status.STATUS_NORMAL, choices=Status.choices, verbose_name=_("状态"))
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name=_("分类"))
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, verbose_name=_("分类"))
     tags = TaggableManager(through=CnTaggedItem)
     archive = models.ForeignKey(
         Archive, on_delete=models.CASCADE, null=True, verbose_name=_("存档"), blank=True)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("作者"))
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name=_("作者"))
     pv = models.PositiveIntegerField(default=1)
     uv = models.PositiveIntegerField(default=1)
     created = models.DateTimeField(auto_now_add=True, verbose_name=_("创建时间"))
@@ -69,7 +85,8 @@ class Post(models.Model):
             category = None
             post_list = []
         else:
-            post_list = category.post_set.filter(status=Status.STATUS_NORMAL).select_related('owner', 'category')
+            post_list = category.post_set.filter(
+                status=Status.STATUS_NORMAL).select_related('owner', 'category')
 
         return post_list, category
 
@@ -82,16 +99,6 @@ class Post(models.Model):
     def hot_posts(cls):
         return cls.objects.filter(status=Status.STATUS_NORMAL).only('id', 'title').order_by('-pv')
 
-
-class Archive(models.Model):
-    time = models.CharField(verbose_name=_('年月'), max_length=10)
-    count = models.IntegerField(default=0)
-
-    class Meta:
-        verbose_name = verbose_name_plural = _("年月")
-
-    def __str__(self) -> str:
-        return self.time
 
 class Comment(models.Model):
     target = models.ForeignKey(
