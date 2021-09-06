@@ -83,11 +83,11 @@ WSGI_APPLICATION = 'scifanchain.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+        'HOST': os.getenv('HOST'),
+        'PORT': os.getenv('PORT'),
         'NAME': os.getenv('NAME'),
         'USER': os.getenv('USER'),
         'PASSWORD': os.getenv('PASSWORD'),
-        'HOST': os.getenv('HOST'),
-        'PORT': os.getenv('PORT'),
     }
 }
 
@@ -146,12 +146,12 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 # SMTP邮箱
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'smtp.163.com'
-EMAIL_PORT = 25
-EMAIL_HOST_USER = 'unityoxb@163.com'
-EMAIL_HOST_PASSWORD = 'BGAVCJWGKVZZCYHM'
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'unityoxb@163.com'
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 # 允许在本域名frame展示
 X_FRAME_OPTIONS = 'SAMEORIGIN'
