@@ -5,27 +5,28 @@ from django.forms import ModelForm, TextInput, Textarea
 from taggit.managers import TaggableManager
 from .cntaggit import CnTaggedItem
 from django.db.models.enums import IntegerChoices
+from django.utils.translation import gettext as _
 
 
 class Status(IntegerChoices):
-    STATUS_DELETED = 0, '删除'
-    STATUS_NORMAL = 1, '正常'
-    STATUS_FROZEN = 2, '冻结'
+    STATUS_DELETED = 0, _('删除')
+    STATUS_NORMAL = 1, _('正常')
+    STATUS_FROZEN = 2, _('冻结')
     
 
 class Display(IntegerChoices):
-    SHOW = 1, '显示'
-    HIDE = 0, '隐藏'
+    SHOW = 1, _('显示')
+    HIDE = 0, _('隐藏')
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=510, verbose_name="分类名称")
-    status = models.PositiveSmallIntegerField(default=Status.STATUS_NORMAL, choices=Status.choices, verbose_name="状态")
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者")
-    created = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+    name = models.CharField(max_length=510, verbose_name=_("分类名称"))
+    status = models.PositiveSmallIntegerField(default=Status.STATUS_NORMAL, choices=Status.choices, verbose_name=_("状态"))
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("作者"))
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_("创建时间"))
 
     class Meta:
-        verbose_name = verbose_name_plural = "分类"
+        verbose_name = verbose_name_plural = _("分类")
 
     def __str__(self) -> str:
         return self.name
@@ -37,10 +38,10 @@ class Category(models.Model):
 
 
 class Archive(models.Model):
-    year = models.CharField(verbose_name='年份', max_length=10)
+    year = models.CharField(verbose_name=_('年份'), max_length=10)
 
     class Meta:
-        verbose_name = verbose_name_plural = "年份"
+        verbose_name = verbose_name_plural = _("年份")
 
     def __str__(self) -> str:
         return self.year

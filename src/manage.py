@@ -4,8 +4,10 @@ import os
 import sys
 from django.core.management.commands.runserver import Command as Runserver
 
+import dotenv
 
 def main():
+    dotenv.read_dotenv()
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'scifanchain.settings')
     try:
