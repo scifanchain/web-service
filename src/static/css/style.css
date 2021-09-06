@@ -85,6 +85,7 @@ html {
     max-width: 80%;
     -webkit-transition: background-color .15s ease;
     transition: background-color .15s ease;
+<<<<<<< HEAD
 }
 
 
@@ -133,4 +134,6 @@ p{
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
+=======
+>>>>>>> e3dd44dc5d5a9a85ca3a9f177f952d530198f45a
 }

@@ -1,0 +1,72 @@
+/* 首页
+-------------------------------------------------- */
+
+body {
+    background-color: #000000;
+    color: #F5F5F5;
+    background-image: url("../img/bg_09.jpg");
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: 20%;
+}
+
+p {
+    line-height: 1.8rem;
+    color: #ced4da;
+}
+
+a:active {
+    color: #eeeeee;
+}
+
+a:visited{
+    color: #0dcaf0;
+}
+
+
+.home-icon {
+    font-size: 120px;
+}
+
+#vision {
+    background-image: url("../img/bg_10.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+
+#intro {
+    background-image: url("../img/bg_02.jpg");
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
+
+#section-block-chain {
+    background-image: url("../img/bg_08.jpg");
+    background-repeat: no-repeat;
+    background-position: center left;
+    background-size: 40%;
+}
+
+#section-framework {
+    background-image: url("../img/bg_03.jpg");
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-size: 50%;
+
+}
+
+#section-partners {
+    background-image: url("../img/bg_09.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+
+#coming {
+    background-image: url("../img/coming.jpg");
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: 20%;
+}

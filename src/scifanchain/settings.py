@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 SITE_NAME = '赛凡链'
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-7-w$!n)j)ta+l%2x-&zy+$cup=+xmii=77jmxdmhe_34hn)-ar
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['118.195.181.77', '127.0.0.1','scifanchain.com']
 
 # Application definition
 
@@ -79,6 +80,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'scifanchain.wsgi.application'
 
+<<<<<<< HEAD
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -95,6 +97,16 @@ DATABASES = {
         'OPTIONS': {
             'read_default_file': 'D:/scifanchain/web/src/scifanchain/db_dev.cnf',
         },
+=======
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': os.getenv('HOST'),
+        'PORT': os.getenv('PORT'),
+        'NAME': os.getenv('NAME'),
+        'USER': os.getenv('USER'),
+        'PASSWORD': os.getenv('PASSWORD'),
+>>>>>>> e3dd44dc5d5a9a85ca3a9f177f952d530198f45a
     }
 }
 
@@ -153,12 +165,21 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 # SMTP邮箱
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+<<<<<<< HEAD
 EMAIL_HOST = 'smtp.163.com'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = 'unityoxb@163.com'
 EMAIL_HOST_PASSWORD = 'BGAVCJWGKVZZCYHM'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'unityoxb@163.com'
+=======
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+>>>>>>> e3dd44dc5d5a9a85ca3a9f177f952d530198f45a
 
 # 允许在本域名frame展示
 X_FRAME_OPTIONS = 'SAMEORIGIN'
