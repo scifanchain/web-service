@@ -16,7 +16,7 @@ class IndexView(CommonViewMixin, ListView):
     queryset = Post.objects.filter(status=Status.STATUS_NORMAL) \
         .select_related('owner') \
         .select_related('category')
-    paginate_by = 2
+    paginate_by = 10
     context_object_name = 'posts'
     template_name = 'blogs/list.html'
 
