@@ -1,4 +1,4 @@
-import {StageEditor, StageView} from './components'
+import {StageEditor, StageView} from './components/stage'
 import ReactDOM from "react-dom";
 import React from "react";
 

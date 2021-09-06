@@ -21,6 +21,80 @@
     {% block extraJsTop %}{% endblock %}
   </head>
 
+<<<<<<< HEAD
+  <body style="background-color: #000000" class="text-white">
+    <header class="">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="/">
+            <img src="{% static 'img/logo.png' %}" alt="" height="30">
+            赛凡链
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'works:index' %}">作品</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">社区</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'blogs:index' %}">博客</a>
+              </li>
+            </ul>
+            {% if user.is_authenticated %}
+            <div class="dropdown mx-4">
+              <a class="dropdown-toggle text-white text-decoration-none" type="button" id="dropdownMenuButton1"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi-plus" style="font-size: 1.5rem;"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">开始创作</a></li>
+                <li><a class="dropdown-item" href="#">参与治理</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">帮助</a></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <a class="dropdown-toggle text-white text-decoration-none" type="button" id="dropdownMenuButton1"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="{{ MEDIA_URL }}avatars/{{ user.date_joined.year }}/{{ user.username }}.svg" alt=""
+                  class="avatar-tiny" id="AvatarTiny">
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                <li><strong class="p-3">Hi,{{ user.username }}</strong></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'space:home' %}">工作空间</a></li>
+                <li><a class="dropdown-item" href="#">钱包</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">帮助</a></li>
+                <li><a class="dropdown-item" href="#">设置</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'logout' %}">退出</a></li>
+              </ul>
+            </div>
+            {% else %}
+            <a href="{% url 'register' %}" class="px-3">注册</a>
+            <a href="{% url 'login' %}">登录</a>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
+    </header>
+=======
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container">
@@ -90,6 +164,7 @@
         {% endif %} {% endcomment %}
       </div>
     </nav>
+>>>>>>> e3dd44dc5d5a9a85ca3a9f177f952d530198f45a
 
     <main>
       {% block content %}
@@ -100,11 +175,28 @@
       <div class="container border-top border-dark">
         <footer class="d-flex flex-wrap justify-content-between py-3 align-top text-white">
           <p class="col-md-3 mb-0 text-muted">&copy; 2021 Scifanchain.com 赛凡链</p>
+<<<<<<< HEAD
+          <ul class="nav col-md-6 text-end">
+=======
           {% comment %} <ul class="nav col-md-6">
+>>>>>>> e3dd44dc5d5a9a85ca3a9f177f952d530198f45a
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">白皮书</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">路线图</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">用户手册</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">关于我们</a></li>
+<<<<<<< HEAD
+          </ul>
+          <div class="col-md-3 mb-0 text-muted text-end">
+            <ul class="list-unstyled">
+              <li>github</li>
+              <li>Telegram</li>
+              <li>Twitter</li>
+              <li>Instagram</li>
+            </ul>
+          </div>
+        </footer>
+
+=======
           </ul> {% endcomment %}
           <div class="col-md-3 text-end">
             <a href="https://github.com/scifanchain" target="_blank" class="px-2 text-muted"><i class="bi bi-github"></i></a>
@@ -113,6 +205,7 @@
                 class="bi bi-discord"></i></a>
           </div>
         </footer>
+>>>>>>> e3dd44dc5d5a9a85ca3a9f177f952d530198f45a
       </div>
     </div>
 
