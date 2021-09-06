@@ -97,6 +97,8 @@ class Comment(models.Model):
     target = models.ForeignKey(
         Post, verbose_name=_("评论目标"), on_delete=models.CASCADE)
     content = models.CharField(max_length=2000, verbose_name=_("内容"))
+    publisher = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name=_("作者"))
     status = models.PositiveSmallIntegerField(
         default=Status.STATUS_NORMAL, choices=Status.choices, verbose_name=_("状态"))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_("创建时间"))
