@@ -7,63 +7,62 @@
 {% block content %}
 
 <div class="row">
-    <div class="col-5">
-        <h3>用户注册</h3>
-        <hr />
-      {% if form.errors %}
-        <div class="alert alert-danger" role="alert">请修正以下错误重新尝试。</div>
+  <div class="col-5">
+    <h3>用户注册</h3>
+    <hr />
+    {% if form.errors %}
+    <div class="alert alert-danger" role="alert">请修正以下错误重新尝试。</div>
 
-      {% endif %}
-      <form action="{% url 'register' %}" method="post" class="">
-          {% csrf_token %}
-          <div class="mb-3">
-            {{ form.username }}
-            {% if form.username.help_text %}
-              <span class="small">{{form.username.help_text}}</span>
-            {% endif %}
-          </div>
+    {% endif %}
+    <form action="{% url 'register' %}" method="post" class="">
+      {% csrf_token %}
+      <div class="mb-3">
+        {{ form.username }}
+        {% if form.username.help_text %}
+        <span class="small">{{form.username.help_text}}</span>
+        {% endif %}
+      </div>
 
-          <div class="mb-3">
-            {{ form.email }}
-            {% if form.email.help_text %}
-              <span class="small">{{form.email.help_text}}</span>
-            {% endif %}
-          </div>
+      <div class="mb-3">
+        {{ form.email }}
+        {% if form.email.help_text %}
+        <span class="small">{{form.email.help_text}}</span>
+        {% endif %}
+      </div>
 
-          <div class="mb-3">
-            {{form.password1.errors}}
-            {{ form.password1 }}
-            {% if form.password1.help_text %}
-              <div class="small">{{form.password1.help_text}}</div>
-            {% endif %}
-          </div>
+      <div class="mb-3">
+        {{form.password1.errors}}
+        {{ form.password1 }}
+        {% if form.password1.help_text %}
+        <div class="small help-text">{{form.password1.help_text|safe}}</div>
+        {% endif %}
+      </div>
 
-           <div class="mb-3">
-            {{form.password2.errors}}
-            {{ form.password2 }}
-            {% if form.password2.help_text %}
-              <span class="small">{{form.password2.help_text}}</span>
-            {% endif %}
-          </div>
-          <div class="d-grid gap-2 mb-3">
-                <input type="submit" name="" id="" value="用户登录"  class="btn btn-info text-white fw-bold">
-            </div>
-        </form>
-        <div class="">如果您已有账号，请<a href="{% url 'login' %}" class="link-primary">从这里登录</a></div>
+      <div class="mb-3">
+        {{form.password2.errors}}
+        {{ form.password2 }}
+        {% if form.password2.help_text %}
+        <span class="small">{{form.password2.help_text}}</span>
+        {% endif %}
+      </div>
+      <div class="d-grid gap-2 mb-3">
+        <input type="submit" name="" id="" value="用户登录" class="btn btn-info text-white fw-bold">
+      </div>
+    </form>
+    <div class="">如果您已有账号，请<a href="{% url 'login' %}" class="link-primary">从这里登录</a></div>
+  </div>
+  <div class="col-7">
+    <h3>注册须知</h3>
+    <hr />
+    <div>
+      <p>
+        赛凡链是一个去中心化的科幻创作区块链社区，您在本站的账号代表您本人，在本站注册意味着您同意《<a href="#">用户服务条款</a>》。
+      </p>
+      <p>
+        您在注册后即被视本社区的成员。本社区成员身份平等，社区属于所有成员，除创始的技术团队和选举出的社区治理机构之外没有管理员，有任何问题，请在社区中寻求帮助和解决。
+      </p>
     </div>
-    <div class="col-7">
-        <h3>注册须知</h3>
-        <hr />
-        <div>
-            <p>
-                赛凡链是一个去中心化的科幻创作区块链社区，您在本站的账号代表您本人，在本站注册意味着您同意《<a href="#">用户服务条款</a>》。
-            </p>
-            <p>
-                您在注册后即被视本社区的成员。本社区成员身份平等，社区属于所有成员，除创始的技术团队和选举出的社区治理机构之外没有管理员，有任何问题，请在社区中寻求帮助和解决。
-            </p>
-        </div>
-    </div>
+  </div>
 </div>
-
 
 {% endblock content %}
