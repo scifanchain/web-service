@@ -23,6 +23,10 @@ a:visited{
     color: #0dcaf0;
 }
 
+#nav {
+    background-color: #000000 !important;
+    border-bottom: #222 1px solid;
+}
 
 .home-icon {
     font-size: 120px;

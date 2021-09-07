@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 import python_avatars as pa
 from django.conf import settings
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from substrateinterface import SubstrateInterface, Keypair
 from substrateinterface.exceptions import SubstrateRequestException
@@ -26,6 +27,7 @@ def change_password(request):
     return render(request, 'space/change_password.html')
 
 
+@login_required
 def home(request):
     return render(request, 'space/home.html')
 

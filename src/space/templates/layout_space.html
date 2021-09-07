@@ -5,31 +5,36 @@
 {% endblock extraJsTop %}
 
 {% block content %}
-  <div class="container-fluid py-4">
-    <div class="row">
-      <div class="col-2">
-        <div class="bg-light mb-3 text-center p-2 border">
-          <img src="{{ MEDIA_URL }}avatars/{{ user.date_joined.year }}/{{ user.username }}.svg" alt="avatar"
-               class="avatar" id="Avatar">
-        </div>
-        <div class="text-center">
-          <span class="btn btn-sm btn-light" onclick="changeAvatar()">换个随机头像</span>
-        </div>
-        <div class="list-group list-group-flush">
-          <a href="{% url 'space:profile' %}" class="list-group-item">个人资料</a>
-          <a href="{% url 'space:works' %}" class="list-group-item">我的作品</a>
-          <a href="{% url 'space:change_password' %}" class="list-group-item">修改密码</a>
-          <a href="{% url 'space:wallet' %}" class="list-group-item">我的钱包</a>
-        </div>
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-2">
+      <div class="bg-light mb-3 text-center p-2 border">
+        <img src="{{ MEDIA_URL }}avatars/{{ user.date_joined.year }}/{{ user.username }}.svg" alt="avatar"
+          class="avatar" id="Avatar">
       </div>
-      <div class="col-8">
-        {% block space_main %}
-        {% endblock space_main %}
+      <div class="text-center">
+        <span class="btn btn-sm btn-light" onclick="changeAvatar()">换个随机头像</span>
       </div>
-      <div class="col-2">
-        <h6>$SFC</h6>
+      <div class="list-group list-group-flush">
+        <a href="{% url 'space:profile' %}" class="list-group-item">个人资料</a>
+        <a href="{% url 'space:works' %}" class="list-group-item">我的作品</a>
+        <a href="{% url 'space:change_password' %}" class="list-group-item">修改密码</a>
+        <a href="{% url 'space:wallet' %}" class="list-group-item">我的钱包</a>
       </div>
     </div>
+    <div class="col-8">
+      {% block space_main %}
+      {% endblock space_main %}
+    </div>
+    <div class="col-2">
+      <h6>$SFC</h6>
+    </div>
   </div>
+</div>
 
 {% endblock content %}
+
+
+{% block extraJsBottom %}
+<script src="{% static 'js/dist/main.bundle.js' %}"></script>
+{% endblock extraJsBottom %}

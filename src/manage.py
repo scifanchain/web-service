@@ -21,8 +21,5 @@ def main():
     execute_from_command_line(sys.argv)
 
 
-if __name__ == '__main__':
-    Runserver.default_addr  = '0.0.0.0'
-    Runserver.default_port = '8080'
-    
+if __name__ == '__main__':    
     main()

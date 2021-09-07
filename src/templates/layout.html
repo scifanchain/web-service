@@ -22,7 +22,7 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="nav">
       <div class="container">
         <a class="navbar-brand" href="/">
           <img src="{% static 'img/logo.png' %}" alt="" height="30">
@@ -45,7 +45,7 @@
             </li>
           </ul>
         </div>
-        {% comment %} {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
         <div class="dropdown mx-4">
           <a class="dropdown-toggle text-white text-decoration-none" type="button" id="dropdownMenuButton1"
             data-bs-toggle="dropdown" aria-expanded="false">
@@ -87,7 +87,7 @@
         {% else %}
         <a href="{% url 'register' %}" class="px-3">注册</a>
         <a href="{% url 'login' %}">登录</a>
-        {% endif %} {% endcomment %}
+        {% endif %}
       </div>
     </nav>
 
@@ -96,18 +96,19 @@
       {% endblock content %}
     </main>
 
-    <div class="container-fluid py-lg-5">
-      <div class="container border-top border-dark">
+    <div class="container-fluid py-lg-5 border-dark">
+      <div class="container border-top ">
         <footer class="d-flex flex-wrap justify-content-between py-3 align-top text-white">
           <p class="col-md-3 mb-0 text-muted">&copy; 2021 Scifanchain.com 赛凡链</p>
-          {% comment %} <ul class="nav col-md-6">
+          <ul class="nav col-md-6">
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">白皮书</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">路线图</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">用户手册</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">关于我们</a></li>
-          </ul> {% endcomment %}
+          </ul>
           <div class="col-md-3 text-end">
-            <a href="https://github.com/scifanchain" target="_blank" class="px-2 text-muted"><i class="bi bi-github"></i></a>
+            <a href="https://github.com/scifanchain" target="_blank" class="px-2 text-muted"><i
+                class="bi bi-github"></i></a>
             <a href="https://t.me/unityoxb" target="_blank" class="px-2 text-muted"><i class="bi bi-telegram"></i></a>
             <a href="https://discord.com/channels/876708038143250472/" target="_blank" class="px-2 text-muted"><i
                 class="bi bi-discord"></i></a>
@@ -119,8 +120,7 @@
     <!-- 引入JS -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/dist/vendor.bundle.js' %}"></script>
-    <script src="{% static 'js/dist/main.bundle.js' %}"></script>
-
+    <script src="{% static 'js/dist/index.bundle.js' %}"></script>
 
     <!-- 加载Scifan的js组件或函数 -->
     {% block extraJsBottom %}{% endblock %}

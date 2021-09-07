@@ -1,6 +1,7 @@
-import {StageEditor, StageView} from './components/stage'
-import ReactDOM from "react-dom";
 import React from "react";
+import ReactDOM from "react-dom";
+import { StageEditor, StageView } from './components.js'
+
 
 const stageEditorWrap = document.getElementById('StageEditorWrap')
 const stageViewWrap = document.getElementById('StageViewWrap')
