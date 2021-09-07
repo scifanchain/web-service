@@ -3,14 +3,41 @@
 {% block title %}我的钱包{% endblock %}
 
 {% block space_main %}
-        <div class="px-5">
-          <div>
-            <h5 class="border-bottom">作品</h5>
+<div class="px-5">
+  <div>
+    <h5 class="border-bottom">助记词</h5>
+    {{mnemonic}}
+  </div>
+  <div>
+    <h5 class="border-bottom">keypair</h5>
+    <table class="table">
+      <tr>
+        <td>ss58_address</td>
+        <td>{{keypair.ss58_address}}</td>
+      </tr>
+      <tr>
+        <td>public_key</td>
+        <td>{{keypair.public_key}}</td>
+      </tr>
+      <tr>
+        <td>private_key</td>
+        <td>{{keypair.private_key}}</td>
+      </tr>
+      <tr>
+      <tr>
+        <td>ss58_format</td>
+        <td>{{keypair.ss58_format}}</td>
+      </tr>
+      <tr>
+        <td>seed_hex</td>
+        <td>{{keypair.seed_hex}}</td>
+      </tr>
+      <tr>
+        <td>crypto_type</td>
+        <td>{{keypair.crypto_type}}</td>
+      </tr>
+    </table>
 
-          </div>
-          <div>
-            <h5 class="border-bottom">动态</h5>
-
-          </div>
-        </div>
+  </div>
+</div>
 {% endblock %}

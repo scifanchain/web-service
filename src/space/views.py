@@ -77,4 +77,4 @@ def wallet(request):
         print('Verified')
         print(keypair)
 
-    return render(request, 'space/wallet.html')
+    return render(request, 'space/wallet.html', {'mnemonic': mnemonic, 'keypair': keypair})
