@@ -86,3 +86,10 @@ html {
     -webkit-transition: background-color .15s ease;
     transition: background-color .15s ease;
 }
+
+
+.help-text>ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
