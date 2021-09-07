@@ -29,6 +29,8 @@ def register(request):
             random_avatar.render("{}/{}.svg".format(path, form.cleaned_data['username']))
 
             return redirect('home')
+        else:
+            print(form.errors)
     else:
         form = UserCreationForm()
 

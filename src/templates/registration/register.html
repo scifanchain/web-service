@@ -11,7 +11,8 @@
         <h3>用户注册</h3>
         <hr />
       {% if form.errors %}
-        <div class="alert alert-danger" role="alert">用户名或密码错误，请重新尝试。</div>
+        <div class="alert alert-danger" role="alert">请修正以下错误重新尝试。</div>
+
       {% endif %}
       <form action="{% url 'register' %}" method="post" class="">
           {% csrf_token %}
@@ -30,13 +31,15 @@
           </div>
 
           <div class="mb-3">
+            {{form.password1.errors}}
             {{ form.password1 }}
             {% if form.password1.help_text %}
-              <span class="small">{{form.password1.help_text}}</span>
+              <div class="small">{{form.password1.help_text}}</div>
             {% endif %}
           </div>
 
            <div class="mb-3">
+            {{form.password2.errors}}
             {{ form.password2 }}
             {% if form.password2.help_text %}
               <span class="small">{{form.password2.help_text}}</span>
