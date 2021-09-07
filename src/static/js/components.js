@@ -203,3 +203,24 @@ export function StageView() {
         <div id={"stageView"}></div>
     )
 }
+
+export function ChangeAvatar() {
+
+    const changeAvatar = () => {
+        axios.get(config.URL + 'space/change_avatar/')
+            .then(function (res) {
+                if (res.data !== "") {
+                    console.log(res.data)
+                    let i = Math.random();
+                    document.getElementById("Avatar").src = res.data + ".svg?i=" + i;
+                    document.getElementById("AvatarTiny").src = res.data + ".svg?i=" + i;
+                }
+            })
+    }
+
+    return (
+        <div className={"text-center"}>
+            <span className={"btn btn-sm btn-light"} onClick={changeAvatar}>换个随机头像</span>
+        </div>
+    )
+}

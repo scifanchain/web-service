@@ -9,22 +9,32 @@ from substrateinterface.exceptions import SubstrateRequestException
 
 from works.models import Stage
 from .forms import StageForm
+from scifanchain.forms import SetPasswordForm
 
 
 def change_avatar(request):
     if request.user.is_authenticated:
-        path = settings.BASE_DIR / "media/avatars/{}".format(request.user.date_joined.year)
+        path = settings.BASE_DIR / \
+            "media/avatars/{}".format(request.user.date_joined.year)
         random_avatar = pa.Avatar.random()
         random_avatar.render("{}/{}.svg".format(path, request.user.username))
 
-        res = "/media/avatars/" + format(request.user.date_joined.year) + "/" + request.user.username
+        res = "/media/avatars/" + \
+            format(request.user.date_joined.year) + "/" + request.user.username
     else:
         res = ''
     return HttpResponse(res)
 
 
 def change_password(request):
-    return render(request, 'space/change_password.html')
+    if request.method == 'POST':
+        form = SetPasswordForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = SetPasswordForm(request.user)
+
+    return render(request, 'space/change_password.html', {'form': form})
 
 
 @login_required
@@ -62,7 +72,7 @@ def wallet(request):
     mnemonic = Keypair.generate_mnemonic()
     keypair = Keypair.create_from_mnemonic(mnemonic)
     signature = keypair.sign("Test123")
-    
+
     if keypair.verify("Test123", signature):
         print('Verified')
         print(keypair)
