@@ -37,6 +37,7 @@ urlpatterns = [
     path('blogs/', include('blogs.urls'), name='blogs'),
     path('works/', include('works.urls'), name='works'),
     path('space/', include('space.urls'), name='space'),
+    path('community/', include('community.urls'), name='community'),
     path('mdeditor/', include('mdeditor.urls')),
     # api
     path('api/', include(router.urls)),

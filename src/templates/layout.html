@@ -35,13 +35,13 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="{% url 'coming' %}">{% trans "Works" %}</a>
+              <a class="nav-link" aria-current="page" href="{% url 'works:index' %}">{% trans "Works" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'coming' %}">{% trans "Community" %}</a>
+              <a class="nav-link" href="{% url 'community:home' %}">{% trans "Community" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'coming' %}">{% trans "Blog" %}</a>
+              <a class="nav-link" href="{% url 'blogs:index' %}">{% trans "Blog" %}</a>
             </li>
           </ul>
         </div>
