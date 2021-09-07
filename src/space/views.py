@@ -9,6 +9,9 @@ from substrateinterface.exceptions import SubstrateRequestException
 
 from works.models import Stage
 from .forms import StageForm
+from scifanchain.forms import SetPasswordForm
+
+from django.core.exceptions import ValidationError
 
 
 def change_avatar(request):
@@ -24,7 +27,16 @@ def change_avatar(request):
 
 
 def change_password(request):
-    return render(request, 'space/change_password.html')
+    if request.method == 'POST':
+        form = SetPasswordForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = SetPasswordForm(request.user)
+
+    print(form.errors)
+
+    return render(request, 'space/change_password.html', {'form': form})
 
 
 @login_required

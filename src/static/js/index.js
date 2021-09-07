@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { StageEditor, StageView } from './components.js'
+import { ChangeAvatar, StageEditor, StageView } from './components.js'
 
 
 const stageEditorWrap = document.getElementById('StageEditorWrap')
 const stageViewWrap = document.getElementById('StageViewWrap')
+const changeAvatar = document.getElementById('ChangeAvatar')
 
 if (stageEditorWrap) {
     ReactDOM.render(
@@ -17,5 +18,12 @@ if (stageViewWrap) {
     ReactDOM.render(
         <StageView/>,
         document.getElementById('StageViewWrap')
+    );
+}
+
+if (changeAvatar) {
+    ReactDOM.render(
+        <ChangeAvatar/> ,
+        document.getElementById('ChangeAvatar')
     );
 }
