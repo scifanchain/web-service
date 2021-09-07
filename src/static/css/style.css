@@ -88,8 +88,21 @@ html {
 }
 
 
+/* 表单
+-------------------------------------------------- */
 .help-text>ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+}
+
+ul.errorlist {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    color:lightcoral;
+    /* font-size: 0.9rem;; */
+}
+ul.errorlist li {
+    padding-top: 1px;
 }
