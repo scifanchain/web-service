@@ -31,7 +31,7 @@ class PostAdmin(admin.ModelAdmin):
     save_on_top = True
     fields = (
         'title',
-        'desc',
+        'summary',
         'category',
         'content',
         'status',

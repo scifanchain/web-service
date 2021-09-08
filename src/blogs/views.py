@@ -76,7 +76,7 @@ class PostDetailView(CommonViewMixin, DetailView):
             'markdown.extensions.extra',  # 标题、表格、引用等基本转换
             'markdown.extensions.codehilite',  # 语法高亮拓展
             'markdown.extensions.toc'  # 自动生成目录
-        ])  # 修改blog.content内容为html
+        ])
 
         return post
 
