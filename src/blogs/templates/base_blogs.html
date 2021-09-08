@@ -1,14 +1,14 @@
 {% extends 'layout.html' %}
 {% load static %}
 
-{%block extracss %}
+{%block extraCss %}
 <link href="{% static 'css/markdown_code.css' %}" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
-<div class="container mb-4 py-4">
+<div class="container-fluid mb-4 py-4">
   <div class="row mb-4">
-    <div class="col-md-3 col-12 text-center">
+    <div class="col-md-2 col-12 text-center">
       <h2 class="h4 bg-light py-2">分类</h2>
       <ul class="navbar-nav">
         {% for menu in menus %}
@@ -24,7 +24,7 @@
         {% endfor %}
       </div>
     </div>
-    <div class="col-md-9 col-12">
+    <div class="col-md-10 col-12">
       {% block blog %}
       {% endblock %}
     </div>

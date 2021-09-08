@@ -26,7 +26,7 @@
       <div class="container">
         <a class="navbar-brand" href="/">
           <img src="{% static 'img/logo.png' %}" alt="" height="30">
-          <span class="px-2">{% trans "赛凡链" %}</span>
+          <span class="px-2">{% translate "赛凡链" %}</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,13 +35,13 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="{% url 'works:index' %}">{% trans "Works" %}</a>
+              <a class="nav-link" aria-current="page" href="{% url 'works:index' %}">{% translate "作品" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'community:home' %}">{% trans "Community" %}</a>
+              <a class="nav-link" href="{% url 'community:home' %}">{% translate "社区" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'blogs:index' %}">{% trans "Blog" %}</a>
+              <a class="nav-link" href="{% url 'blogs:index' %}">{% translate "博客" %}</a>
             </li>
           </ul>
         </div>
@@ -52,12 +52,12 @@
             <i class="bi-plus" style="font-size: 1.5rem;"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">开始创作</a></li>
-            <li><a class="dropdown-item" href="#">参与治理</a></li>
+            <li><a class="dropdown-item" href="#">{% translate "开始创作" %}</a></li>
+            <li><a class="dropdown-item" href="#">{% translate "参与治理" %}</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="#">帮助</a></li>
+            <li><a class="dropdown-item" href="#">{% translate "帮助" %}</a></li>
           </ul>
         </div>
         <div class="dropdown">
@@ -71,22 +71,22 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{% url 'space:home' %}">工作空间</a></li>
-            <li><a class="dropdown-item" href="#">钱包</a></li>
+            <li><a class="dropdown-item" href="{% url 'space:home' %}">{% translate "工作空间" %}</a></li>
+            <li><a class="dropdown-item" href="#">{% translate "钱包" %}</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="#">帮助</a></li>
-            <li><a class="dropdown-item" href="#">设置</a></li>
+            <li><a class="dropdown-item" href="#">{% translate "帮助" %}</a></li>
+            <li><a class="dropdown-item" href="#">{% translate "设置" %}</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{% url 'logout' %}">退出</a></li>
+            <li><a class="dropdown-item" href="{% url 'logout' %}">{% translate "退出" %}</a></li>
           </ul>
         </div>
         {% else %}
-        <a href="{% url 'register' %}" class="px-3">注册</a>
-        <a href="{% url 'login' %}">登录</a>
+        <a href="{% url 'register' %}" class="px-3">{% translate "注册" %}</a>
+        <a href="{% url 'login' %}">{% translate "登录" %}</a>
         {% endif %}
       </div>
     </nav>
@@ -98,20 +98,21 @@
 
     <div class="container-fluid py-lg-5 border-dark">
       <div class="container border-top ">
-        <footer class="d-flex flex-wrap justify-content-between py-3 align-top text-white">
-          <p class="col-md-3 mb-0 text-muted">&copy; 2021 Scifanchain.com 赛凡链</p>
+        <footer class="d-flex flex-wrap justify-content-between py-3 text-white">
+          <p class="col-md-3 text-muted pt-1">&copy; 2021 Scifanchain.com {% translate "赛凡链" %}</p>
           <ul class="nav col-md-6">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">白皮书</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">路线图</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">用户手册</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">关于我们</a></li>
+            <li class="nav-item"><a href="https://docs.scifanchain.com/whitebook/"
+                class="nav-link px-2 text-muted">{% translate "白皮书" %}</a></li>
+            <li class="nav-item"><a href="https://docs.scifanchain.com/roadmap/"
+                class="nav-link px-2 text-muted">{% translate "路线图" %}</a></li>
+            <li class="nav-item"><a href="https://docs.scifanchain.com/manual/"
+                class="nav-link px-2 text-muted">{% translate "用户手册" %}</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">{% translate "关于我们" %}</a></li>
           </ul>
-          <div class="col-md-3 text-end">
-            <a href="https://github.com/scifanchain" target="_blank" class="px-2 text-muted"><i
-                class="bi bi-github"></i></a>
+          <div class="col-md-3 text-end pt-1">
+            <a href="https://github.com/scifanchain" target="_blank" class="px-2 text-muted"><i class="bi bi-github"></i></a>
             <a href="https://t.me/unityoxb" target="_blank" class="px-2 text-muted"><i class="bi bi-telegram"></i></a>
-            <a href="https://discord.com/channels/876708038143250472/" target="_blank" class="px-2 text-muted"><i
-                class="bi bi-discord"></i></a>
+            <a href="https://discord.com/channels/876708038143250472/" target="_blank" class="px-2 text-muted"><i class="bi bi-discord"></i></a>
           </div>
         </footer>
       </div>
