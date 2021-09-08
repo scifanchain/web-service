@@ -89,6 +89,12 @@ class Post(models.Model):
                 status=Status.STATUS_NORMAL).select_related('owner', 'category')
 
         return post_list, category
+    
+    @staticmethod
+    def get_by_tag(tag_id):
+        post_list = Post.objects.filter(tags__id=tag_id)
+
+        return post_list 
 
     @classmethod
     def latest_posts(cls):
@@ -124,12 +130,3 @@ class Comment(models.Model):
             comment_list = post.comment_set.filter(status=Status.STATUS_NORMAL)
 
         return comment_list
-
-
-class CommentForm(ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['content']
-        widgets = {
-            'content': Textarea(attrs={'class': 'form-control form-control-sm', 'rows': 5, }),
-        }

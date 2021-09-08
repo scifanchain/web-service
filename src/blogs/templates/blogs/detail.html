@@ -1,4 +1,4 @@
-{% extends 'base_blogs.html' %}
+{% extends 'layout_blogs.html' %}
 
 {% block blog %}
 {% if post %}
@@ -11,7 +11,7 @@
   {% comment %} <span class="px-2 bg-light">标签：{{ post.tags.all|join:"，" }}</span> {% endcomment %}
   <span class="px-2 bg-light">标签：
     {% for tag in post.tags.all %}
-    <a href="{% url 'blogs:index' %}" class="px-1">{{tag}}</a>
+    <a href="{% url 'blogs:tag' tag.id %}" class="px-1">{{tag}}</a>
     {% endfor %}
   </span>
 </div>
