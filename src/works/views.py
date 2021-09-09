@@ -7,13 +7,25 @@ from .serializers import StageListSerializer, StageDetailSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from rest_framework import generics, routers, serializers, viewsets
-
-
+import json
 
 def index(request):
     return render(request, 'works/index.html')
+
+
+# 检查标题是否重复
+def check_title(request):
+    allow = 'yes'
+    if request.method == "POST":
+        data = json.loads(request.body)
+        stage = Stage.objects.filter(title=data['title']).first()
+        if stage:
+            allow = 'no'
+            
+    return HttpResponse(msg)
+
 
 
 class StageList(generics.ListCreateAPIView):

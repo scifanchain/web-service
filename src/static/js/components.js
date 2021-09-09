@@ -19,6 +19,7 @@ export function StageEditor() {
     const [title, setTitle] = useState('')
     const [titleError, setTitleError] = useState('')
     const [contentError, setContentError] = useState('')
+    const [titleEnable, setTitleEnable] = useState(false)
 
     // get stage content
     // url参数锁定该方法在页面不变更只执行一次
@@ -54,7 +55,6 @@ export function StageEditor() {
 
 
     // 标题值改变
-    // todo: 验证是否有重名标题，有的话给出提示
     function handleChange(e) {
         setTitle(e.target.value)
         if (title.length >= 1) {
@@ -63,13 +63,28 @@ export function StageEditor() {
         console.log(title)
     }
 
-    // 验证标题是否为空
+    // 标题是否重名
+    function checkTitle(e) {
+        axios.post('/works/check_title', {
+            'title': e.target.value
+        }).then(function (res) {
+            if (res.data == 'no') {
+                setTitleEnable(false)
+                setTitleError("这个标题已经有人用了，请修改后再次提交。")
+            } else {
+                setTitleEnable(true)
+            }
+        })
+    }
+
+    // 验证标题
     function titleValidated() {
         if (title.length < 1) {
-            setTitleError("标题不能为空")
+            setTitleError("请为作品设置标题。")
             return false
-        } else {
-            setTitleError('')
+        }
+        if (titleEnable == false) {
+            return false
         }
         return true
     }
@@ -124,7 +139,7 @@ export function StageEditor() {
 
     return (
         <div className={"row"}>
-            <div className={"col-md-3"}>
+            <div className={"col-md-2"}>
                 <h6>渐进式的创作</h6>
                 <p className="small">你的作品可以在后续不断演化。</p>
                 <table className="table caption-top">
@@ -146,18 +161,18 @@ export function StageEditor() {
                 人物
             </div>
             <div className={"col-md-8"}>
-                <input type="text" className={"form-control mb-2 bg-light"} onChange={handleChange}/>
+                <input type="text" className={"form-control mb-2 bg-light"} onChange={handleChange} onBlur={ checkTitle }/>
                 {titleError !== '' &&
-                <p className={"bg-danger"}>{titleError}</p>
+                <p className={"bg-warning bg-opacity-25 p-2 rounded text-danger"}>{titleError}</p>
                 }
                 {contentError !== '' &&
                 <p className={"bg-danger"}>{contentError}</p>
                 }
-                <div className={"stage-editor-wrap bg-light"}>
-                    <div className={"border rounded"} id={"StageEditor"}></div>
+                <div className={"stage-editor-wrap"}>
+                    <div className={"rounded p-4 border bg-light"} id={"StageEditor"}></div>
                 </div>
             </div>
-            <div className={"col-md-1"}>
+            <div className={"col-md-2"}>
                 <div className="sticky-top">
                     <a className="btn btn-small btn-primary px-2 mb-2" onClick={putStage}>
                         <i className="bi-file-earmark-check-fill me-1"></i>

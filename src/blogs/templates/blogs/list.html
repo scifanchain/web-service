@@ -4,12 +4,26 @@
 
 {% for post in posts %}
 
-<div class="row mb-4">
+<div class="mb-4">
     <a class="h4 text-decoration-none" href="{% url 'blogs:detail' post.id %}">{{ post.title }}</a>
-    <div class="my-3">
-        <span class="px-2 bg-light">分类:{{post.category.name}}</span>
-        <span class="px-2 bg-light">标签：{{ post.tags.all|join:"，" }}</span>
+
+    <div class="py-2 mb-1">
+        <span>
+            分类：<a href="{% url 'blogs:category' post.category.id %}">{{ post.category.name }}</a>
+        </span>
+        {% comment %} <span class="px-2 bg-light">标签：{{ post.tags.all|join:"，" }}</span> {% endcomment %}
+        <span class="px-2">标签：
+            {% for tag in post.tags.all %}
+            <a href="{% url 'blogs:tag' tag.id %}" class="px-1 bg-light rounded">{{tag}}</a>
+            {% endfor %}
+        </span>
     </div>
+
+    <div class="small text-secondary pb-1 mb-2 border-bottom">
+        <span class="pe-3"><i class="bi-clock-fill pe-2"></i>创建于：{{ post.created }}</span>
+        <span><i class="bi-clock-history pe-2"></i>更新于：{{ post.updated }}</span>
+    </div>
+
     <div class="mb-4">
          {{post.summary|safe}}
     </div>

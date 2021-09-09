@@ -4,7 +4,7 @@
 {% if post %}
 <h2 class="mb-2">{{ post.title }}</h2>
 
-<div class="py-2 border-bottom mb-1">
+<div class="py-2 mb-1">
   <span>
     分类：<a href="{% url 'blogs:category' post.category.id %}">{{ post.category.name }}</a>
   </span>
@@ -16,9 +16,9 @@
   </span>
 </div>
 
-<div class="small text-secondary">
-  <em class="pe-3">创建于：{{ post.created }}</em>
-  <em>更新于：{{ post.updated }}</em>
+<div class="small text-secondary pb-1 mb-2 border-bottom">
+  <span class="pe-3"><i class="bi-clock-fill pe-2"></i>创建于：{{ post.created }}</span>
+  <span><i class="bi-clock-history pe-2"></i>更新于：{{ post.updated }}</span>
 </div>
 
 <div class="my-4">

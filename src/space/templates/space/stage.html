@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% load static %}
+ {% load editorjs %}
 
 {% block extraJsTop %}
 
@@ -16,8 +17,11 @@
     <div class="col-md-8">
       
       <h4>{{ stage.title }}</h4>
-      <div id="StageViewWrap" class="py-4 bg-light" data-userId="{{ user.id }}" data-stageId="{{ stage.id }}"></div>
-    </div>
+      <div>
+        {{stage.content|editorjs}}
+      </div>
+      {% comment %} <div id="StageViewWrap" class="py-4 bg-light" data-userId="{{ user.id }}" data-stageId="{{ stage.id }}"></div>
+    </div> {% endcomment %}
     <div class="col-md-2">
       <h6>链上数据</h6>
     </div>
