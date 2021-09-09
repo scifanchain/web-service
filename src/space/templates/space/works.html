@@ -3,24 +3,35 @@
 {% block title %}我的作品{% endblock %}
 
 {% block space_main %}
-  <div class="px-5">
+<div class="px-5">
+  <div class="row">
     <div class="text-end">
       <a href="{% url 'space:create_stage' %}" class="btn btn-primary">创建新作品</a>
     </div>
-    <div>
-      <h5 class="border-bottom">作品</h5>
-      <ul class="list-unstyled">
+  </div>
+  <div>
+    <h5 class="border-bottom">作品</h5>
+    <div class="bg-light">
+      {% for stage in stages %}
+      <div class="row py-2 mb-2 border">
+        <div class="col-10">
+          <a href="{% url 'space:stage' stage.id %}" class="px-2">
+            {{ stage.title }}
 
-        {% for stage in stages %}
-          <li class="">
-            <a href="{% url 'space:stage' stage.id %}">{{ stage.title }}</a>
-          </li>
-        {% endfor %}
-
-      </ul>
-    </div>
-    <div>
+          </a>
+          {{stage.created}}
+        </div>
+        <div class="col-2 text-end">
+          <span class="">编辑</span>
+          <span class="">删除</span>
+        </div>
+      </div>
+      {% endfor %}
 
     </div>
   </div>
+  <div>
+
+  </div>
+</div>
 {% endblock %}
