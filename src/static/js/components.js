@@ -36,7 +36,7 @@ export function StageEditor() {
         // 初始化编加器
         function initEditor(data) {
             const editor = new EditorJS({
-                autofocus: true,
+                // autofocus: true,
                 holder: 'StageEditor',
                 data: data,
                 readOnly: false,
@@ -52,7 +52,6 @@ export function StageEditor() {
             });
         }
     }, [url]);
-
 
     // 标题值改变
     function handleChange(e) {
@@ -101,9 +100,6 @@ export function StageEditor() {
     function submitStage(options) {
         axios(options)
             .then(function (response) {
-                if (method === 'post') {
-                    window.location.reload();
-                }
                 console.log(response);
             })
             .catch(function (error) {
@@ -174,14 +170,17 @@ export function StageEditor() {
             </div>
             <div className={"col-md-2"}>
                 <div className="sticky-top">
-                    <a className="btn btn-small btn-primary px-2 mb-2" onClick={putStage}>
+                    <button className="btn btn-small btn-primary px-5 mb-2" onClick={postStage}>
+                        <i className="bi-file-arrow-up-fill me-1"/>
+                        <span className="small">提交</span>
+                    </button>
+                    <br />
+                    <a className="p3-2 mb-2" onClick={putStage}>
                         <i className="bi-file-earmark-check-fill me-1"></i>
                         <span className="small">保存</span>
                     </a>
-                    <a className="btn btn-small btn-primary px-2 mb-2" onClick={postStage}>
-                        <i className="bi-file-arrow-up-fill me-1"/>
-                        <span className="small">提交</span>
-                    </a>
+                    <br />
+                    
                 </div>
             </div>
         </div>

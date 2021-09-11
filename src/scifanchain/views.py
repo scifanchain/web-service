@@ -4,6 +4,8 @@ import python_avatars as pa
 import os
 import datetime
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
 
 
 def home(request):
@@ -21,14 +23,24 @@ def register(request):
             form.save()
 
             # avatar
-            path = settings.BASE_DIR / "media/avatars/{}".format(datetime.datetime.now().year)
+            path = settings.BASE_DIR / \
+                "media/avatars/{}".format(datetime.datetime.now().year)
             is_exists = os.path.exists(path)
             if not is_exists:
                 os.makedirs(path)
             random_avatar = pa.Avatar.random()
-            random_avatar.render("{}/{}.svg".format(path, form.cleaned_data['username']))
+            random_avatar.render(
+                "{}/{}.svg".format(path, form.cleaned_data['username']))
 
-            return redirect('home')
+            # login
+            messages.success(request, '您已成功注册，欢迎来到赛凡链！')
+            new_user = authenticate(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'],
+            )
+            login(request, new_user)
+
+            return redirect('/space/')
         else:
             print(form.errors)
     else:

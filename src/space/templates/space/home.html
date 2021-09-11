@@ -4,13 +4,16 @@
 {% block title %}我的空间{% endblock %}
 
 {% block space_main %}
-  <div>
-    <img src="{% static 'img/slot.jpg' %}" alt="" class="img-fluid">
-    <h5 class="border-bottom">作品</h5>
+<div class="px-4">
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 
-  </div>
-  <div>
-    <h5 class="border-bottom">动态</h5>
+  <h5 class="border-bottom">作品</h5>
 
-  </div>
+</div>
 {% endblock %}

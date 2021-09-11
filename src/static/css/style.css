@@ -68,3 +68,9 @@ ul.errorlist {
 ul.errorlist li {
     padding-top: 1px;
 }
+
+.form-control:focus {
+    border-color: rgb(147, 71, 228);
+    webkit-box-shadow: none;
+    box-shadow: none;
+}

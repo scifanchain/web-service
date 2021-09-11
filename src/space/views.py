@@ -11,6 +11,8 @@ from works.models import Stage
 from .forms import StageForm
 from scifanchain.forms import SetPasswordForm
 
+from django.core.paginator import Paginator
+
 
 # 修改头像
 def change_avatar(request):
@@ -53,7 +55,21 @@ def profile(request):
 # 作品
 def works(request):
     stages = Stage.objects.all()
-    return render(request, 'space/works.html', {"stages": stages})
+
+    paginator = Paginator(stages, 2) # 每页1条记录
+    page = request.GET.get('page', 1) # 获取当前page页码，默认为1
+    try:
+        page_obj = paginator.page(page) # 分页
+    except PageNotAnInteger:
+        page_obj = paginator.page(1) 
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+    is_paginated = True if paginator.num_pages > 1 else False
+    page_range = paginator.get_elided_page_range(page, on_each_side=4, on_ends=3)
+    context = {'page_obj': page_obj, 'paginator': paginator,
+               'is_paginated': is_paginated, 'page_range': page_range}
+
+    return render(request, 'space/works.html',context)
 
 
 def get_stage(request, stage_id):

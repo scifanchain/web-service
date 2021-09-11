@@ -1,67 +1,8 @@
-{% load static %}
-{% load i18n %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="赛凡链scifanchain">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="scifanchain" content="scifanchain">
+{% extends "layout.html" %}
 
-  <title>{% block title %}{% endblock %}-赛凡链</title>
-  <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
-  <link rel="bookmark" href="{% static 'favicon.ico' %}"/>
-  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'css/style.css' %}" rel="stylesheet">
-</head>
-<body>
-<main>
-  <header class="bg-dark">
-    <div class="container-fluid">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/">
-            <img src="{% static 'img/logo.png' %}" alt="" height="24">
-            赛凡链
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                  aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">故事</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">创作坊</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">社区</a>
-              </li>
-            </ul>
+{% block content %}
 
-          </div>
-        </div>
-      </nav>
-    </div>
-  </header>
-  <div class="container py-4">
-    {% block content %}
-    {% endblock %}
-  </div>
-</main>
+<div class="container py-4">{% block content %} {% endblock %}</div>
 
-<nav class="footer navbar navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Scifan Chain</a>
-    <span style="font-family:arial;">Copyright &copy; 2021 scifanchain.com All Rights Reserved.</span>
-    <a href="https://docs.scifanchain.com" target="_blank">文档</a>
-    <a href="https://blogs.scifanchain.com" target="_blank">博客</a>
-  </div>
-</nav>
+{% endblock content %}
 
-</body>
-</html>

@@ -4,34 +4,53 @@
 
 {% block space_main %}
 <div class="px-5">
+
   <div class="row">
     <div class="text-end">
       <a href="{% url 'space:create_stage' %}" class="btn btn-primary">创建新作品</a>
     </div>
   </div>
-  <div>
-    <h5 class="border-bottom">作品</h5>
-    <div class="bg-light">
-      {% for stage in stages %}
-      <div class="row py-2 mb-2 border">
-        <div class="col-10">
-          <a href="{% url 'space:stage' stage.id %}" class="px-2">
-            {{ stage.title }}
 
-          </a>
-          {{stage.created}}
-        </div>
-        <div class="col-2 text-end">
-          <span class="">编辑</span>
-          <span class="">删除</span>
-        </div>
-      </div>
-      {% endfor %}
-
+  <div class="row mb-4">
+    <h5 class="border-bottom mb-4">作品</h5>
+    {% for stage in page_obj %}
+    <div class=" py-2 mb-2 border">
+      <a href="{% url 'space:stage' stage.id %}" class="px-2">
+        {{ stage.title }}
+      </a>
+      {{stage.created}}
+      <div>{{stage.type}} {{stage.status}}</div>
+      <div>编辑</div>
     </div>
+    {% endfor %}
   </div>
-  <div>
 
+  <div class="row">
+    {% if is_paginated %}
+    <ul class="pagination flex-wrap mb-4">
+      {% if page_obj.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+      {% else %}
+      <li class="disabled page-item"><span class="page-link">&laquo;</span></li>
+      {% endif %}
+      {% for i in page_range|default_if_none:page_obj.paginator.get_elided_page_range %}
+      {% if page_obj.number == i %}
+      <li class="active page-item"><span class="page-link">{{ i }} <span class="sr-only"></span></span></li>
+      {% else %}
+      {% if i == page_obj.paginator.ELLIPSIS %}
+      <li class="page-item"><span class="page-link">{{ i }}</span></li>
+      {% else %}
+      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+      {% else %}
+      <li class="disabled page-item"><span class="page-link">&raquo;</span></li>
+      {% endif %}
+    </ul>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

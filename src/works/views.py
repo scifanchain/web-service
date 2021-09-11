@@ -11,6 +11,7 @@ from django.http import Http404, HttpResponse
 from rest_framework import generics, routers, serializers, viewsets
 import json
 
+
 def index(request):
     return render(request, 'works/index.html')
 
@@ -23,9 +24,8 @@ def check_title(request):
         stage = Stage.objects.filter(title=data['title']).first()
         if stage:
             allow = 'no'
-            
-    return HttpResponse(msg)
 
+    return HttpResponse(allow)
 
 
 class StageList(generics.ListCreateAPIView):

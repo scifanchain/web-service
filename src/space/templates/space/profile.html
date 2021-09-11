@@ -1,15 +1,11 @@
-{% extends "layout_space.html" %}
-{% load i18n %}
-
-{% block title %}个人资料{% endblock %}
-
-{% block space_main %}
+{% extends "layout_space.html" %} {% load i18n %} {% block title %}个人资料{%
+endblock %} {% block space_main %}
 <div class="px-5">
   <div>
     <h5 class="border-bottom mb-4">个人信息</h5>
-    <p class="">{% translate "用户名：" %} {{request.user.username}} </p>
-    <p class="">{% translate "邮箱：" %} {{request.user.email}} </p>
-    <p class="">{% translate "注册于：" %} {{request.user.date_joined}} </p>
+    <p class="">{% translate "用户名：" %} {{request.user.username}}</p>
+    <p class="">{% translate "邮箱：" %} {{request.user.email}}</p>
+    <p class="">{% translate "注册于：" %} {{request.user.date_joined}}</p>
   </div>
 </div>
 {% endblock %}
