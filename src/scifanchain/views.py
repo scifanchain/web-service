@@ -6,6 +6,7 @@ import datetime
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from works.models import Word
 
 
 def home(request):
@@ -46,4 +47,6 @@ def register(request):
     else:
         form = UserCreationForm()
 
-    return render(request, 'registration/register.html', {'form': form})
+    word = Word.objects.order_by('?')[:1]
+
+    return render(request, 'registration/register.html', {'form': form, 'word':word})

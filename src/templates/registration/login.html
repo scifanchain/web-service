@@ -8,7 +8,7 @@
 <div class="container py-5">
   <div class="row">
     <div class="col-5">
-      <h4>欢迎登录</h4>
+      <h3>欢迎登录</h3>
       <hr>
       {% if form.errors %}
       <div class="alert alert-danger" role="alert">用户名或密码错误，请重新尝试。</div>
@@ -32,14 +32,12 @@
         </div>
       </form>
       <div class="mt-4 mb-1">
-        <a href="{% url 'password_reset' %}" class="btn btn-secondary btn-sm">重置密码</a>
-        <a href="{% url 'register' %}" class="btn btn-secondary btn-sm">注册新账号</a>
+        <a href="{% url 'password_reset' %}" class="btn btn-secondary btn-sm">通过邮箱重设密码</a>
       </div>
 
     </div>
-    <div class="col-7">
-      <h4>登录须知</h4>
-      <hr>
+    <div class="col-7 ps-5 pt-5">
+    dfkfdsk
     </div>
   </div>
 </div>

@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import Story, Plot, Stage
+from .models import Story, SpaceHub, Stage, Word
+
+
+@admin.register(Word)
+class WordAdmin(admin.ModelAdmin):
+    list_display = ('phrase', 'owner')
 
 
 @admin.register(Story)
@@ -12,14 +17,14 @@ class StoryAdmin(admin.ModelAdmin):
         return super(StoryAdmin, self).save_model(request, obj, form, change)
 
 
-@admin.register(Plot)
-class PlotAdmin(admin.ModelAdmin):
+@admin.register(SpaceHub)
+class SpaceHubAdmin(admin.ModelAdmin):
     list_display = ('name', 'belong_to_story')
     fields = ('name', 'order', 'belong_to_story')
 
     def save_model(self, request, obj, form, change):
         obj.owner = request.user
-        return super(PlotAdmin, self).save_model(request, obj, form, change)
+        return super(SpaceHubAdmin, self).save_model(request, obj, form, change)
 
 
 @admin.register(Stage)

@@ -70,7 +70,8 @@ ul.errorlist li {
 }
 
 .form-control:focus {
-    border-color: rgb(147, 71, 228);
+    border-color: rgb(169, 168, 187);
+    background-color: #f8f8f8;
     webkit-box-shadow: none;
     box-shadow: none;
 }

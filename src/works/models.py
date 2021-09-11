@@ -25,6 +25,12 @@ class Display(IntegerChoices):
     HIDE = 0, '隐藏'
 
 
+class Word(models.Model):
+    phrase = models.TextField()
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name="作者")
+
+
 class Story(models.Model):
     title = models.CharField(max_length=200, verbose_name="故事")
     desc = EditorJsTextField()
@@ -35,9 +41,10 @@ class Story(models.Model):
     history = HistoricalRecords()
 
 
-class Plot(models.Model):
-    name = models.CharField(max_length=200, verbose_name="故事章节")
-    content = EditorJsJSONField(verbose_name='情节内容')
+class SpaceHub(models.Model):
+    name = models.CharField(max_length=200, verbose_name="时空卡槽")
+    content = EditorJsJSONField(verbose_name='描述')
+    era = models.CharField(max_length=20)
     order = models.IntegerField("次序", blank=True, null=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者")
     belong_to_story = models.ForeignKey(Story, on_delete=models.CASCADE, verbose_name="所属故事")
@@ -54,7 +61,7 @@ class Stage(models.Model):
     status = models.PositiveSmallIntegerField("状态", default=Status.STATUS_NORMAL, choices=Status.choices)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者")
     belong_to_story = models.ForeignKey(Story, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="所属故事")
-    belong_to_plot = models.ForeignKey(Plot, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="所属情节")
+    belong_to_hub = models.ForeignKey(SpaceHub, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="所属情节")
     pv = models.PositiveIntegerField("浏览量", default=1)
     uv = models.PositiveIntegerField("访问人数", default=1)
     history = HistoricalRecords()

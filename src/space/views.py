@@ -54,7 +54,7 @@ def profile(request):
 
 # 作品
 def works(request):
-    stages = Stage.objects.all()
+    stages = Stage.objects.filter(owner=request.user.id)
 
     paginator = Paginator(stages, 2) # 每页1条记录
     page = request.GET.get('page', 1) # 获取当前page页码，默认为1
