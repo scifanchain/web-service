@@ -14,6 +14,8 @@ urlpatterns = [
     path('edit_stage/<int:stage_id>/', views.edit_stage, name='edit_stage'),
     # wallet
     path('wallet/', views.wallet, name='wallet'),
+    path('create_wallet/', views.create_wallet, name='create_wallet'),
+
     # avatar
     path('change_avatar/', views.change_avatar, name='change_avatar')
 ]

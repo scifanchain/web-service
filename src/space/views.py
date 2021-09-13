@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 import python_avatars as pa
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 
 from substrateinterface import SubstrateInterface, Keypair
@@ -12,7 +12,6 @@ from .forms import StageForm
 from scifanchain.forms import SetPasswordForm
 
 from django.core.paginator import Paginator
-
 
 # 修改头像
 def change_avatar(request):
@@ -56,7 +55,7 @@ def profile(request):
 def works(request):
     stages = Stage.objects.filter(owner=request.user.id)
 
-    paginator = Paginator(stages, 2) # 每页1条记录
+    paginator = Paginator(stages, 20) # 每页1条记录
     page = request.GET.get('page', 1) # 获取当前page页码，默认为1
     try:
         page_obj = paginator.page(page) # 分页
@@ -117,15 +116,32 @@ def sign_ex(request):
 
 
 def wallet(request):
+    return render(request, 'space/wallet.html')
+
+# 生成钱包
+def create_wallet(request):
     substrate = SubstrateInterface(
         url="ws://127.0.0.1:9944",
     )
     mnemonic = Keypair.generate_mnemonic()
     keypair = Keypair.create_from_mnemonic(mnemonic)
+    data = {
+        'mnemonic': mnemonic, 
+        'keypair': {
+            'ss58_address': keypair.ss58_address,
+            'public_key': keypair.public_key,
+            'private_key': keypair.private_key,
+            'seed_hex': keypair.seed_hex,
+            'ss58_format': keypair.ss58_format,
+            'crypto_type': keypair.crypto_type
+        }
+    }
+
     signature = keypair.sign("Test123")
 
     if keypair.verify("Test123", signature):
         print('Verified')
         print(keypair)
 
-    return render(request, 'space/wallet.html', {'mnemonic': mnemonic, 'keypair': keypair})
+    return JsonResponse(data)
+

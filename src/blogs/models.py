@@ -56,6 +56,9 @@ class Post(models.Model):
         max_length=1024, blank=True, verbose_name=_("摘要"))
     content = MDTextField(
         verbose_name=_("正文"), help_text=_("请使用MarkDown格式"), default="")
+    thumb_height = models.PositiveIntegerField(default=90)
+    thumb_width = models.PositiveIntegerField(default=160)
+    thumb = models.ImageField("封面图", upload_to="blogs/thumbs//%Y", height_field='thumb_height', width_field='thumb_width', blank=True)
     status = models.PositiveSmallIntegerField(
         default=Status.STATUS_NORMAL, choices=Status.choices, verbose_name=_("状态"))
     category = models.ForeignKey(

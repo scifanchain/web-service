@@ -218,6 +218,8 @@ export function StageView() {
     )
 }
 
+
+// 修改头像
 export function ChangeAvatar() {
 
     const changeAvatar = () => {
@@ -236,5 +238,19 @@ export function ChangeAvatar() {
         <div className={"text-center"}>
             <span className={"btn btn-sm btn-light"} onClick={changeAvatar}>换个随机头像</span>
         </div>
+    )
+}
+
+// 生成钱包
+export function CreateWallet() {
+        const createWallet = () => {
+        axios.get(config.URL + 'space/create_wallet/')
+            .then(function (res) {
+                console.log(res)
+            })
+    }
+
+    return (
+        <button className={"btn btn-danger"} onClick={createWallet}>生成钱包</button>
     )
 }
