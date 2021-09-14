@@ -198,7 +198,10 @@ export function StageView() {
     const stageId = document.getElementById("StageViewWrap").getAttribute("data-stageId")
 
     const keyring = new Keyring();
-    const alice = keyring.addFromUri('//unity');
+    // const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
+    keyring.setSS58Format(42);
+
+    const alice = keyring.addFromUri('//Alice');
     const BOB = keyring.addFromUri('//BOB');
     const message = stringToU8a('this is our message, heklo,k');
     const signature = BOB.sign(message);
@@ -209,7 +212,8 @@ export function StageView() {
 
     console.log('bob address: ' + BOB.address)
     console.log('alice address: ' + alice.address)
-
+    console.log(keyring.createFromUri('//Alice').address);
+    
     // Construct
     const wsProvider = new WsProvider('ws://127.0.0.1:9944');
   
@@ -219,8 +223,8 @@ export function StageView() {
         console.log(api.genesisHash.toHex());
 
         const txHash = await api.tx.balances
-            .transfer('3sFVwcjWe9FvDatHrrcfnfk8FoCGBHeMAmNuA75JF5KeRTV8', 123450000)
-            .signAndSend('3sqiJgebhvHQqGbVUQJ5XbnV2KCmTrUXjUwgapcAKJwVyU7u');
+            .transfer(BOB, 123450000)
+            .signAndSend(alice);
 
         // Show the hash
         console.log(`Submitted with hash ${txHash}`);
