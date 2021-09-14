@@ -124,7 +124,8 @@ def create_wallet(request):
         url="ws://127.0.0.1:9944",
     )
     mnemonic = Keypair.generate_mnemonic()
-    keypair = Keypair.create_from_mnemonic(mnemonic)
+    # keypair = Keypair.create_from_mnemonic(mnemonic)
+    keypair = Keypair.create_from_uri('//Alice')
     data = {
         'mnemonic': mnemonic, 
         'keypair': {
@@ -138,6 +139,8 @@ def create_wallet(request):
     }
 
     signature = keypair.sign("Test123")
+
+    print(signature)
 
     if keypair.verify("Test123", signature):
         print('Verified')

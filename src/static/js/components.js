@@ -1,12 +1,18 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
+
+import { Keyring } from '@polkadot/api';
+import { stringToU8a, u8aToHex } from '@polkadot/util';
+
 
 import config from "./config"
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 axios.defaults.xsrfCookieName = "csrftoken"
+
+
 
 // Stage编辑组件
 export function StageEditor() {
@@ -45,9 +51,9 @@ export function StageEditor() {
                     editor.save().then((outputData) => {
                         setDataStage(outputData)
                     }).catch
-                    ((error) => {
-                        console.log('Saving failed: ', error)
-                    });
+                        ((error) => {
+                            console.log('Saving failed: ', error)
+                        });
                 }
             });
         }
@@ -112,7 +118,7 @@ export function StageEditor() {
         if (titleValidated() && contentValidated()) {
             const options = {
                 method: 'put',
-                data: {"title": title, "content": dataStage, "owner": userId},
+                data: { "title": title, "content": dataStage, "owner": userId },
                 url: config.API_URL + 'stages/' + userId,
             };
             submitStage(options);
@@ -125,7 +131,7 @@ export function StageEditor() {
         if (titleValidated() && contentValidated()) {
             const options = {
                 method: 'post',
-                data: {"title": title, "content": dataStage, "owner": userId},
+                data: { "title": title, "content": dataStage, "owner": userId },
                 url: config.API_URL + 'stages/',
             };
             submitStage(options);
@@ -141,28 +147,28 @@ export function StageEditor() {
                 <table className="table caption-top">
                     <caption>List of users</caption>
                     <thead>
-                    <tr>
-                        <td>字数</td>
-                        <td>Token</td>
-                    </tr>
+                        <tr>
+                            <td>字数</td>
+                            <td>Token</td>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>5051</td>
-                        <td>50</td>
-                    </tr>
+                        <tr>
+                            <td>5051</td>
+                            <td>50</td>
+                        </tr>
                     </tbody>
                 </table>
                 <h5>内容元素</h5>
                 人物
             </div>
             <div className={"col-md-8"}>
-                <input type="text" className={"form-control mb-2 bg-light"} onChange={handleChange} onBlur={ checkTitle }/>
+                <input type="text" className={"form-control mb-2 bg-light"} onChange={handleChange} onBlur={checkTitle} />
                 {titleError !== '' &&
-                <p className={"bg-warning bg-opacity-25 p-2 rounded text-danger"}>{titleError}</p>
+                    <p className={"bg-warning bg-opacity-25 p-2 rounded text-danger"}>{titleError}</p>
                 }
                 {contentError !== '' &&
-                <p className={"bg-danger"}>{contentError}</p>
+                    <p className={"bg-danger"}>{contentError}</p>
                 }
                 <div className={"stage-editor-wrap"}>
                     <div className={"rounded p-4 border bg-light"} id={"StageEditor"}></div>
@@ -171,7 +177,7 @@ export function StageEditor() {
             <div className={"col-md-2"}>
                 <div className="sticky-top">
                     <button className="btn btn-small btn-primary px-5 mb-2" onClick={postStage}>
-                        <i className="bi-file-arrow-up-fill me-1"/>
+                        <i className="bi-file-arrow-up-fill me-1" />
                         <span className="small">提交</span>
                     </button>
                     <br />
@@ -180,7 +186,7 @@ export function StageEditor() {
                         <span className="small">保存</span>
                     </a>
                     <br />
-                    
+
                 </div>
             </div>
         </div>
@@ -243,7 +249,20 @@ export function ChangeAvatar() {
 
 // 生成钱包
 export function CreateWallet() {
-        const createWallet = () => {
+    const createWallet = () => {
+
+        const keyring = new Keyring({ type: 'sr25519' });
+
+        const alice = keyring.addFromUri('//Alice', { name: 'Alice default' });
+
+        console.log(`${alice.meta.name}: has address ${alice.address} with publicKey [${alice.publicKey}]`);
+
+        const message = stringToU8a('this is our message');
+        const signature = alice.sign(message);
+        const isValid = alice.verify(message, signature);
+
+        console.log(`The signature ${u8aToHex(signature)}, is ${isValid ? '' : 'in'}valid`);
+
         axios.get(config.URL + 'space/create_wallet/')
             .then(function (res) {
                 console.log(res)
