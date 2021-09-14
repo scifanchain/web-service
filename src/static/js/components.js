@@ -5,6 +5,7 @@ import axios from "axios";
 
 import { Keyring } from '@polkadot/api';
 import { stringToU8a, u8aToHex } from '@polkadot/util';
+import { signatureVerify } from '@polkadot/util-crypto';
 
 
 import config from "./config"
@@ -251,17 +252,24 @@ export function ChangeAvatar() {
 export function CreateWallet() {
     const createWallet = () => {
 
-        const keyring = new Keyring({ type: 'sr25519' });
+        const keyring = new Keyring();
 
-        const alice = keyring.addFromUri('//Alice', { name: 'Alice default' });
+        // create Alice based on the development seed
+        const alice = keyring.addFromUri('//Alice');
 
-        console.log(`${alice.meta.name}: has address ${alice.address} with publicKey [${alice.publicKey}]`);
-
+        // create the message, actual signature and verify
         const message = stringToU8a('this is our message');
         const signature = alice.sign(message);
-        const isValid = alice.verify(message, signature);
+        // const isValid = alice.verify(message, signature);
 
-        console.log(`The signature ${u8aToHex(signature)}, is ${isValid ? '' : 'in'}valid`);
+        // verify the message using Alice's address
+        const { isValid } = signatureVerify(message, signature, alice.address);
+
+        // output the result
+        console.log(`${u8aToHex(signature)} is ${isValid ? 'valid' : 'invalid'}`);
+
+        // output the result
+        // console.log(`${u8aToHex(signature)} is ${isValid ? 'valid' : 'invalid'}`);
 
         axios.get(config.URL + 'space/create_wallet/')
             .then(function (res) {

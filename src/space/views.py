@@ -140,8 +140,6 @@ def create_wallet(request):
 
     signature = keypair.sign("Test123")
 
-    print(signature)
-
     if keypair.verify("Test123", signature):
         print('Verified')
         print(keypair)
