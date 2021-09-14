@@ -137,7 +137,7 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/dist/vendor.bundle.js' %}"></script>
     <script src="{% static 'js/dist/index.bundle.js' %}"></script>
-    <script src="{% static 'js/dist/main.bundle.js' %}"></script>
+    {% comment %} <script src="{% static 'js/dist/components.bundle.js' %}"></script> {% endcomment %}
 
     <!-- 加载Scifan的js组件或函数 -->
     {% block extraJsBottom %}{% endblock %}

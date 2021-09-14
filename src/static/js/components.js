@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom';
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
 
@@ -7,13 +6,10 @@ import { Keyring } from '@polkadot/api';
 import { stringToU8a, u8aToHex } from '@polkadot/util';
 import { signatureVerify } from '@polkadot/util-crypto';
 
-
 import config from "./config"
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 axios.defaults.xsrfCookieName = "csrftoken"
-
-
 
 // Stage编辑组件
 export function StageEditor() {
@@ -248,29 +244,45 @@ export function ChangeAvatar() {
     )
 }
 
+export function PoE() {
+    const keyring = new Keyring();
+
+    const alice = keyring.addFromUri('//Alice');
+
+    const message = stringToU8a('this is our message');
+    const signature = alice.sign(message);
+
+
+    // const isValid = alice.verify(message, signature);
+    const { isValid } = signatureVerify(message, signature, alice.address);
+
+    // output the result
+    console.log(`${u8aToHex(signature)} is ${isValid ? 'valid' : 'invalid'}`);
+    const hashStage = () => {
+
+    }
+
+    const verifyStage = () => {
+
+    }
+
+    const poeStage = () => {
+
+    }
+
+    return (
+        <div>
+            <button onClick={hashStage}>Hash</button>
+            <button onClick={verifyStage}>验证</button>
+            <button onClick={poeStage}>Hash</button>
+        </div>
+    )
+}
+
+
 // 生成钱包
 export function CreateWallet() {
     const createWallet = () => {
-
-        const keyring = new Keyring();
-
-        // create Alice based on the development seed
-        const alice = keyring.addFromUri('//Alice');
-
-        // create the message, actual signature and verify
-        const message = stringToU8a('this is our message');
-        const signature = alice.sign(message);
-        // const isValid = alice.verify(message, signature);
-
-        // verify the message using Alice's address
-        const { isValid } = signatureVerify(message, signature, alice.address);
-
-        // output the result
-        console.log(`${u8aToHex(signature)} is ${isValid ? 'valid' : 'invalid'}`);
-
-        // output the result
-        // console.log(`${u8aToHex(signature)} is ${isValid ? 'valid' : 'invalid'}`);
-
         axios.get(config.URL + 'space/create_wallet/')
             .then(function (res) {
                 console.log(res)
