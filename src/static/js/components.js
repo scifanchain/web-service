@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
 
-import { Keyring } from '@polkadot/api';
+import { Keyring, ApiPromise, WsProvider } from '@polkadot/api';
 import { stringToU8a, u8aToHex } from '@polkadot/util';
 import { signatureVerify } from '@polkadot/util-crypto';
 
@@ -192,12 +192,58 @@ export function StageEditor() {
 
 // stage显示组件
 export function StageView() {
+    const [dataStage, setDataStage] = useState({})
+    const [stageHash, setStageHash] = useState('')
+
     const stageId = document.getElementById("StageViewWrap").getAttribute("data-stageId")
-    console.log(stageId)
+
+    const keyring = new Keyring();
+    const alice = keyring.addFromUri('//unity');
+    const BOB = keyring.addFromUri('//BOB');
+    const message = stringToU8a('this is our message, heklo,k');
+    const signature = BOB.sign(message);
+    // const isValid = alice.verify(message, signature);
+    const { isValid } = signatureVerify(message, signature, alice.address);
+    // output the result
+    console.log(`${u8aToHex(signature)} is ${isValid ? 'valid' : 'invalid'}`);
+
+    console.log('bob address: ' + BOB.address)
+    console.log('alice address: ' + alice.address)
+
+    // Construct
+    const wsProvider = new WsProvider('ws://127.0.0.1:9944');
+  
+    async function test() {
+        const api = await ApiPromise.create({ provider: wsProvider });
+        // Do something
+        console.log(api.genesisHash.toHex());
+
+        const txHash = await api.tx.balances
+            .transfer('3sFVwcjWe9FvDatHrrcfnfk8FoCGBHeMAmNuA75JF5KeRTV8', 123450000)
+            .signAndSend('3sqiJgebhvHQqGbVUQJ5XbnV2KCmTrUXjUwgapcAKJwVyU7u');
+
+        // Show the hash
+        console.log(`Submitted with hash ${txHash}`);
+    }
+
+    const hashStage = () => {
+        setStageHash(alice.sign(stringToU8a(dataStage)))
+        console.log(stringToU8a(dataStage))
+    }
+
+    const verifyStage = () => {
+
+    }
+
+    const poeStage = () => {
+
+    }
+
     useEffect(() => {
         axios.get(config.API_URL + 'stages/' + stageId + '/')
             .then(function (response) {
-                console.log(response);
+                console.log(response.data);
+                setDataStage(response.data)
                 const editor = new EditorJS({
                     autofocus: false,
                     holder: 'stageView',
@@ -217,7 +263,18 @@ export function StageView() {
     }, []);
 
     return (
-        <div id={"stageView"}></div>
+        <div>
+            <div>
+                <button className={'btn btn-primary btn-sm mx-2'} onClick={hashStage}>Hash</button>
+                <button className={'btn btn-primary btn-sm mx-2'} onClick={test}>验证</button>
+                <button className={'btn btn-primary btn-sm mx-2'} onClick={poeStage}>上链存证</button>
+            </div>
+            {stageHash !== '' &&
+                <div>{u8aToHex(stageHash)}</div>
+            }
+           
+            <div id={"stageView"}></div>
+        </div>
     )
 }
 
@@ -243,42 +300,6 @@ export function ChangeAvatar() {
         </div>
     )
 }
-
-export function PoE() {
-    const keyring = new Keyring();
-
-    const alice = keyring.addFromUri('//Alice');
-
-    const message = stringToU8a('this is our message');
-    const signature = alice.sign(message);
-
-
-    // const isValid = alice.verify(message, signature);
-    const { isValid } = signatureVerify(message, signature, alice.address);
-
-    // output the result
-    console.log(`${u8aToHex(signature)} is ${isValid ? 'valid' : 'invalid'}`);
-    const hashStage = () => {
-
-    }
-
-    const verifyStage = () => {
-
-    }
-
-    const poeStage = () => {
-
-    }
-
-    return (
-        <div>
-            <button onClick={hashStage}>Hash</button>
-            <button onClick={verifyStage}>验证</button>
-            <button onClick={poeStage}>Hash</button>
-        </div>
-    )
-}
-
 
 // 生成钱包
 export function CreateWallet() {

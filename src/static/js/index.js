@@ -1,12 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { ChangeAvatar, StageEditor, StageView, CreateWallet, PoE } from './components.js'
+import { ChangeAvatar, StageEditor, StageView, CreateWallet } from './components.js'
 
 const stageEditorWrap = document.getElementById('StageEditorWrap')
 const stageViewWrap = document.getElementById('StageViewWrap')
 const changeAvatar = document.getElementById('ChangeAvatar')
 const createWalletButton = document.getElementById('CreateWalletButton')
-const poeStageWrap = document.getElementById('PoEStageWrap')
 
 if (stageEditorWrap) {
     ReactDOM.render(
@@ -35,11 +34,3 @@ if (createWalletButton) {
         document.getElementById('CreateWalletButton')
     );
 }
-
-if (poeStageWrap) {
-    ReactDOM.render(
-        <PoE />,
-        document.getElementById('PoEStageWrap')
-    );
-}
-
