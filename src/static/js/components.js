@@ -11,6 +11,22 @@ import config from "./config"
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 axios.defaults.xsrfCookieName = "csrftoken"
 
+// Substrate connection config
+const WEB_SOCKET = 'ws://localhost:9944';
+
+const ALICE = '//Alice';
+const BOB = '//Bob';
+
+// This is 1 Unit
+const TX_AMT = 1000000000000000;
+
+
+const connectSubstrate = async () => {
+    const wsProvider = new WsProvider(WEB_SOCKET);
+    const api = await ApiPromise.create({ provider: wsProvider, types: {} });
+    return api;
+};
+
 // Stage编辑组件
 export function StageEditor() {
     const userId = document.getElementById('StageEditorWrap').getAttribute('data-userId')
@@ -197,37 +213,36 @@ export function StageView() {
 
     const stageId = document.getElementById("StageViewWrap").getAttribute("data-stageId")
 
-    const keyring = new Keyring();
-    // const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
-    keyring.setSS58Format(42);
-
-    const alice = keyring.addFromUri('//Alice');
-    const BOB = keyring.addFromUri('//BOB');
-    const message = stringToU8a('this is our message, heklo,k');
-    const signature = BOB.sign(message);
-    // const isValid = alice.verify(message, signature);
-    const { isValid } = signatureVerify(message, signature, alice.address);
-    // output the result
-    console.log(`${u8aToHex(signature)} is ${isValid ? 'valid' : 'invalid'}`);
-
-    console.log('bob address: ' + BOB.address)
-    console.log('alice address: ' + alice.address)
-    console.log(keyring.createFromUri('//Alice').address);
-    
-    // Construct
-    const wsProvider = new WsProvider('ws://127.0.0.1:9944');
   
     async function test() {
-        const api = await ApiPromise.create({ provider: wsProvider });
-        // Do something
-        console.log(api.genesisHash.toHex());
+        const api = await connectSubstrate();
+        const keyring = new Keyring({ type: 'sr25519' });
+        console.log('Connected to Substrate');
 
-        const txHash = await api.tx.balances
-            .transfer(BOB, 123450000)
-            .signAndSend(alice);
+        const alice = keyring.addFromUri(ALICE);
+        const bob = keyring.addFromUri(BOB);
 
-        // Show the hash
-        console.log(`Submitted with hash ${txHash}`);
+        // 读取某个模块 (pallet) 的常量
+        const existentialDeposit = await api.consts.balances.existentialDeposit;
+        console.log(`Balance existentialDeposit: ${existentialDeposit}`);
+
+        // 读取 balance 模块的存储内容
+        const aliceAccount = await api.query.system.account(alice.address);
+        console.log(`Alice Account: ${aliceAccount}`);
+        const aliceFreeBalance = aliceAccount.data.free.toHuman();
+        console.log(`Alice free balance in readable format: ${aliceFreeBalance}`)
+
+        console.log(`alice address is: ${alice.address}`)
+
+        // 订阅 Alice 的帐号资料
+        const unsub = await api.query.system.account(alice.address, aliceAcct => {
+            console.log("Subscribed to Alice account.");
+            const aliceFreeSub = aliceAcct.data.free;
+            console.log(`Alice Account (sub): ${aliceFreeSub}`);
+        });
+
+        // 发送交易
+        // submitTx(api, alice, bob, TX_AMT);
     }
 
     const hashStage = () => {
