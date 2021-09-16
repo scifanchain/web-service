@@ -11,21 +11,6 @@ import config from "./config"
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 axios.defaults.xsrfCookieName = "csrftoken"
 
-// Substrate connection config
-const WEB_SOCKET = 'ws://localhost:9944';
-
-const ALICE = '//Alice';
-const BOB = '//Bob';
-
-// This is 1 Unit
-const TX_AMT = 1000000000000000;
-
-
-const connectSubstrate = async () => {
-    const wsProvider = new WsProvider(WEB_SOCKET);
-    const api = await ApiPromise.create({ provider: wsProvider, types: {} });
-    return api;
-};
 
 // Stage编辑组件
 export function StageEditor() {
@@ -208,54 +193,66 @@ export function StageEditor() {
 
 // stage显示组件
 export function StageView() {
+    // Substrate connection config
+    const WEB_SOCKET = config.WEB_SOCKET;
+
+    const connectSubstrate = async () => {
+        const wsProvider = new WsProvider(WEB_SOCKET);
+        const api = await ApiPromise.create({ provider: wsProvider, types: {} });
+        return api;
+    };
+    
+    // This is 1 Unit
+    const TX_AMT = 1000000000000000;
+
+    // state
     const [dataStage, setDataStage] = useState({})
     const [stageHash, setStageHash] = useState('')
+    const [stageOwner, setStageOwner] = useState('')
+    const [blockNum, setBlockNum] = useState('')
 
     const stageId = document.getElementById("StageViewWrap").getAttribute("data-stageId")
+ 
+    async function verifyStage() {
+        const api = await connectSubstrate();
+        const keyring = new Keyring({ type: 'ed25519' });
+        // just for dev
+        const alice = keyring.addFromUri('//Alice');
+        
+        signature = alice.sign(stringToU8a(dataStage))
+        setStageHash(u8aToHex(signature))
+        
+        // const { isValid } = signatureVerify(message, signature, alice.address);
 
-  
-    async function test() {
+        await api.query.poe
+            .proofs(hashstr, (result) => {
+                // poe storage item returns a tuple, which is represented as an array.
+                setStageOwner(result[0].toString());
+                setBlockNum(result[1].toNumber());
+                console.log(result[0].toString())
+                console.log(result[1].toNumber())
+            })
+            .then(() => {
+                console.log('this is end.');
+            });
+    }
+
+    async function poeStage() {
         const api = await connectSubstrate();
         const keyring = new Keyring({ type: 'sr25519' });
-        console.log('Connected to Substrate');
+        const alice = keyring.addFromUri('//Alice');
 
-        const alice = keyring.addFromUri(ALICE);
-        const bob = keyring.addFromUri(BOB);
+        const txResHandler = ({ status }) =>
+            status.isFinalized
+                ? console.log(`😉 Finalized. Block hash: ${status.asFinalized.toString()}`)
+                : console.log(`Current transaction status: ${status.type}`);
 
-        // 读取某个模块 (pallet) 的常量
-        const existentialDeposit = await api.consts.balances.existentialDeposit;
-        console.log(`Balance existentialDeposit: ${existentialDeposit}`);
+        const txErrHandler = err =>
+            console.log(err);
 
-        // 读取 balance 模块的存储内容
-        const aliceAccount = await api.query.system.account(alice.address);
-        console.log(`Alice Account: ${aliceAccount}`);
-        const aliceFreeBalance = aliceAccount.data.free.toHuman();
-        console.log(`Alice free balance in readable format: ${aliceFreeBalance}`)
-
-        console.log(`alice address is: ${alice.address}`)
-
-        // 订阅 Alice 的帐号资料
-        const unsub = await api.query.system.account(alice.address, aliceAcct => {
-            console.log("Subscribed to Alice account.");
-            const aliceFreeSub = aliceAcct.data.free;
-            console.log(`Alice Account (sub): ${aliceFreeSub}`);
-        });
-
-        // 发送交易
-        // submitTx(api, alice, bob, TX_AMT);
-    }
-
-    const hashStage = () => {
-        setStageHash(alice.sign(stringToU8a(dataStage)))
-        console.log(stringToU8a(dataStage))
-    }
-
-    const verifyStage = () => {
-
-    }
-
-    const poeStage = () => {
-
+        const poe = await api.tx.poe.createProof(stageHash).signAndSend(alice, txResHandler)
+            .catch(txErrHandler);
+        console.log("poe:" + poe)
     }
 
     useEffect(() => {
@@ -284,14 +281,13 @@ export function StageView() {
     return (
         <div>
             <div>
-                <button className={'btn btn-primary btn-sm mx-2'} onClick={hashStage}>Hash</button>
-                <button className={'btn btn-primary btn-sm mx-2'} onClick={test}>验证</button>
+                <button className={'btn btn-primary btn-sm mx-2'} onClick={verifyStage}>验证Hash</button>
                 <button className={'btn btn-primary btn-sm mx-2'} onClick={poeStage}>上链存证</button>
             </div>
             {stageHash !== '' &&
                 <div>{u8aToHex(stageHash)}</div>
             }
-           
+
             <div id={"stageView"}></div>
         </div>
     )
