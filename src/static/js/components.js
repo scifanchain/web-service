@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { Keyring, ApiPromise, WsProvider } from '@polkadot/api';
 import { stringToU8a, u8aToHex } from '@polkadot/util';
-import { signatureVerify } from '@polkadot/util-crypto';
+import { signatureVerify, mnemonicGenerate } from '@polkadot/util-crypto';
 
 import config from "./config"
 
@@ -201,7 +201,7 @@ export function StageView() {
         const api = await ApiPromise.create({ provider: wsProvider, types: {} });
         return api;
     };
-    
+
     // This is 1 Unit
     const TX_AMT = 1000000000000000;
 
@@ -212,16 +212,16 @@ export function StageView() {
     const [blockNum, setBlockNum] = useState('')
 
     const stageId = document.getElementById("StageViewWrap").getAttribute("data-stageId")
- 
+
     async function verifyStage() {
         const api = await connectSubstrate();
         const keyring = new Keyring({ type: 'ed25519' });
         // just for dev
         const alice = keyring.addFromUri('//Alice');
-        
+
         signature = alice.sign(stringToU8a(dataStage))
         setStageHash(u8aToHex(signature))
-        
+
         // const { isValid } = signatureVerify(message, signature, alice.address);
 
         await api.query.poe
@@ -316,16 +316,64 @@ export function ChangeAvatar() {
     )
 }
 
+
 // 生成钱包
 export function CreateWallet() {
-    const createWallet = () => {
+    const [mnemonicWrods, setMnemonicWords] = useState('')
+
+    function makeMnemonic() {
+        const mnemonic = mnemonicGenerate();
+        setMnemonicWords(mnemonic)
+        console.log(mnemonic)
+    }
+
+    async function makeWallet() {
+        // Substrate connection config
+        const WEB_SOCKET = config.WEB_SOCKET;
+
+        const connectSubstrate = async () => {
+            const wsProvider = new WsProvider(WEB_SOCKET);
+            const api = await ApiPromise.create({ provider: wsProvider, types: {} });
+            return api;
+        };
+
+        const api = await connectSubstrate();
+        const keyring = new Keyring();
+
+        // create & add the pair to the keyring with the type and some additional
+        // metadata specified
+        const pair = keyring.addFromUri(mnemonic, { name: 'first pair' }, 'ed25519');
+
         axios.get(config.URL + 'space/create_wallet/')
             .then(function (res) {
                 console.log(res)
             })
+
+        // the pair has been added to our keyring
+        console.log(keyring.pairs.length, 'pairs available');
+
+        // log the name & address (the latter encoded with the ss58Format)
+        console.log(pair.meta.name, 'has address', pair.address);
+        console.log(pair)
     }
 
     return (
-        <button className={"btn btn-danger"} onClick={createWallet}>生成钱包</button>
+        <div>
+            <p>在区块链中，钱包是一个基本工具，拥有钱包才能获取SFT资产，进行交易、参与社区治理等。</p>
+            <button className={"btn btn-danger"} onClick={makeMnemonic}>生成钱包</button>
+            {mnemonicWrods !== '' &&
+                <div className={'py-3'}>
+                    <h2>助记词</h2>
+                    <h4 className={'bg-success bg-opacity-10 p-3 border text-danger'}>{mnemonicWrods}</h4>
+                    <p>助记词只是私钥的另一种展现形式。由12个英文单词组成。如果由于某种原因造成钱包丢失，只要你记住这些单词，按照顺序在钱包中输入，就能恢复钱包并且进行任意操作。如果别人拿到了你的助记词，就相当于拿到了你的私钥，对你的资产进行掌控。</p>
+                    <p>所以以上助记词对您的钱包非常重要！为了安全起见，它只在生成时出现一次，所以请<span className={'text-danger fw-bold'}>现在立即</span>将上面的助记词用纸笔记下来或打印。</p>
+                    <p>在存储私钥、助记词时，我们都建议采用离线形式（手抄、打印等）进行数据备份，同时将备份好的内容妥善保管。我们不建议您进行截屏、网络传输（QQ、微信）、云端存储等方式备份，这些方式都有可能遭遇攻击，从而造成资产损失。</p>
+                    <p>当您确保记录好助记词之后，再点以下按钮继续操作。</p>
+                    <button className={'btn btn-success'}>继续</button>
+                </div>
+
+            }
+        </div>
+
     )
 }
