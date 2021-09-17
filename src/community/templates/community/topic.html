@@ -1,19 +1,51 @@
 {% extends "layout.html" %}
-{% load widget_tweaks%}
-
 
 {% block content %}
 
-<div class="container py-3">
-    <form action="{% url 'community:create_topic' %}" method="post">
+<div class="container py-4">
+
+    <nav aria-label="breadcrumb" class="bg-light px-2 rounded">
+        <ol class="breadcrumb py-2">
+            <li class="breadcrumb-item"><a href="/">首页</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'community:home' %}">社区</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'community:channel' topic.channel_id %}">{{topic.channel}}</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{topic.title}}</li>
+        </ol>
+    </nav>
+
+    <h2>{{topic.title}}</h2>
+    <p class="small text-black-50">
+        <span class="pe-4">{{topic.owner}}</span>
+        <span class="pe-4">发布于：{{topic.created}}</span>
+        <span>更新于：{{topic.updated}}</span>
+    </p>
+    <hr>
+    <div class="mb-4">
+        {{topic.topic_body|safe}}
+    </div>
+
+    <h5 class="bg-light ps-3 py-2">回复</h5>
+
+    {% for reply in replies %}
+    <div class="mb-2 border pt-3 ps-3 rounded">
+        <p><span class="pe-2">{{reply.owner}}</span>回复说：</p>
+        {{reply.reply_body|safe}}
+        <p class="small text-black-50">
+            <span class="pe-4">{{reply.created}}</span>
+        </p>
+    </div>
+    {% endfor %}
+
+    <form action="{% url 'community:topic' topic.id %}" method="POST">
         {% csrf_token %}
-        <div class="mb-2">{{form.title|add_class:"form-control"}}</div>
-        <div class="mb-2">{{form.channel|add_class:"form-select"}}</div>
-        <div class="mb-3">
-            {{form.topic_body}}
-        </div>
-        <button type="submit" class="btn btn-danger px-4">提交</button>
+        {{form.reply_body}}
+
+        <button type="submit" class="btn btn-danger px-4">提交回复</button>
+
     </form>
+
 </div>
+
 
 {% endblock content %}

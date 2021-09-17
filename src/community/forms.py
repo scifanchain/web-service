@@ -9,3 +9,12 @@ class TopicForm(ModelForm):
         widgets = {
             'topic_body':SummernoteWidget(),
         }
+
+
+class ReplyForm(ModelForm):
+    class Meta:
+        model = Reply
+        fields = ['reply_body',]
+        widgets = {
+            'reply_body':SummernoteWidget(),
+        }

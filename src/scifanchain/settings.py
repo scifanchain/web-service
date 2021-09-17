@@ -179,7 +179,7 @@ SUMMERNOTE_CONFIG = {
         
         # 编辑窗口 size
         'width': '100%',
-        'height': '450',
+        'height': '300',
  
         # 语言设置
         'lang': None,
@@ -194,7 +194,7 @@ SUMMERNOTE_CONFIG = {
             ['color', ['color']],
             ['para', ['ul', 'ol', 'paragraph']],
             ['table', ['table']],
-            ['insert', ['link', 'picture', 'video']],
+            ['insert', ['link', 'picture']],
             ['view', ['redo', 'undo', 'fullscreen', 'codeview',]],
         ],
     },

@@ -39,7 +39,7 @@ class Topic(models.Model):
 class Reply(models.Model):
     target = models.ForeignKey(
         Topic, verbose_name=_("回复主题"), on_delete=models.CASCADE)
-    reply_body = models.CharField(max_length=500, verbose_name=_("内容"))
+    reply_body = models.CharField(max_length=1000, verbose_name=_("回复"))
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("作者"))
     status = models.PositiveSmallIntegerField(
         default=Status.STATUS_NORMAL, choices=Status.choices, verbose_name=_("状态"))

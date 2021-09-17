@@ -32,7 +32,7 @@
         </tr>
         {% for topic in topics %}
         <tr>
-          <td> <a href="{% url 'community:topic_list' topic.id %}">{{topic.title}}</a> </td>
+          <td> <a href="{% url 'community:topic' topic.id %}">{{topic.title}}</a> </td>
           <td> {{topic.owner}}</td>
           <td class="text-end small text-black-50"> {{topic.created}}</td>
         </tr>

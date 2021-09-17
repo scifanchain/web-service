@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
-from .models import Channel, Topic
-from .forms import TopicForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Channel, Topic, Reply
+from .forms import TopicForm, ReplyForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -11,6 +11,7 @@ def home(request):
     total = Topic.objects.count()
     return render(request, 'community/home.html', {'channels':channels, 'topics':topics, 'total':total})
 
+
 def channel(request, channel_id):
     channels = Channel.objects.all()
     topics = Topic.objects.all().filter(channel=channel_id)
@@ -18,8 +19,24 @@ def channel(request, channel_id):
 
     return render(request, 'community/home.html', {'channels':channels, 'topics':topics, 'total':total, 'channel_id':channel_id})
 
-def topic_list(request, topic_id):
-    return render(request, 'community/topic_list.html')
+
+def topic(request, topic_id):
+    topic = get_object_or_404(Topic, pk=topic_id)
+    replies = Reply.objects.filter(target=topic_id).all()
+
+    if request.method == "POST":
+        form = ReplyForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.target = topic
+            obj.owner = request.user
+            obj.save()
+            return redirect('/community/topic/' + str(topic_id))
+    else:
+        form = ReplyForm()
+    
+    return render(request, 'community/topic.html', {"topic":topic, 'form':form, 'replies':replies})
+
 
 @login_required()
 def create_topic(request):
@@ -32,5 +49,7 @@ def create_topic(request):
             return redirect('/community/')
     else:
         form = TopicForm()
-    return render (request, 'community/topic.html', {'form':form})
+    return render (request, 'community/create_topic.html', {'form':form})
+
+
 
