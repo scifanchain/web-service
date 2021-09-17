@@ -25,7 +25,10 @@ class Topic(models.Model):
     title = models.CharField(max_length=100, verbose_name="标题")
     post = models.CharField(max_length=200, verbose_name="内容")
     category = models.ForeignKey(TopicCategory, on_delete=models.CASCADE, verbose_name="分类")
+    status = models.PositiveSmallIntegerField(
+        default=Status.STATUS_NORMAL, choices=Status.choices, verbose_name=_("状态"))
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者")
+    top = models.SmallIntegerField()
     created = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     updated = models.DateTimeField(auto_now=True, verbose_name="修改时间")
 
