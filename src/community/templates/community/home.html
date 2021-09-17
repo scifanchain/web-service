@@ -2,13 +2,43 @@
 
 {% block content %}
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-3">
-      <h3>频道</h3>
+<div class="container py-4">
+  <ul class="nav nav-tabs mb-2">
+    <li class="nav-item">
+      <a class="nav-link {% if not channel_id  %} active {% endif %}" aria-current="page" href="{% url 'community:home' %}">全部</a>
+    </li>
+    {% for channel in channels %}
+    <li class="nav-item">
+      <a class="nav-link {% if channel_id == channel.id %} active {% endif %}"
+        href="{% url 'community:channel' channel.id %}">{{channel.name}}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="row mb-2">
+    <div class="col-md-9 small text-black-50 pt-2">主题数量：{{total}}</div>
+    <div class="col-md-3 text-end">
+       <a href="{% url 'community:create_topic' %}" class="btn btn-danger btn-sm px-4">发表主题</a>
     </div>
-    <div class="col-md-9">
-      <h4>主题</h4>
+   
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      
+      <table class="table border">
+        <tr>
+          <th>主题</th>
+          <th>作者</th>
+          <th class="text-end">发布时间</th>
+        </tr>
+        {% for topic in topics %}
+        <tr>
+          <td> <a href="{% url 'community:topic_list' topic.id %}">{{topic.title}}</a> </td>
+          <td> {{topic.owner}}</td>
+          <td class="text-end small text-black-50"> {{topic.created}}</td>
+        </tr>
+
+        {% endfor %}
+      </table>
     </div>
   </div>
 </div>

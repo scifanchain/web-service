@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'space',
     'widget_tweaks',
     'mdeditor',
+    'django_summernote',
     'taggit',
 ]
 
@@ -167,3 +168,63 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # After login
 LOGIN_REDIRECT_URL = '/space/'
+
+SUMMERNOTE_CONFIG = {
+    'iframe': True,
+    # 如果你本身已使用Bootstrap/jQuery主题
+    # 'iframe': False,
+    'summernote': {
+        # airMode不显示工具栏，右键打开时显示
+    'airMode': False,
+        
+        # 编辑窗口 size
+        'width': '100%',
+        'height': '450',
+ 
+        # 语言设置
+        'lang': None,
+ 
+        # 工具栏图标
+        # Summernote - Super Simple WYSIWYG editor
+        'toolbar': [
+            ['style', ['style',]],
+            ['font', ['bold', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['redo', 'undo', 'fullscreen', 'codeview',]],
+        ],
+    },
+ 
+ 
+    # 上传图片需要用户先登录.
+    'attachment_require_authentication': True,
+ 
+ 
+    # Set `upload_to` function for attachments.
+    # 'attachment_upload_to': my_custom_upload_to_func(),
+ 
+ 
+    # Set custom storage class for attachments.
+    # 'attachment_storage_class': 'my.custom.storage.class.name',
+    
+    # You can completely disable the attachment feature.
+    'disable_attachment': False,
+    
+    # Set to `True` to return attachment paths in absolute URIs.
+    'attachment_absolute_uri': False,
+    
+    # test_func in summernote upload view. (Allow upload images only when user passes the test)
+    # Using the Django authentication system
+    # ```
+    # def example_test_func(request):
+    #     return request.user.groups.filter(name='group_name').exists()
+    # ```
+    # 'test_func_upload_view': example_test_func,
+    
+    # 懒加载
+    'lazy': True,
+}

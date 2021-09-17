@@ -39,6 +39,7 @@ urlpatterns = [
     path('space/', include('space.urls'), name='space'),
     path('community/', include('community.urls'), name='community'),
     path('mdeditor/', include('mdeditor.urls')),
+    path('summernote/', include('django_summernote.urls')),
     # api
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
