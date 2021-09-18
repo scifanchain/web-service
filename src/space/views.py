@@ -3,6 +3,7 @@ import python_avatars as pa
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
 
 from substrateinterface import SubstrateInterface, Keypair
 from substrateinterface.exceptions import SubstrateRequestException
@@ -119,30 +120,9 @@ def wallet(request):
     return render(request, 'space/wallet.html')
 
 # 生成钱包
+@csrf_protect
 def create_wallet(request):
-    substrate = SubstrateInterface(
-        url="ws://127.0.0.1:9944",
-    )
-    mnemonic = Keypair.generate_mnemonic()
-    # keypair = Keypair.create_from_mnemonic(mnemonic)
-    keypair = Keypair.create_from_uri('//Alice')
-    data = {
-        'mnemonic': mnemonic, 
-        'keypair': {
-            'ss58_address': keypair.ss58_address,
-            'public_key': keypair.public_key,
-            'private_key': keypair.private_key,
-            'seed_hex': keypair.seed_hex,
-            'ss58_format': keypair.ss58_format,
-            'crypto_type': keypair.crypto_type
-        }
-    }
-
-    signature = keypair.sign("Test123")
-
-    if keypair.verify("Test123", signature):
-        print('Verified')
-        print(keypair)
-
-    return JsonResponse(data)
+    if request.method == "POST":
+        return HttpResponse("yes")
+    return HttpResponse("no")
 

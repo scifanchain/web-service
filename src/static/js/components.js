@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
 
-import { Keyring, ApiPromise, WsProvider } from '@polkadot/api';
+import { ApiPromise, WsProvider } from '@polkadot/api';
 import { stringToU8a, u8aToHex } from '@polkadot/util';
 import { signatureVerify, mnemonicGenerate } from '@polkadot/util-crypto';
+import { Keyring } from '@polkadot/keyring';
 
 import config from "./config"
 
@@ -316,7 +317,6 @@ export function ChangeAvatar() {
     )
 }
 
-
 // 生成钱包
 export function CreateWallet() {
     const [mnemonicWrods, setMnemonicWords] = useState('')
@@ -342,19 +342,21 @@ export function CreateWallet() {
 
         // create & add the pair to the keyring with the type and some additional
         // metadata specified
-        const pair = keyring.addFromUri(mnemonic, { name: 'first pair' }, 'ed25519');
+        const pair = keyring.addFromUri(mnemonicWrods, { name: 'first pair' }, 'ed25519');
 
-        axios.get(config.URL + 'space/create_wallet/')
-            .then(function (res) {
-                console.log(res)
-            })
+        axios.post(config.URL + 'space/create_wallet/', {
+            'address': pair.address,
+            'public_key': pair.publicKey
+        }).then(function (res) {
+            console.log(res)
+        })
 
         // the pair has been added to our keyring
         console.log(keyring.pairs.length, 'pairs available');
 
         // log the name & address (the latter encoded with the ss58Format)
         console.log(pair.meta.name, 'has address', pair.address);
-        console.log(pair)
+        console.log(pair.meta.name, 'has public_key', u8aToHex(pair.publicKey));
     }
 
     return (
@@ -369,7 +371,7 @@ export function CreateWallet() {
                     <p>所以以上助记词对您的钱包非常重要！为了安全起见，它只在生成时出现一次，所以请<span className={'text-danger fw-bold'}>现在立即</span>将上面的助记词用纸笔记下来或打印。</p>
                     <p>在存储私钥、助记词时，我们都建议采用离线形式（手抄、打印等）进行数据备份，同时将备份好的内容妥善保管。我们不建议您进行截屏、网络传输（QQ、微信）、云端存储等方式备份，这些方式都有可能遭遇攻击，从而造成资产损失。</p>
                     <p>当您确保记录好助记词之后，再点以下按钮继续操作。</p>
-                    <button className={'btn btn-success'}>继续</button>
+                    <button className={'btn btn-success'} onClick={makeWallet}>继续</button>
                 </div>
 
             }
