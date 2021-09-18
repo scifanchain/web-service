@@ -319,7 +319,10 @@ export function ChangeAvatar() {
 
 // 生成钱包
 export function CreateWallet() {
+
     const [mnemonicWrods, setMnemonicWords] = useState('')
+    const [address, setAddress] = useState('')
+    const [publickey, setPublickey] = useState('')
 
     function makeMnemonic() {
         const mnemonic = mnemonicGenerate();
@@ -345,9 +348,15 @@ export function CreateWallet() {
         const pair = keyring.addFromUri(mnemonicWrods, { name: 'first pair' }, 'ed25519');
 
         axios.post(config.URL + 'space/create_wallet/', {
-            'address': pair.address,
-            'public_key': pair.publicKey
+            address: pair.address,
+            publickey: u8aToHex(pair.publicKey)
         }).then(function (res) {
+            if (res.data.code == 0) {
+                setAddress(pair.address)
+                setPublickey(u8aToHex(pair.publicKey))
+            } else {
+                console.log(res.data.msg)
+            }
             console.log(res)
         })
 
@@ -376,6 +385,23 @@ export function CreateWallet() {
 
             }
         </div>
+    )
+}
 
+export function Wallet() {
+
+    const WEB_SOCKET = config.WEB_SOCKET;
+    const wsProvider = new WsProvider(WEB_SOCKET);
+    const WEE = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNo";
+
+    useEffect(async () => {
+        const api = await ApiPromise.create({ provider: wsProvider, types: {} });
+        console.log(api.genesisHash.toHex());
+        console.log(api.rpc.state.getMetadata());
+        console.log(api.derive.chain.bestNumber);
+    })
+    
+    return (
+        <div>你拥有的SFT：</div>
     )
 }

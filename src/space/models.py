@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 
 
 class Wallet(models.Model):
-    public_key = models.CharField(max_length=256)
+    kind = models.CharField(max_length=50, default='')
+    publickey = models.CharField(max_length=256)
     address = models.CharField(max_length=256)
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE)

@@ -4,15 +4,33 @@
 
 {% block space_main %}
 <div class="px-5">
-
-  <div id="CreateWalletButton"></div>
+  {% if not wallet %}
+    <div id="CreateWalletButton"></div>
+  {% else %}
+     <div id="WalletWrap"></div>
+  {% endif %}
+  
 
   <div>
     <p>区块链钱包</p>
     <p>
       由于私钥不方便记忆，因此出现了助记词，助记词只是私钥的另一种展现形式。一般由12或24个英文单词组成，为了方便国内用户，也有提供汉字版本助记词。只要你记住这些单词，按照顺序在钱包中输入，就能恢复钱包并且进行任意操作。如果别人拿到了你的助记词，就相当于拿到了你的私钥，就可以对你的资产进行掌控了。
     </p>
+    <table class="table border">
+      <tr>
+        <td>钱包地址</td>
+        <td>{{wallet.address}}</td>
+      </tr>
+      <tr>
+        <td>公钥</td>
+        <td>{{wallet.publickey}}</td>
+      </tr>
+
+    </table>
   </div>
-  
+  <div class="col-md-3">
+
+  </div>
+
 </div>
 {% endblock %}

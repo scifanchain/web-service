@@ -3,16 +3,20 @@ import python_avatars as pa
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_protect
 
 from substrateinterface import SubstrateInterface, Keypair
 from substrateinterface.exceptions import SubstrateRequestException
 
 from works.models import Stage
+from .models import Wallet
 from .forms import StageForm
 from scifanchain.forms import SetPasswordForm
 
 from django.core.paginator import Paginator
+
+import json
 
 # 修改头像
 def change_avatar(request):
@@ -115,14 +119,37 @@ def sign_ex(request):
 
     return render(request, 'space/sign_ex.html', {'receipt': receipt})
 
-
+@login_required
 def wallet(request):
-    return render(request, 'space/wallet.html')
+    wallet = Wallet.objects.filter(owner_id=request.user.id)
+    return render(request, 'space/wallet.html', {
+        'wallet': wallet
+    })
 
 # 生成钱包
+@require_POST
 @csrf_protect
 def create_wallet(request):
     if request.method == "POST":
-        return HttpResponse("yes")
-    return HttpResponse("no")
+        data = json.loads(request.body)
+        wallet = Wallet.objects.get(owner_id=request.user.id)
+        if not wallet:
+            wallet = Wallet()
+            wallet.address = data['address']
+            wallet.publickey = data['publickey']
+            wallet.owner = request.user
+            wallet.save()
+            return JsonResponse({
+                'msg':'yes',
+                'code':0
+                })
+        else:
+            return JsonResponse({
+                'msg':'you have the wallet',
+                'code':1
+                })
+    return JsonResponse({
+        'msg':"error",
+        'code':2
+    })
 
