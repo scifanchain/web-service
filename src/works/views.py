@@ -1,14 +1,12 @@
 from django.shortcuts import render
-from django.http.response import JsonResponse
 from .models import Stage
-from django.core import serializers
 from .serializers import StageListSerializer, StageDetailSerializer
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from django.http import Http404, HttpResponse
-from rest_framework import generics, routers, serializers, viewsets
+from rest_framework import generics, viewsets
 import json
 
 

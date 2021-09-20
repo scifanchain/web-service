@@ -1,3 +1,6 @@
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 from django.shortcuts import render, redirect
 from .forms import UserCreationForm
 import python_avatars as pa
@@ -15,7 +18,7 @@ def home(request):
 
 def coming(request):
     return render(request, 'coming.html')
-
+    
 
 def register(request):
     if request.method == 'POST':
