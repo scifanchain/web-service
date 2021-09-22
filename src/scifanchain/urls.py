@@ -12,6 +12,7 @@ from rest_framework_simplejwt.views import (
 )
 
 from works.views import StageViewSet
+from space.views import UserViewSet
 
 
 # Serializers define the API representation.
@@ -35,6 +36,7 @@ router.register('stages', StageViewSet)
 urlpatterns = [
     path('', views.home, name='home'),
     path('coming/', views.coming, name='coming'),
+    path('register/', views.register, name='register'),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/register/', views.register, name='register'),
@@ -47,7 +49,9 @@ urlpatterns = [
     # api
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
-    # token
+    
+
+    path('api/users/', UserViewSet),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,3 +1,10 @@
+
+from rest_framework.response import Response
+from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework import viewsets
+from django.contrib.auth.models import User
+from django.forms.widgets import ClearableFileInput
 from django.shortcuts import render, redirect, get_object_or_404
 import python_avatars as pa
 from django.conf import settings
@@ -16,7 +23,11 @@ from scifanchain.forms import SetPasswordForm
 
 from django.core.paginator import Paginator
 
+from space.permissions import IsSelfOrReadOnly
+from space.serializers import UserRegisterSerializer
+
 import json
+
 
 # 修改头像
 def change_avatar(request):
@@ -43,6 +54,21 @@ def change_password(request):
         form = SetPasswordForm(request.user)
 
     return render(request, 'space/change_password.html', {'form': form})
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserRegisterSerializer
+    lookup_field = 'username'
+
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            self.permission_classes = [AllowAny]
+        else:
+            self.permission_classes = [
+                IsAuthenticatedOrReadOnly, IsSelfOrReadOnly]
+
+        return super().get_permissions()
 
 
 # 个人空间首页
@@ -128,7 +154,6 @@ def wallet(request):
 
 # 生成钱包
 @require_POST
-@csrf_protect
 def create_wallet(request):
     if request.method == "POST":
         data = json.loads(request.body)
