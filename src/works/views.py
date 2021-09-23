@@ -33,7 +33,7 @@ class StageViewSet(viewsets.ModelViewSet):
     queryset = Stage.objects.all()
     serializer_class = StageSerializer
 
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticated,]
 
     # 新增代码
     def perform_create(self, serializer):

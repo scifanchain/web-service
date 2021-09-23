@@ -154,7 +154,6 @@ def wallet(request):
     })
 
 # 生成钱包
-@api_view(['POST'])
 @permission_classes((IsAuthenticated, ))
 def save_wallet(request):
     if request.method == "POST":
