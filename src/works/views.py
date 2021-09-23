@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from .models import Stage
-from .serializers import StageListSerializer, StageDetailSerializer
+from .serializers import StageSerializer, StageListSerializer, StageDetailSerializer
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from django.http import Http404, HttpResponse
 from rest_framework import generics, viewsets
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from works.permissions import IsAdminUserOrReadOnly
 import json
 
 
@@ -26,15 +28,12 @@ def check_title(request):
     return HttpResponse(allow)
 
 
-class StageList(generics.ListCreateAPIView):
-    queryset = Stage.objects.all()
-    serializer_class = StageListSerializer
-
-
 # ViewSets define the view behavior.
 class StageViewSet(viewsets.ModelViewSet):
     queryset = Stage.objects.all()
-    serializer_class = StageListSerializer
+    serializer_class = StageSerializer
+
+    permission_classes = [IsAdminUser]
 
     # 新增代码
     def perform_create(self, serializer):

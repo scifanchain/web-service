@@ -1,7 +1,6 @@
 
 from rest_framework.response import Response
-from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework import viewsets
 from django.contrib.auth.models import User
 from django.forms.widgets import ClearableFileInput
@@ -25,6 +24,8 @@ from django.core.paginator import Paginator
 
 from space.permissions import IsSelfOrReadOnly
 from space.serializers import UserRegisterSerializer
+
+from rest_framework.decorators import api_view, permission_classes
 
 import json
 
@@ -66,7 +67,7 @@ class UserViewSet(viewsets.ModelViewSet):
             self.permission_classes = [AllowAny]
         else:
             self.permission_classes = [
-                IsAuthenticatedOrReadOnly, IsSelfOrReadOnly]
+                IsAuthenticated]
 
         return super().get_permissions()
 
@@ -153,16 +154,18 @@ def wallet(request):
     })
 
 # 生成钱包
-@require_POST
-def create_wallet(request):
+@api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
+def save_wallet(request):
     if request.method == "POST":
         data = json.loads(request.body)
-        wallet = Wallet.objects.get(owner_id=request.user.id)
+        wallet = Wallet.objects.filter(owner_id=data['user_id']).exists()
+        print(data['publickey'])
         if not wallet:
             wallet = Wallet()
             wallet.address = data['address']
-            wallet.publickey = data['publickey']
-            wallet.owner = request.user
+            wallet.publickey = str(data['publickey'])
+            wallet.owner_id = data['user_id']
             wallet.save()
             return JsonResponse({
                 'msg':'yes',

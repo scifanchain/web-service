@@ -21,7 +21,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ['url', 'username', 'email', 'is_staff']
 
-
 # ViewSets define the view behavior.
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -32,6 +31,7 @@ class UserViewSet(viewsets.ModelViewSet):
 router = routers.DefaultRouter()
 router.register('users', UserViewSet)
 router.register('stages', StageViewSet)
+
 
 urlpatterns = [
     path('', views.home, name='home'),

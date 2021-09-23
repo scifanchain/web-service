@@ -26,3 +26,16 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             password = validated_data.pop('password')
             instance.set_password(password)
         return super().update(instance, validated_data)
+
+
+class UserDescSerializer(serializers.ModelSerializer):
+    """可用于其它视图中引用的嵌套序列化器"""
+
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'username',
+            'last_login',
+            'date_joined'
+        ]
