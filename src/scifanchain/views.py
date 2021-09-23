@@ -41,7 +41,6 @@ def get_tokens_for_user(user):
         'refresh': str(refresh),
     }
 
-
 # 生成随机头像
 def generate_avatar(username):
     path = settings.BASE_DIR / \
