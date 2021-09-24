@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from space.models import Wallet
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(
@@ -39,3 +40,13 @@ class UserDescSerializer(serializers.ModelSerializer):
             'last_login',
             'date_joined'
         ]
+
+
+class WalletSerializer(serializers.ModelSerializer):
+    """钱包序列化器"""
+
+    owner = UserDescSerializer(read_only=True)  # 嵌套作者序列化信息
+    
+    class Meta:
+        model = Wallet
+        fields = '__all__'

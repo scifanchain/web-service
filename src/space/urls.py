@@ -15,6 +15,7 @@ urlpatterns = [
     # wallet
     path('wallet/', views.wallet, name='wallet'),
     path('save_wallet/', views.save_wallet, name='save_wallet'),
+    path('my_wallets/<owner_id>/', views.MyWallets.as_view(), name='my_wallets'),
 
     # avatar
     path('change_avatar/', views.change_avatar, name='change_avatar')

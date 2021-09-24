@@ -12,30 +12,20 @@ from rest_framework_simplejwt.views import (
 )
 
 from works.views import StageViewSet
-from space.views import UserViewSet
-
-
-# Serializers define the API representation.
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'is_staff']
-
-# ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+from space.views import UserViewSet, WalletViewSet
 
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register('users', UserViewSet)
 router.register('stages', StageViewSet)
+router.register('wallets', WalletViewSet)
 
 
 urlpatterns = [
     path('', views.home, name='home'),
     path('coming/', views.coming, name='coming'),
+   
     
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
@@ -50,7 +40,8 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
     path('api/register/', views.register, name='register'),
-    path('api/users/', UserViewSet),
+    # path('api/users/', UserViewSet),
+    path('api/wallets/<str:username>/', WalletViewSet, name='wallet-detail'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

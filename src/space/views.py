@@ -11,6 +11,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_protect
+from rest_framework.views import APIView
 
 from substrateinterface import SubstrateInterface, Keypair
 from substrateinterface.exceptions import SubstrateRequestException
@@ -23,11 +24,13 @@ from scifanchain.forms import SetPasswordForm
 from django.core.paginator import Paginator
 
 from space.permissions import IsSelfOrReadOnly
-from space.serializers import UserRegisterSerializer
+from space.serializers import UserRegisterSerializer, WalletSerializer
 
 from rest_framework.decorators import api_view, permission_classes
 
 import json
+
+from space.serializers import UserDescSerializer
 
 
 # 修改头像
@@ -70,6 +73,43 @@ class UserViewSet(viewsets.ModelViewSet):
                 IsAuthenticated]
 
         return super().get_permissions()
+
+
+class WalletViewSet(viewsets.ModelViewSet):
+    queryset = Wallet.objects.all()
+    serializer_class = WalletSerializer
+    # lookup_field = 'owner_id'
+
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            self.permission_classes = [IsAuthenticated]
+        else:
+            self.permission_classes = [AllowAny]
+
+        return super().get_permissions()
+    
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+class MyWallets(APIView):
+    # queryset = Wallet.objects.all()
+    # serializer = WalletSerializer(queryset, many=True)
+    # owner = UserDescSerializer
+
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            self.permission_classes = [IsAuthenticated]
+        else:
+            self.permission_classes = [AllowAny]
+
+        return super().get_permissions()
+
+    def get(self, request, owner_id):
+        queryset = Wallet.objects.filter(owner_id=owner_id)
+        serializer = WalletSerializer(queryset, many=True)
+        return Response(serializer.data)
+    
 
 
 # 个人空间首页
@@ -146,11 +186,12 @@ def sign_ex(request):
 
     return render(request, 'space/sign_ex.html', {'receipt': receipt})
 
-@login_required
+
 def wallet(request):
     wallet = Wallet.objects.filter(owner_id=request.user.id)
-    return render(request, 'space/wallet.html', {
-        'wallet': wallet
+    return JsonResponse({
+        'address': wallet.address,
+        'publickey': wallet.publickey
     })
 
 # 生成钱包
