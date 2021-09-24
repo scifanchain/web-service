@@ -14,16 +14,16 @@
       </div>
       <div id="ChangeAvatar"></div>
       <div class="list-group list-group-flush text-center">
-        <a href="{% url 'space:home' %}" class="list-group-item">我的空间</a>
-        <a href="{% url 'space:profile' %}" class="list-group-item">个人资料</a>
-        <a href="{% url 'space:works' %}" class="list-group-item">我的作品</a>
-        <a href="{% url 'space:wallet' %}" class="list-group-item">我的钱包</a>
+        <a href="{% url 'authors:home' %}" class="list-group-item">我的空间</a>
+        <a href="{% url 'authors:profile' %}" class="list-group-item">个人资料</a>
+        <a href="{% url 'authors:works' %}" class="list-group-item">我的作品</a>
+        <a href="{% url 'authors:wallet' %}" class="list-group-item">我的钱包</a>
         <a href="{% url 'password_change' %}" class="list-group-item">修改密码</a>
       </div>
     </div>
     <div class="col-8">
-      {% block space_main %}
-      {% endblock space_main %}
+      {% block authors_main %}
+      {% endblock authors_main %}
     </div>
     <div class="col-2">
       <h6>$SFC</h6>

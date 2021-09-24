@@ -9,7 +9,7 @@ import config from './config'
 
 
 function changeAvatar() {
-    axios.get(config.API_URL + 'space/change_avatar')
+    axios.get(config.API_URL + 'authors/change_avatar')
         .then(function (res) {
             if (res.data !== "") {
                 console.log(res.data)

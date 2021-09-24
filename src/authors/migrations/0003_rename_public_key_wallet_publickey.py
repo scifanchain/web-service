@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('space', '0002_remove_wallet_account_id'),
+        ('authors', '0002_remove_wallet_account_id'),
     ]
 
     operations = [

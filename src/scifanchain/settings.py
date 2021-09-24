@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'blogs',
     'works',
     'community',
-    'space',
+    'authors',
     'widget_tweaks',
     'mdeditor',
     'django_summernote',
@@ -129,7 +129,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=2),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
 }
 
 CORS_ALLOWED_ORIGINS = [
@@ -188,7 +188,7 @@ TAGGIT_TAGS_FROM_STRING = 'scifanchain.utils.comma_splitter'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # After login
-LOGIN_REDIRECT_URL = '/space/'
+LOGIN_REDIRECT_URL = '/authors/'
 
 SUMMERNOTE_CONFIG = {
     'iframe': True,

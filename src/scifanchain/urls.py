@@ -12,7 +12,7 @@ from rest_framework_simplejwt.views import (
 )
 
 from works.views import StageViewSet
-from space.views import UserViewSet, WalletViewSet
+from authors.views import UserViewSet, WalletViewSet
 
 
 # Routers provide an easy way of automatically determining the URL conf.
@@ -32,7 +32,7 @@ urlpatterns = [
     path('accounts/register/', views.register, name='register'),
     path('blogs/', include('blogs.urls'), name='blogs'),
     path('works/', include('works.urls'), name='works'),
-    path('space/', include('space.urls'), name='space'),
+    path('authors/', include('authors.urls'), name='authors'),
     path('community/', include('community.urls'), name='community'),
     path('mdeditor/', include('mdeditor.urls')),
     path('summernote/', include('django_summernote.urls')),
@@ -40,8 +40,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
     path('api/register/', views.register, name='register'),
-    # path('api/users/', UserViewSet),
-    path('api/wallets/<str:username>/', WalletViewSet, name='wallet-detail'),
+    path('api/users/', UserViewSet),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from space.models import Wallet
+from authors.models import Wallet
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(

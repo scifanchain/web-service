@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework import viewsets
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.widgets import ClearableFileInput
 from django.shortcuts import render, redirect, get_object_or_404
 import python_avatars as pa
@@ -23,14 +24,65 @@ from scifanchain.forms import SetPasswordForm
 
 from django.core.paginator import Paginator
 
-from space.permissions import IsSelfOrReadOnly
-from space.serializers import UserRegisterSerializer, WalletSerializer
+from authors.permissions import IsSelfOrReadOnly
+from authors.serializers import UserRegisterSerializer, WalletSerializer
 
 from rest_framework.decorators import api_view, permission_classes
 
 import json
 
-from space.serializers import UserDescSerializer
+from authors.serializers import UserDescSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """用户视图集"""
+    queryset = User.objects.all()
+    serializer_class = UserRegisterSerializer
+    lookup_field = 'username'
+
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            self.permission_classes = [AllowAny]
+        else:
+            self.permission_classes = [
+                IsAuthenticated]
+
+        return super().get_permissions()
+
+
+class WalletViewSet(viewsets.ModelViewSet):
+    """钱包视图集"""
+    queryset = Wallet.objects.all()
+    serializer_class = WalletSerializer
+    # lookup_field = 'owner_id'
+
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            self.permission_classes = [IsAuthenticated]
+        else:
+            self.permission_classes = [AllowAny]
+
+        return super().get_permissions()
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+class MyWallets(APIView):
+    """用户钱包"""
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            self.permission_classes = [IsAuthenticated]
+        else:
+            self.permission_classes = [AllowAny]
+
+        return super().get_permissions()
+
+    def get(self, request, owner_id):
+        queryset = Wallet.objects.filter(owner_id=owner_id).first() #当前只允许用户拥有一个钱包
+        # serializer = WalletSerializer(queryset, many=True) # 多个钱包
+        serializer = WalletSerializer(queryset)
+        return Response(serializer.data)
 
 
 # 修改头像
@@ -57,70 +109,21 @@ def change_password(request):
     else:
         form = SetPasswordForm(request.user)
 
-    return render(request, 'space/change_password.html', {'form': form})
+    return render(request, 'authors/change_password.html', {'form': form})
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserRegisterSerializer
-    lookup_field = 'username'
-
-    def get_permissions(self):
-        if self.request.method == 'POST':
-            self.permission_classes = [AllowAny]
-        else:
-            self.permission_classes = [
-                IsAuthenticated]
-
-        return super().get_permissions()
-
-
-class WalletViewSet(viewsets.ModelViewSet):
-    queryset = Wallet.objects.all()
-    serializer_class = WalletSerializer
-    # lookup_field = 'owner_id'
-
-    def get_permissions(self):
-        if self.request.method == 'POST':
-            self.permission_classes = [IsAuthenticated]
-        else:
-            self.permission_classes = [AllowAny]
-
-        return super().get_permissions()
-    
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
-
-
-class MyWallets(APIView):
-    # queryset = Wallet.objects.all()
-    # serializer = WalletSerializer(queryset, many=True)
-    # owner = UserDescSerializer
-
-    def get_permissions(self):
-        if self.request.method == 'POST':
-            self.permission_classes = [IsAuthenticated]
-        else:
-            self.permission_classes = [AllowAny]
-
-        return super().get_permissions()
-
-    def get(self, request, owner_id):
-        queryset = Wallet.objects.filter(owner_id=owner_id)
-        serializer = WalletSerializer(queryset, many=True)
-        return Response(serializer.data)
     
 
 
 # 个人空间首页
 @login_required
 def home(request):
-    return render(request, 'space/home.html')
+    return render(request, 'authors/home.html')
 
 
 # 个人信息
 def profile(request):
-    return render(request, 'space/profile.html')
+    return render(request, 'authors/profile.html')
 
 
 # 作品
@@ -140,21 +143,21 @@ def works(request):
     context = {'page_obj': page_obj, 'paginator': paginator,
                'is_paginated': is_paginated, 'page_range': page_range}
 
-    return render(request, 'space/works.html',context)
+    return render(request, 'authors/works.html',context)
 
 
 def get_stage(request, stage_id):
     stage = get_object_or_404(Stage, pk=stage_id)
-    return render(request, 'space/stage.html', {'stage': stage})
+    return render(request, 'authors/stage.html', {'stage': stage})
 
 
 def create_stage(request):
-    return render(request, 'space/create_stage.html')
+    return render(request, 'authors/create_stage.html')
 
 
 def edit_stage(request, stage_id):
     stage = get_object_or_404(Stage, pk=stage_id)
-    return render(request, 'space/edit_stage.html', {'stage': stage})
+    return render(request, 'authors/edit_stage.html', {'stage': stage})
 
 
 def sign_ex(request):
@@ -184,7 +187,7 @@ def sign_ex(request):
     except SubstrateRequestException as e:
         print("Failed to send: {}".format(e))
 
-    return render(request, 'space/sign_ex.html', {'receipt': receipt})
+    return render(request, 'authors/sign_ex.html', {'receipt': receipt})
 
 
 def wallet(request):

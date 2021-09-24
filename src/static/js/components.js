@@ -121,7 +121,7 @@ export function StageEditor() {
                 url: config.API_URL + 'stages/' + userId,
             };
             submitStage(options);
-            window.location.href = "/space/works/";
+            window.location.href = "/authors/works/";
         }
     }
 
@@ -134,7 +134,7 @@ export function StageEditor() {
                 url: config.API_URL + 'stages/',
             };
             submitStage(options);
-            window.location.href = "/space/works/";
+            window.location.href = "/authors/works/";
         }
     }
 
@@ -299,7 +299,7 @@ export function StageView() {
 export function ChangeAvatar() {
 
     const changeAvatar = () => {
-        axios.get(config.URL + 'space/change_avatar/')
+        axios.get(config.URL + 'authors/change_avatar/')
             .then(function (res) {
                 if (res.data !== "") {
                     console.log(res.data)
@@ -347,7 +347,7 @@ export function CreateWallet() {
         // metadata specified
         const pair = keyring.addFromUri(mnemonicWrods, { name: 'first pair' }, 'ed25519');
 
-        axios.post(config.URL + 'space/create_wallet/', {
+        axios.post(config.URL + 'authors/create_wallet/', {
             address: pair.address,
             publickey: u8aToHex(pair.publicKey)
         }).then(function (res) {

@@ -1,13 +1,13 @@
-{% extends "layout_space.html" %}
+{% extends "layout_authors.html" %}
 
 {% block title %}我的作品{% endblock %}
 
-{% block space_main %}
+{% block authors_main %}
 <div class="px-5">
 
   <div class="row">
     <div class="text-end">
-      <a href="{% url 'space:create_stage' %}" class="btn btn-primary">创建新作品</a>
+      <a href="{% url 'authors:create_stage' %}" class="btn btn-primary">创建新作品</a>
     </div>
   </div>
 
@@ -15,7 +15,7 @@
     <h5 class="border-bottom mb-4">作品</h5>
     {% for stage in page_obj %}
     <div class=" py-2 mb-2 border">
-      <a href="{% url 'space:stage' stage.id %}" class="px-2">
+      <a href="{% url 'authors:stage' stage.id %}" class="px-2">
         {{ stage.title }}
       </a>
       {{stage.created}}

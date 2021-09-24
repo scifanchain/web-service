@@ -105,7 +105,7 @@ export function StageEditor() {
                 url: config.API_URL + 'stages/' + userId,
             };
             submitStage(options);
-            window.location.href = "/space/works/";
+            window.location.href = "/authors/works/";
         }
     }
 
@@ -118,7 +118,7 @@ export function StageEditor() {
                 url: config.API_URL + 'stages/',
             };
             submitStage(options);
-            window.location.href = "/space/works/";
+            window.location.href = "/authors/works/";
         }
     }
 

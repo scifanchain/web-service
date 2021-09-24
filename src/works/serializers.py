@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Stage
-from space.serializers import UserDescSerializer
+from authors.serializers import UserDescSerializer
 
 
 # Stage 视图集序列化器

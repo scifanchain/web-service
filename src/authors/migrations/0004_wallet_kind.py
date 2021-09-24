@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('space', '0003_rename_public_key_wallet_publickey'),
+        ('authors', '0003_rename_public_key_wallet_publickey'),
     ]
 
     operations = [
