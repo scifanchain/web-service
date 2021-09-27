@@ -74,6 +74,7 @@ def register(request):
             user.username = clientData['username']
             user.email = clientData['email']
             user.set_password(clientData['password'])
+            user.is_staff = 1
             user.save()
             tokens = get_tokens_for_user(user)
             resData = {
