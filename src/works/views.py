@@ -4,10 +4,11 @@ from .serializers import StageSerializer, StageListSerializer, StageDetailSerial
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework import status
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, request
 from rest_framework import generics, viewsets
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
 from works.permissions import IsAdminUserOrReadOnly
 import json
 
@@ -33,11 +34,25 @@ class StageViewSet(viewsets.ModelViewSet):
     queryset = Stage.objects.all()
     serializer_class = StageSerializer
 
-    permission_classes = [IsAuthenticated,]
+    # permission_classes = [IsAuthenticated,]
+    permission_classes = [IsAuthenticatedOrReadOnly,]
 
     # 新增代码
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+# 登录作者的作品列表
+class StageListByAuthor(ListAPIView):
+    serializer_class = StageListSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly, ]
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return Stage.objects.filter(owner=user)
 
 
 class StageDetail(APIView):

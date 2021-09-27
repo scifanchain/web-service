@@ -5,6 +5,7 @@ import axios from "axios";
 
 import config from "./config"
 
+
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 axios.defaults.xsrfCookieName = "csrftoken"
 
