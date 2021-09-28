@@ -57,6 +57,7 @@ class StageListByAuthor(ListAPIView):
 
 class StageDetail(APIView):
     """详情视图"""
+    permission_classes = [IsAuthenticatedOrReadOnly, ]
 
     def get_object(self, pk):
         """获取单个文章对象"""
