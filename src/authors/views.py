@@ -70,6 +70,7 @@ class WalletViewSet(viewsets.ModelViewSet):
 
 class MyWallets(APIView):
     """用户钱包"""
+
     def get_permissions(self):
         if self.request.method == 'POST':
             self.permission_classes = [IsAuthenticated]
@@ -79,25 +80,26 @@ class MyWallets(APIView):
         return super().get_permissions()
 
     def get(self, request, owner_id):
-        queryset = Wallet.objects.filter(owner_id=owner_id).first() #当前只允许用户拥有一个钱包
+        queryset = Wallet.objects.filter(
+            owner_id=owner_id).first()  # 当前只允许用户拥有一个钱包
         # serializer = WalletSerializer(queryset, many=True) # 多个钱包
         serializer = WalletSerializer(queryset)
         return Response(serializer.data)
 
 
-# 修改头像
-def change_avatar(request):
-    if request.user.is_authenticated:
+class ChangeAvatar(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
         path = settings.BASE_DIR / \
             "media/avatars/{}".format(request.user.date_joined.year)
         random_avatar = pa.Avatar.random()
         random_avatar.render("{}/{}.svg".format(path, request.user.username))
 
-        res = "/media/avatars/" + \
+        res = "media/avatars/" + \
             format(request.user.date_joined.year) + "/" + request.user.username
-    else:
-        res = ''
-    return HttpResponse(res)
+
+        return HttpResponse(res)    
 
 
 # 修改密码

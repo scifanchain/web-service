@@ -18,5 +18,5 @@ urlpatterns = [
     path('my_wallets/<owner_id>/', views.MyWallets.as_view(), name='my_wallets'),
 
     # avatar
-    path('change_avatar/', views.change_avatar, name='change_avatar')
+    path('change_avatar/', views.ChangeAvatar.as_view(), name='change_avatar')
 ]

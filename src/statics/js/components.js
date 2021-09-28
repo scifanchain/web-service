@@ -25,7 +25,7 @@ export function StageEditor() {
     // url参数锁定该方法在页面不变更只执行一次
     useEffect(() => {
         if (stageId) { // 编辑页面才会传入stageId
-            axios.get('http://127.0.0.1:8000/api/stages/23/').then(function (res) {
+            axios.get('http://127.0.0.1:8000/media/stages/23/').then(function (res) {
                 initEditor(res.data['content'])
                 console.log(res.data['content']);
             })
