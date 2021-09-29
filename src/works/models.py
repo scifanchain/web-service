@@ -67,6 +67,7 @@ class Stage(models.Model):
     history = HistoricalRecords()
     created = models.DateTimeField("创建时间", auto_now_add=True)
     updated = models.DateTimeField("修改时间", auto_now=True)
+    digest = models.CharField("hash", max_length=128, default='', blank=True)
 
     class Meta:
         verbose_name = verbose_name_plural = "作品"
