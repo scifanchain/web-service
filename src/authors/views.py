@@ -44,10 +44,11 @@ class UserViewSet(viewsets.ModelViewSet):
         if self.request.method == 'POST':
             self.permission_classes = [AllowAny]
         else:
-            self.permission_classes = [
-                IsAuthenticated]
+            self.permission_classes = [IsAuthenticated]
 
         return super().get_permissions()
+
+
 
 
 class WalletViewSet(viewsets.ModelViewSet):
@@ -114,7 +115,6 @@ def change_password(request):
     return render(request, 'authors/change_password.html', {'form': form})
 
 
-    
 
 
 # 个人空间首页

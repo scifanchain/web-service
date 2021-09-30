@@ -6,7 +6,7 @@ from authors.serializers import UserDescSerializer
 # Stage 视图集序列化器
 # 自动提供了外键字段的超链接
 # 默认不包含模型对象的 id 字段
-class StageSerializer(serializers.HyperlinkedModelSerializer):
+class StageSerializer(serializers.ModelSerializer):
     owner = UserDescSerializer(read_only=True) # 嵌套作者序列化信息
     class Meta:
         model = Stage
