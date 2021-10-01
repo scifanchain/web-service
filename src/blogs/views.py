@@ -6,6 +6,32 @@ import markdown
 from django.views.generic import DetailView, ListView, TemplateView
 from django.core.paginator import Paginator
 
+from rest_framework import viewsets
+
+from .serializers import BlogListSerializer, CategoryListSerializer
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
+from scifanchain.permissions import IsAdminUserOrReadOnly
+
+
+# ViewSets define the view behavior.
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = BlogListSerializer
+
+    # permission_classes = [IsAuthenticated,]
+    permission_classes = [IsAdminUserOrReadOnly, ]
+
+
+
+# ViewSets define the view behavior.
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategoryListSerializer
+
+    # permission_classes = [IsAuthenticated,]
+    permission_classes = [IsAdminUserOrReadOnly, ]
+
+
 
 class CommonViewMixin:
     def get_context_data(self, **kwargs):

@@ -30,7 +30,7 @@ class SpaceHubAdmin(admin.ModelAdmin):
 @admin.register(Stage)
 class StageAdmin(admin.ModelAdmin):
     list_display = ('title', 'type', 'owner', 'created')
-    fields = ('title', 'summary', 'content')
+    fields = ('title', 'summary', 'content','maturity', 'openess')
 
     def save_model(self, request, obj, form, change):
         obj.owner = request.user

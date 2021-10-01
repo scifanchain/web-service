@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models.enums import IntegerChoices
 from django_editorjs_fields import EditorJsJSONField, EditorJsTextField
 from simple_history.models import HistoricalRecords
+from django.utils.translation import gettext_lazy as _
 
 
 class Status(IntegerChoices):
@@ -19,6 +20,11 @@ class StageType(IntegerChoices):
     TYPE_EVENT = 4, '事件'
     TYPE_CONCEPT = 5, '概念'
 
+
+class Openess(models.TextChoices):
+    PUBLIC = 'PUBLIC', _('Public')
+    SEMI_PUBLIC = 'SEMI_PUBLIC', _('SemiPublic')
+    PRIVATE = 'PRIVATE', _('Private')
 
 class Display(IntegerChoices):
     SHOW = 1, '显示'
@@ -58,6 +64,8 @@ class Stage(models.Model):
     summary = models.CharField("摘要", max_length=1024, blank=True)
     content = EditorJsJSONField(verbose_name='内容')
     type = models.PositiveSmallIntegerField("类型", default=StageType.TYPE_NONE, choices=StageType.choices)
+    maturity = models.PositiveSmallIntegerField("成熟度", default=0)
+    openess = models.CharField(max_length=20, choices=Openess.choices, default=Openess.PUBLIC)
     status = models.PositiveSmallIntegerField("状态", default=Status.STATUS_NORMAL, choices=Status.choices)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者")
     belong_to_story = models.ForeignKey(Story, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="所属故事")

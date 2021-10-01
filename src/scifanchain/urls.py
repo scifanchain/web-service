@@ -11,22 +11,25 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+
+# for DRF Routers
 from works.views import StageViewSet
 from authors.views import UserViewSet, WalletViewSet
-
+from blogs.views import PostViewSet, CategoryViewSet
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register('users', UserViewSet)
 router.register('stages', StageViewSet)
 router.register('wallets', WalletViewSet)
+router.register('blogs/posts', PostViewSet)
+router.register('blogs/categories', CategoryViewSet)
 
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('coming/', views.coming, name='coming'),
-   
     path('admin/', admin.site.urls),
+    path('coming/', views.coming, name='coming'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/register/', views.register, name='register'),
     path('blogs/', include('blogs.urls'), name='blogs'),
@@ -35,11 +38,11 @@ urlpatterns = [
     path('community/', include('community.urls'), name='community'),
     path('mdeditor/', include('mdeditor.urls')),
     path('summernote/', include('django_summernote.urls')),
+
     # api
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
     path('api/register/', views.register, name='register'),
-    path('api/users/', UserViewSet),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
