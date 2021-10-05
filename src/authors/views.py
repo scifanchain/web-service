@@ -49,8 +49,6 @@ class UserViewSet(viewsets.ModelViewSet):
         return super().get_permissions()
 
 
-
-
 class WalletViewSet(viewsets.ModelViewSet):
     """钱包视图集"""
     queryset = Wallet.objects.all()
@@ -100,7 +98,7 @@ class ChangeAvatar(APIView):
         res = "media/avatars/" + \
             format(request.user.date_joined.year) + "/" + request.user.username
 
-        return HttpResponse(res)    
+        return HttpResponse(res)
 
 
 # 修改密码
@@ -113,8 +111,6 @@ def change_password(request):
         form = SetPasswordForm(request.user)
 
     return render(request, 'authors/change_password.html', {'form': form})
-
-
 
 
 # 个人空间首页
@@ -132,20 +128,21 @@ def profile(request):
 def works(request):
     stages = Stage.objects.filter(owner=request.user.id)
 
-    paginator = Paginator(stages, 20) # 每页1条记录
-    page = request.GET.get('page', 1) # 获取当前page页码，默认为1
+    paginator = Paginator(stages, 20)  # 每页1条记录
+    page = request.GET.get('page', 1)  # 获取当前page页码，默认为1
     try:
-        page_obj = paginator.page(page) # 分页
+        page_obj = paginator.page(page)  # 分页
     except PageNotAnInteger:
-        page_obj = paginator.page(1) 
+        page_obj = paginator.page(1)
     except EmptyPage:
         page_obj = paginator.page(paginator.num_pages)
     is_paginated = True if paginator.num_pages > 1 else False
-    page_range = paginator.get_elided_page_range(page, on_each_side=4, on_ends=3)
+    page_range = paginator.get_elided_page_range(
+        page, on_each_side=4, on_ends=3)
     context = {'page_obj': page_obj, 'paginator': paginator,
                'is_paginated': is_paginated, 'page_range': page_range}
 
-    return render(request, 'authors/works.html',context)
+    return render(request, 'authors/works.html', context)
 
 
 def get_stage(request, stage_id):
@@ -167,15 +164,19 @@ def sign_ex(request):
         url="ws://127.0.0.1:9944",
     )
 
-    keypair = Keypair.create_from_mnemonic(
-        'episode together nose spoon dose oil faculty zoo ankle evoke admit walnut')
+    # keypair = Keypair.create_from_mnemonic('episode together nose spoon dose oil faculty zoo ankle evoke admit walnut')
+
+    keypair = Keypair(ss58_address="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY")
+
+    # keypair = Keypair.create_from_uri('//Alice')
+
 
     call = substrate.compose_call(
         call_module='Balances',
         call_function='transfer',
         call_params={
-            'dest': '5E9oDs9PjpsBbxXxRE9uMaZZhnBAV38n2ouLB28oecBDdeQo',
-            'value': 1 * 10**12
+            'dest': '5DAAnrj7VHTznn2AWBemMuyBwZWs6FNFjdyVXUeYum3PTXFy',
+            'value': 2 * 10 ** 3
         }
     )
 
@@ -185,11 +186,11 @@ def sign_ex(request):
         receipt = substrate.submit_extrinsic(extrinsic, wait_for_inclusion=True)
         print("Extrinsic '{}' sent and included in block '{}'".format(
             receipt.extrinsic_hash, receipt.block_hash))
-
     except SubstrateRequestException as e:
         print("Failed to send: {}".format(e))
 
-    return render(request, 'authors/sign_ex.html', {'receipt': receipt})
+
+    return render(request, 'authors/home.html')
 
 
 def wallet(request):
@@ -200,6 +201,8 @@ def wallet(request):
     })
 
 # 生成钱包
+
+
 @permission_classes((IsAuthenticated, ))
 def save_wallet(request):
     if request.method == "POST":
@@ -213,16 +216,15 @@ def save_wallet(request):
             wallet.owner_id = data['user_id']
             wallet.save()
             return JsonResponse({
-                'msg':'yes',
-                'code':0
-                })
+                'msg': 'yes',
+                'code': 0
+            })
         else:
             return JsonResponse({
-                'msg':'you have the wallet',
-                'code':1
-                })
+                'msg': 'you have the wallet',
+                'code': 1
+            })
     return JsonResponse({
-        'msg':"error",
-        'code':2
+        'msg': "error",
+        'code': 2
     })
-
