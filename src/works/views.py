@@ -81,7 +81,7 @@ class StageDetail(APIView):
         # 验证提交的数据是否合法
         # 不合法则返回400
         if serializer.is_valid():
-            # 序列化器将持有的数据反序列化后，
+            # 序列化器将持有的数据反序列化
             # 保存到数据库中
             serializer.save()
             # 在history中记录更改原因
