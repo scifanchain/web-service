@@ -1,4 +1,5 @@
 from django.contrib import admin
+from simple_history.admin import SimpleHistoryAdmin
 from .models import Story, SpaceHub, Stage, Word
 
 
@@ -28,7 +29,7 @@ class SpaceHubAdmin(admin.ModelAdmin):
 
 
 @admin.register(Stage)
-class StageAdmin(admin.ModelAdmin):
+class StageAdmin(SimpleHistoryAdmin):
     list_display = ('title', 'type', 'owner', 'created')
     fields = ('title', 'summary', 'content','maturity', 'openess')
 

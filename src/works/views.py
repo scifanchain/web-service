@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .models import Stage
 from .serializers import StageSerializer, StageListSerializer, StageDetailSerializer
 
+from simple_history.utils import update_change_reason
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
@@ -82,6 +84,8 @@ class StageDetail(APIView):
             # 序列化器将持有的数据反序列化后，
             # 保存到数据库中
             serializer.save()
+            # 在history中记录更改原因
+            update_change_reason(stage, 'Add a question')
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
