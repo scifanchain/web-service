@@ -62,7 +62,8 @@ class SpaceHub(models.Model):
 class Stage(models.Model):
     title = models.CharField("标题", max_length=200)
     summary = models.CharField("摘要", max_length=1024, blank=True)
-    content = EditorJsJSONField(verbose_name='内容')
+    content = EditorJsJSONField(verbose_name="内容")
+    words_count = models.IntegerField("字数", default=0)
     type = models.PositiveSmallIntegerField("类型", default=StageType.TYPE_NONE, choices=StageType.choices)
     maturity = models.PositiveSmallIntegerField("成熟度", default=0)
     openess = models.CharField(max_length=20, choices=Openess.choices, default=Openess.PUBLIC)
