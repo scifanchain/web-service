@@ -68,6 +68,8 @@ class Stage(models.Model):
     maturity = models.PositiveSmallIntegerField("成熟度", default=0)
     openess = models.CharField(max_length=20, choices=Openess.choices, default=Openess.PUBLIC)
     status = models.PositiveSmallIntegerField("状态", default=Status.STATUS_NORMAL, choices=Status.choices)
+    proofed = models.BooleanField('是否存证', default=False)
+    coin = models.BigIntegerField('通证', default=0)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者")
     belong_to_story = models.ForeignKey(Story, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="所属故事")
     belong_to_hub = models.ForeignKey(SpaceHub, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="所属情节")
