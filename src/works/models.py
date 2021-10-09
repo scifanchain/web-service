@@ -26,6 +26,14 @@ class Openess(models.TextChoices):
     SEMI_PUBLIC = 'SEMI_PUBLIC', _('SemiPublic')
     PRIVATE = 'PRIVATE', _('Private')
 
+
+class Level(models.IntegerChoices):
+    LEVEL_A = 1, _('一级')
+    LEVEL_B = 2, _('二级')
+    LEVEL_C = 3, _('三级')
+    LEVEL_D = 4, _('四级')
+    LEVEL_E = 5, _('五级')
+
 class Display(IntegerChoices):
     SHOW = 1, '显示'
     HIDE = 0, '隐藏'
@@ -66,7 +74,9 @@ class Stage(models.Model):
     words_count = models.IntegerField("字数", default=0)
     type = models.PositiveSmallIntegerField("类型", default=StageType.TYPE_NONE, choices=StageType.choices)
     maturity = models.PositiveSmallIntegerField("成熟度", default=0)
-    openess = models.CharField(max_length=20, choices=Openess.choices, default=Openess.PUBLIC)
+    openess = models.CharField("开放性", max_length=20, choices=Openess.choices, default=Openess.PUBLIC)
+    level = models.PositiveSmallIntegerField(
+        "评级", choices=Level.choices, default=Level.LEVEL_A)
     status = models.PositiveSmallIntegerField("状态", default=Status.STATUS_NORMAL, choices=Status.choices)
     proofed = models.BooleanField('是否存证', default=False)
     coin = models.BigIntegerField('通证', default=0)

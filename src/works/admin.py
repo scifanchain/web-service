@@ -31,7 +31,7 @@ class SpaceHubAdmin(admin.ModelAdmin):
 @admin.register(Stage)
 class StageAdmin(SimpleHistoryAdmin):
     list_display = ('title', 'type', 'owner', 'created')
-    fields = ('title', 'summary', 'content','maturity', 'openess')
+    fields = ('title', 'summary', 'content','maturity', 'openess', 'level')
 
     def save_model(self, request, obj, form, change):
         obj.owner = request.user

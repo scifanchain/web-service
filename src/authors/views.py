@@ -25,7 +25,7 @@ from scifanchain.forms import SetPasswordForm
 from django.core.paginator import Paginator
 
 from authors.permissions import IsSelfOrReadOnly
-from authors.serializers import UserRegisterSerializer, WalletSerializer
+from authors.serializers import UserRegisterSerializer, WalletSerializer, UserActiveListSerializer
 
 from rest_framework.decorators import api_view, permission_classes
 
@@ -47,6 +47,17 @@ class UserViewSet(viewsets.ModelViewSet):
             self.permission_classes = [IsAuthenticated]
 
         return super().get_permissions()
+
+
+class ActiveAuthorList(APIView):
+    permission_classes = [AllowAny]
+    
+    def get(self, request):
+       queryset = User.objects.order_by('-last_login')[:10]
+        # serializer = WalletSerializer(queryset, many=True) # 多个钱包
+       serializer = UserActiveListSerializer(queryset, many=True)
+       
+       return Response(serializer.data)
 
 
 class WalletViewSet(viewsets.ModelViewSet):

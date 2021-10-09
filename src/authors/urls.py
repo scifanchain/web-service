@@ -6,6 +6,8 @@ app_name = 'authors'
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('active_author_list/', views.ActiveAuthorList.as_view(),
+         name='active_author_list'),
     path('profile/', views.profile, name='profile'),
     path('works/', views.works, name='works'),
     # stages

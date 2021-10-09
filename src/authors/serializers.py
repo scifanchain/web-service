@@ -1,3 +1,4 @@
+from django.db.models import fields
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from authors.models import Wallet
@@ -28,6 +29,13 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             password = validated_data.pop('password')
             instance.set_password(password)
         return super().update(instance, validated_data)
+
+
+class UserActiveListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'last_login',]
 
 
 class UserDescSerializer(serializers.ModelSerializer):
