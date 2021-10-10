@@ -44,7 +44,7 @@ class UserViewSet(viewsets.ModelViewSet):
         if self.request.method == 'POST':
             self.permission_classes = [AllowAny]
         else:
-            self.permission_classes = [IsAuthenticated]
+            self.permission_classes = [AllowAny]
 
         return super().get_permissions()
     
