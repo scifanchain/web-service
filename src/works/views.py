@@ -11,6 +11,7 @@ from rest_framework import status
 from django.http import Http404, HttpResponse, request
 from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.pagination import PageNumberPagination
 from works.permissions import IsAdminUserOrReadOnly
 import json
 
@@ -31,6 +32,12 @@ def check_title(request):
     return HttpResponse(allow)
 
 
+class StageWidgetListPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 10000
+
+
 # ViewSets define the view behavior.
 class StageViewSet(viewsets.ModelViewSet):
     queryset = Stage.objects.all()
@@ -39,11 +46,22 @@ class StageViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated,]
     permission_classes = [IsAuthenticatedOrReadOnly,]
 
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        type = self.request.query_params.get('type', None)
+        if type is not None:
+            self.pagination_class = StageWidgetListPagination
+            self.queryset = self.queryset.filter(type=type)
+        return self.queryset
+
     # 新增代码
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-# 登录作者的作品列表
+# 作者的作品列表
 class StageListByAuthor(ListAPIView):
     serializer_class = StageListSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, ]

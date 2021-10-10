@@ -47,6 +47,12 @@ class UserViewSet(viewsets.ModelViewSet):
             self.permission_classes = [IsAuthenticated]
 
         return super().get_permissions()
+    
+    def get_queryset(self):
+        author_id = self.request.query_params.get('author', None)
+        if author_id is not None:
+            self.queryset = self.queryset.filter(pk=author_id)
+        return self.queryset
 
 
 class ActiveAuthorList(APIView):
