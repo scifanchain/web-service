@@ -27,9 +27,9 @@ def coming(request):
 
 
 # 生成随机语录
-def generate_word():
+def generate_quotation():
     word = Word.objects.order_by('?')[:1]
-    return JsonResponse({'word':word})
+    return {'word':word}
 
 
 # 获取JWT的Token令牌

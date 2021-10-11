@@ -71,8 +71,9 @@ class StageListByAuthor(ListAPIView):
         This view should return a list of all the purchases
         for the currently authenticated user.
         """
+        user_id = self.kwargs['user_id']
         user = self.request.user
-        return Stage.objects.filter(owner=user)
+        return Stage.objects.filter(owner_id = user_id)
 
 
 class StageDetail(APIView):

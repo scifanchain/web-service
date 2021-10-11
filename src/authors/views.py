@@ -95,9 +95,9 @@ class MyWallets(APIView):
 
         return super().get_permissions()
 
-    def get(self, request, owner_id):
+    def get(self, request, username):
         queryset = Wallet.objects.filter(
-            owner_id=owner_id).first()  # 当前只允许用户拥有一个钱包
+            username=username).first()  # 当前只允许用户拥有一个钱包
         # serializer = WalletSerializer(queryset, many=True) # 多个钱包
         serializer = WalletSerializer(queryset)
         return Response(serializer.data)
