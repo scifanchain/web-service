@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.deletion import CASCADE
 from django.db.models.enums import IntegerChoices
 from django_editorjs_fields import EditorJsJSONField, EditorJsTextField
 from simple_history.models import HistoricalRecords
@@ -77,6 +78,7 @@ class Stage(models.Model):
     openess = models.CharField("开放性", max_length=20, choices=Openess.choices, default=Openess.PUBLIC)
     level = models.PositiveSmallIntegerField(
         "评级", choices=Level.choices, default=Level.LEVEL_A)
+    stars = models.IntegerField('星', default=0)
     status = models.PositiveSmallIntegerField("状态", default=Status.STATUS_NORMAL, choices=Status.choices)
     proofed = models.BooleanField('是否存证', default=False)
     coin = models.BigIntegerField('通证', default=0)
@@ -105,3 +107,9 @@ class Stage(models.Model):
     @classmethod
     def hot_stages(cls):
         return cls.objects.filter(status=Status.STATUS_NORMAL).only('id', 'title').order_by('-pv')
+
+
+class Star(models.Model):
+    stage_id = models.ForeignKey(Stage, on_delete=CASCADE)
+    user_id = models.ForeignKey(User, on_delete=CASCADE)
+

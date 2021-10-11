@@ -31,6 +31,13 @@ def check_title(request):
 
     return HttpResponse(allow)
 
+def add_star(request):
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        stage = Stage.objects.filter(id=data['stage_id']).filter()
+        
+
+
 
 class StageWidgetListPagination(PageNumberPagination):
     page_size = 10
@@ -104,7 +111,8 @@ class StageDetail(APIView):
             # 保存到数据库中
             serializer.save()
             # 在history中记录更改原因
-            update_change_reason(stage, 'Add a question')
+            if 'reason' in request.data:
+                update_change_reason(stage, request.data['reason'])
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
