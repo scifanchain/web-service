@@ -3,18 +3,6 @@ from .models import Category, Post, Archive, Comment
 from django.contrib.auth.models import User
 
 
-class BlogListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-        fields = [
-            'id',
-            'title',
-            'summary',
-            'owner',
-            'created',
-        ]
-
-
 class CategoryListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -27,9 +15,25 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username']
 
 
+class BlogListSerializer(serializers.ModelSerializer):
+    # category = CategoryListSerializer()
+
+    class Meta:
+        model = Post
+        fields = [
+            'id',
+            'title',
+            'summary',
+            'owner',
+            'created',
+            'category'
+        ]
+
+
 class BlogDetailSerializer(serializers.ModelSerializer):
     category = CategoryListSerializer()
     owner = UserSerializer()
+
     class Meta:
         model = Post
         fields = '__all__'

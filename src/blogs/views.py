@@ -17,12 +17,19 @@ from .serializers import BlogListSerializer, CategoryListSerializer, BlogDetailS
 # ViewSets define the view behavior.
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
+    serializer_class = BlogListSerializer
     # permission_classes = [IsAuthenticated,]
     permission_classes = [IsAdminUserOrReadOnly, ]
 
-    def list(self, request):
-        serializer = BlogListSerializer(self.queryset, many=True)
-        return Response(serializer.data)
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        category_id = self.request.query_params.get('category_id', None)
+        if category_id is not None:
+            self.queryset = self.queryset.filter(category=category_id)
+        return self.queryset
 
     def retrieve(self, request, pk=None):
         user = get_object_or_404(self.queryset, pk=pk)
