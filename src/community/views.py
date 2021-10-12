@@ -3,13 +3,42 @@ from .models import Channel, Topic, Reply
 from .forms import TopicForm, ReplyForm
 from django.contrib.auth.decorators import login_required
 
-# Create your views here.
+from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
+from scifanchain.permissions import IsAdminUserOrReadOnly
+
+from .serializers import TopicListSerializer
+
+
+# ViewSets define the view behavior.
+class TopicViewSet(viewsets.ModelViewSet):
+    queryset = Topic.objects.all()
+    serializer_class = TopicListSerializer
+    # permission_classes = [IsAuthenticated,]
+    permission_classes = [IsAuthenticatedOrReadOnly, ]
+
+    # def get_queryset(self):
+    #     """
+    #     Optionally restricts the returned purchases to a given user,
+    #     by filtering against a `username` query parameter in the URL.
+    #     """
+    #     category_id = self.request.query_params.get('category_id', None)
+    #     if category_id is not None:
+    #         self.queryset = self.queryset.filter(category=category_id)
+    #     return self.queryset
+
+    # def retrieve(self, request, pk=None):
+    #     user = get_object_or_404(self.queryset, pk=pk)
+    #     serializer = BlogDetailSerializer(user)
+    #     return Response(serializer.data)
+
 
 def home(request):
     channels = Channel.objects.all()
     topics = Topic.objects.all()
     total = Topic.objects.count()
-    return render(request, 'community/home.html', {'channels':channels, 'topics':topics, 'total':total})
+    return render(request, 'community/home.html', {'channels': channels, 'topics': topics, 'total': total})
 
 
 def channel(request, channel_id):
@@ -17,7 +46,7 @@ def channel(request, channel_id):
     topics = Topic.objects.all().filter(channel=channel_id)
     total = Topic.objects.filter(channel=channel_id).count()
 
-    return render(request, 'community/home.html', {'channels':channels, 'topics':topics, 'total':total, 'channel_id':channel_id})
+    return render(request, 'community/home.html', {'channels': channels, 'topics': topics, 'total': total, 'channel_id': channel_id})
 
 
 def topic(request, topic_id):
@@ -34,8 +63,8 @@ def topic(request, topic_id):
             return redirect('/community/topic/' + str(topic_id))
     else:
         form = ReplyForm()
-    
-    return render(request, 'community/topic.html', {"topic":topic, 'form':form, 'replies':replies})
+
+    return render(request, 'community/topic.html', {"topic": topic, 'form': form, 'replies': replies})
 
 
 @login_required()
@@ -49,7 +78,4 @@ def create_topic(request):
             return redirect('/community/')
     else:
         form = TopicForm()
-    return render (request, 'community/create_topic.html', {'form':form})
-
-
-
+    return render(request, 'community/create_topic.html', {'form': form})
