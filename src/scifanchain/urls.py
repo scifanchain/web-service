@@ -13,11 +13,11 @@ from rest_framework_simplejwt.views import (
 
 
 # for DRF Routers
+# Routers provide an easy way of automatically determining the URL conf.
 from works.views import StageViewSet
 from authors.views import UserViewSet, WalletViewSet
 from blogs.views import PostViewSet, CategoryViewSet
 
-# Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register('users', UserViewSet)
 router.register('stages', StageViewSet)
@@ -25,7 +25,7 @@ router.register('wallets', WalletViewSet)
 router.register('blogs/posts', PostViewSet)
 router.register('blogs/categories', CategoryViewSet)
 
-
+# for Django Web Routers
 urlpatterns = [
     path('', views.home, name='home'),
     path('admin/', admin.site.urls),

@@ -4,6 +4,7 @@ from .views import PostDetailView, PostListView, CategoryView, TagView, IndexVie
 app_name = 'blogs'
 
 urlpatterns = [
+    # 以下为web页面路由
     path('', IndexView.as_view(), name='index'),
     path('category/<category_id>/', CategoryView.as_view(), name='category'),
     path('tag/<tag_id>/', TagView.as_view(), name='tag'),

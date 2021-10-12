@@ -1,3 +1,4 @@
+from django.utils.timezone import now
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -84,6 +85,7 @@ def register(request):
             user.email = clientData['email']
             user.set_password(clientData['password'])
             user.is_staff = 1
+            user.last_login = datetime.datetime.now()
             user.save()
             tokens = get_tokens_for_user(user)
             resData = {

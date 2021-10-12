@@ -7,20 +7,27 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.core.paginator import Paginator
 
 from rest_framework import viewsets
-
-from .serializers import BlogListSerializer, CategoryListSerializer
+from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 from scifanchain.permissions import IsAdminUserOrReadOnly
+
+from .serializers import BlogListSerializer, CategoryListSerializer, BlogDetailSerializer
 
 
 # ViewSets define the view behavior.
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
-    serializer_class = BlogListSerializer
-
     # permission_classes = [IsAuthenticated,]
     permission_classes = [IsAdminUserOrReadOnly, ]
 
+    def list(self, request):
+        serializer = BlogListSerializer(self.queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        user = get_object_or_404(self.queryset, pk=pk)
+        serializer = BlogDetailSerializer(user)
+        return Response(serializer.data)
 
 
 # ViewSets define the view behavior.
@@ -31,6 +38,10 @@ class CategoryViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated,]
     permission_classes = [IsAdminUserOrReadOnly, ]
 
+
+"""
+以下是web页面
+"""
 
 
 class CommonViewMixin:
@@ -142,4 +153,4 @@ def tag_list(request, tag_id):
 
     menus = Category.get_menus()
 
-    return render(request, 'blogs/list.html', {'posts': posts, 'menus': menus, 'page_obj':page_obj})
+    return render(request, 'blogs/list.html', {'posts': posts, 'menus': menus, 'page_obj': page_obj})
