@@ -218,8 +218,6 @@ def wallet(request):
     })
 
 # 生成钱包
-
-
 @permission_classes((IsAuthenticated, ))
 def save_wallet(request):
     if request.method == "POST":

@@ -29,7 +29,7 @@ def coming(request):
 # 生成随机语录
 def generate_quotation():
     word = Word.objects.order_by('?')[:1]
-    return {'word':word}
+    return {'word': word}
 
 
 # 获取JWT的Token令牌
@@ -42,6 +42,8 @@ def get_tokens_for_user(user):
     }
 
 # 生成随机头像
+
+
 def generate_avatar(username):
     path = settings.BASE_DIR / \
         "media/avatars/{}".format(datetime.datetime.now().year)
@@ -50,13 +52,15 @@ def generate_avatar(username):
         os.makedirs(path)
     random_avatar = pa.Avatar.random()
     random_avatar.render(
-        "{}/{}.svg".format(path,username))
+        "{}/{}.svg".format(path, username))
 
 
 # 用户注册
 # todo:前端已有验证，但这里仍有待进一步添加更为严格的验证
 def register(request):
     resData = {}
+    proteced_name = ['community', 'blogs',
+                     'blog', 'signup', 'signin', 'sign-in', 'sign-up', 'finance', 'galaxy', 'space', 'eras', 'star', 'stars', 'expedition', 'stage', 'stages', 'story', 'stories', 'spacehub', 'hubs', 'person', 'place', 'event', 'concept', 'contract', 'universe', 'ipfs', 'token', 'tokens', 'nfts', 'scifan', 'sci-fan', 'chain', 'about', 'docs', 'word', 'words', 'work', 'works', 'white-paper', 'white_paper', 'text', 'test', 'home', 'index', 'route', 'list', 'category', 'categories', 'logout', 'login']
     if request.method == 'POST':
         clientData = json.loads(request.body)
         if User.objects.filter(username=clientData['username']).exists():
@@ -64,10 +68,15 @@ def register(request):
                 'error': True,
                 'msg': '已存在同名用户。'
             }
+        elif clientData['username'] in proteced_name:
+            resData = {
+                'error': True,
+                'msg': '该用户名与系统路径名称冲突，换一个吧。'
+            }
         elif User.objects.filter(email=clientData['email']).exists():
             resData = {
                 'error': True,
-                'msg': '邮箱已被注册。'
+                'msg': '该邮箱已被注册。'
             }
         else:
             user = User()
