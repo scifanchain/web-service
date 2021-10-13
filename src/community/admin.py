@@ -14,7 +14,7 @@ class ChannelAdmin(admin.ModelAdmin):
 @admin.register(Topic)
 class TopicAdmin(SummernoteModelAdmin):
     list_display = ('title', 'channel', 'status', 'owner')
-    fields = ('title', 'channel', 'topic_body')
+    fields = ('title', 'channel', 'topic_body', 'owner')
     summernote_fields = ('topic_body')
 
     def save_model(self, request, obj, form, change):

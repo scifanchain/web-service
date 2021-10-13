@@ -18,10 +18,14 @@ class ChannelViewSet(viewsets.ModelViewSet):
 
 
 class TopicViewSet(viewsets.ModelViewSet):
-    queryset = Topic.objects.all()
+    queryset = Topic.objects.order_by('-id').all()
     serializer_class = TopicListSerializer
-    # permission_classes = [IsAuthenticated,]
+    ordering_fields = ('created', 'updated')
     permission_classes = [IsAuthenticatedOrReadOnly, ]
+
+    # 新增
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
     def get_queryset(self):
         """
@@ -40,13 +44,26 @@ class TopicViewSet(viewsets.ModelViewSet):
 
 
 class ReplylViewSet(viewsets.ModelViewSet):
-    queryset = Reply.objects.all()
+    queryset = Reply.objects.order_by('-id').all()
     serializer_class = ReplyListSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, ]
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        topic_id = self.request.query_params.get('topic_id', None)
+        if topic_id is not None:
+            self.queryset = self.queryset.filter(target=topic_id)
+        return self.queryset
+
 
 # for web 
-
+# 由服务端渲染页面
 def home(request):
     channels = Channel.objects.all()
     topics = Topic.objects.all()

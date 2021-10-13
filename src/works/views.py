@@ -64,7 +64,7 @@ class StageViewSet(viewsets.ModelViewSet):
             self.queryset = self.queryset.filter(type=type)
         return self.queryset
 
-    # 新增代码
+    # 新增
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
