@@ -8,31 +8,44 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 from scifanchain.permissions import IsAdminUserOrReadOnly
 
-from .serializers import TopicListSerializer
+from .serializers import ChannelSerializer, TopicListSerializer, ReplyListSerializer
 
 
-# ViewSets define the view behavior.
+class ChannelViewSet(viewsets.ModelViewSet):
+    queryset = Channel.objects.all()
+    serializer_class = ChannelSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly, ]
+
+
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topic.objects.all()
     serializer_class = TopicListSerializer
     # permission_classes = [IsAuthenticated,]
     permission_classes = [IsAuthenticatedOrReadOnly, ]
 
-    # def get_queryset(self):
-    #     """
-    #     Optionally restricts the returned purchases to a given user,
-    #     by filtering against a `username` query parameter in the URL.
-    #     """
-    #     category_id = self.request.query_params.get('category_id', None)
-    #     if category_id is not None:
-    #         self.queryset = self.queryset.filter(category=category_id)
-    #     return self.queryset
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        channel_id = self.request.query_params.get('channel_id', None)
+        if channel_id is not None:
+            self.queryset = self.queryset.filter(channel=channel_id)
+        return self.queryset
 
-    # def retrieve(self, request, pk=None):
-    #     user = get_object_or_404(self.queryset, pk=pk)
-    #     serializer = BlogDetailSerializer(user)
-    #     return Response(serializer.data)
+    def retrieve(self, request, pk=None):
+        user = get_object_or_404(self.queryset, pk=pk)
+        serializer = TopicListSerializer(user)
+        return Response(serializer.data)
 
+
+class ReplylViewSet(viewsets.ModelViewSet):
+    queryset = Reply.objects.all()
+    serializer_class = ReplyListSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly, ]
+
+
+# for web 
 
 def home(request):
     channels = Channel.objects.all()

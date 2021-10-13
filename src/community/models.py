@@ -35,6 +35,9 @@ class Topic(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     updated = models.DateTimeField(auto_now=True, verbose_name="修改时间")
 
+    def __str__(self) -> str:
+        return self.title
+
 
 class Reply(models.Model):
     target = models.ForeignKey(
@@ -47,3 +50,15 @@ class Reply(models.Model):
 
     class Meta:
         verbose_name = verbose_name_plural = _("回复")
+    
+    @staticmethod
+    def get_by_topic(topic_id):
+        try:
+            topic = Topic.objects.get(id=topic_id)
+        except Topic.DoesNotExist:
+            topic = None
+            reply_list = []
+        else:
+            reply_list = topic.comment_set.filter(status=Status.STATUS_NORMAL)
+
+        return reply_list

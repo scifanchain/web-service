@@ -17,13 +17,15 @@ from rest_framework_simplejwt.views import (
 from works.views import StageViewSet
 from authors.views import UserViewSet, WalletViewSet
 from blogs.views import PostViewSet, CategoryViewSet
-from community.views import TopicViewSet
+from community.views import ChannelViewSet, TopicViewSet, ReplylViewSet
 
 router = routers.DefaultRouter()
 router.register('users', UserViewSet)
 router.register('stages', StageViewSet)
 router.register('wallets', WalletViewSet)
+router.register('channels', ChannelViewSet)
 router.register('topics', TopicViewSet)
+router.register('replies', ReplylViewSet)
 router.register('blogs/posts', PostViewSet)
 router.register('blogs/categories', CategoryViewSet)
 
