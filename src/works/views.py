@@ -37,8 +37,6 @@ def add_star(request):
         stage = Stage.objects.filter(id=data['stage_id']).filter()
         
 
-
-
 class StageWidgetListPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'page_size'

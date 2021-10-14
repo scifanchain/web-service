@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 from scifanchain.permissions import IsAdminUserOrReadOnly
 
-from .serializers import ChannelSerializer, TopicListSerializer, ReplyListSerializer
+from .serializers import ChannelSerializer, TopicListSerializer, TopicSerializer, ReplyListSerializer
 
 
 class ChannelViewSet(viewsets.ModelViewSet):
@@ -19,7 +19,7 @@ class ChannelViewSet(viewsets.ModelViewSet):
 
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topic.objects.order_by('-id').all()
-    serializer_class = TopicListSerializer
+    serializer_class = TopicSerializer
     ordering_fields = ('created', 'updated')
     permission_classes = [IsAuthenticatedOrReadOnly, ]
 
@@ -38,8 +38,8 @@ class TopicViewSet(viewsets.ModelViewSet):
         return self.queryset
 
     def retrieve(self, request, pk=None):
-        user = get_object_or_404(self.queryset, pk=pk)
-        serializer = TopicListSerializer(user)
+        topic = get_object_or_404(self.queryset, pk=pk)
+        serializer = TopicSerializer(topic)
         return Response(serializer.data)
 
 

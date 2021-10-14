@@ -15,14 +15,23 @@ class ChannelSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class TopicListSerializer(serializers.ModelSerializer):
+class TopicSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(required=False)
+
     class Meta:
         model = Topic
         fields = '__all__'
 
+class TopicListSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(required=False)
+
+    class Meta:
+        model = Topic
+        fields = ['id', 'title', 'channel', 'status',  'owner', 'top', 'created', ]
+
 
 class ReplyListSerializer(serializers.ModelSerializer):
-    owner = UserSerializer()
+    owner = UserSerializer(required=False)
 
     class Meta:
         model = Reply
