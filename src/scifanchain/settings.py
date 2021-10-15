@@ -136,6 +136,7 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = [
     "https://scifanchian.com",
+    "https://service.scifanchian.com",
     "https://sci.fan",
     "http://localhost:8000",
     "http://localhost:9000",
