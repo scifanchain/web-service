@@ -9,7 +9,6 @@ cffi==1.14.6
 charset-normalizer==2.0.4
 constantly==15.1.0
 cryptography==3.4.8
-daphne==3.0.2
 Django==3.2.6
 django-appconf==1.0.4
 django-cors-headers==3.8.0
