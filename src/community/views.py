@@ -12,7 +12,7 @@ from .serializers import ChannelSerializer, TopicListSerializer, TopicSerializer
 
 
 class ChannelViewSet(viewsets.ModelViewSet):
-    queryset = Channel.objects.all()
+    queryset = Channel.objects.order_by('order').all()
     serializer_class = ChannelSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, ]
 
